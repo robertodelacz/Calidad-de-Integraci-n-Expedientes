@@ -1,0 +1,678 @@
+/**
+ * =====================================================
+ * GENERADOR DE EMAIL EJECUTIVO PREMIUM - FINAL
+ * Compatible con Gmail - Diseño homologado
+ * =====================================================
+ */
+
+function generarHTMLEmailInfografia(datos, periodo) {
+  const [anio, mes] = periodo.split("-");
+  const nombreMes = obtenerNombreMes(parseInt(mes));
+  
+  let html = HtmlService.createHtmlOutputFromFile('EmailInfografia').getContent();
+  
+  // ============================================
+  // SALUDO DINÁMICO
+  // ============================================
+  const hora = new Date().getHours();
+  let saludo;
+  
+  if (hora >= 5 && hora < 12) {
+    saludo = "Estimado equipo, buenos días:";
+  } else if (hora >= 12 && hora < 19) {
+    saludo = "Estimado equipo, buenas tardes:";
+  } else {
+    saludo = "Estimado equipo, buenas noches:";
+  }
+
+  // ============================================
+  // CONFIGURACIÓN DE URLS DE ICONOS
+  // ============================================
+  const ICONOS = {
+    logo: 'https://cualli.mx/wp-content/uploads/2022/07/cualli-bl@3x.png',
+    comercial: 'https://cdn-icons-png.freepik.com/512/14598/14598062.png',
+    cartera: 'https://cdn-icons-png.freepik.com/512/8376/8376410.png',
+    credito: 'https://cdn-icons-png.freepik.com/512/1674/1674640.png',
+    juridico: 'https://cdn-icons-png.freepik.com/512/4252/4252349.png',
+    pld: 'https://cdn-icons-png.freepik.com/512/3359/3359520.png'
+  };
+
+  const ICONOS_KPI = {
+    total: 'https://cdn-icons-png.freepik.com/512/4371/4371079.png',
+    completos: 'https://cdn-icons-png.freepik.com/512/2724/2724742.png',
+    incidencias: 'https://cdn-icons-png.freepik.com/512/7100/7100197.png'
+  };
+
+  
+  // ============================================
+  // CÁLCULOS BÁSICOS
+  // ============================================
+  const total = datos.total || 1;
+  const completos = datos.sinIncidencias || 0;
+  const incidencias = datos.conIncidencias || 0;
+  const pctCompletos = Math.round((completos / total) * 100);
+  const pctIncidencias = Math.round((incidencias / total) * 100);
+  
+  // ============================================
+  // GENERAR SECCIONES
+  // ============================================
+  const graficoBarras = generarGraficoBarrasPorAreaEjecutivo(datos, nombreMes, anio, ICONOS);
+  const seccionExpedientesIncidencias = generarSeccionExpedientesIncidenciasEjecutivo(datos);
+  const seccionDetalleAreas = generarSeccionDetalleAreasEjecutivo(datos, ICONOS);
+  
+  // ============================================
+  // FECHA DE GENERACIÓN (SIN HORA)
+  // ============================================
+  const fechaGen = Utilities.formatDate(
+    new Date(), 
+    Session.getScriptTimeZone(), 
+    "dd/MM/yyyy"
+  );
+  
+  // ============================================
+  // REEMPLAZAR PLACEHOLDERS
+  // ============================================
+  html = html
+    .replace(/{{LOGO_URL}}/g, ICONOS.logo)
+    .replace(/{{ICONO_KPI_TOTAL}}/g, ICONOS_KPI.total)
+    .replace(/{{ICONO_KPI_COMPLETOS}}/g, ICONOS_KPI.completos)
+    .replace(/{{ICONO_KPI_INCIDENCIAS}}/g, ICONOS_KPI.incidencias)
+    .replace(/{{MES}}/g, nombreMes.toUpperCase())
+    .replace(/{{MES_COMPLETO}}/g, nombreMes)
+    .replace(/{{ANIO}}/g, anio)
+    .replace(/{{SALUDO}}/g, saludo)
+    .replace(/{{TOTAL_EVALUADOS}}/g, total)
+    .replace(/{{COMPLETOS}}/g, completos)
+    .replace(/{{INCIDENCIAS}}/g, incidencias)
+    .replace(/{{PCT_COMPLETOS}}/g, pctCompletos)
+    .replace(/{{PCT_INCIDENCIAS}}/g, pctIncidencias)
+    .replace(/{{SECCION_GRAFICO_BARRAS}}/g, graficoBarras)
+    .replace(/{{SECCION_EXPEDIENTES_INCIDENCIAS}}/g, seccionExpedientesIncidencias)
+    .replace(/{{SECCION_DETALLE_AREAS}}/g, seccionDetalleAreas)
+    .replace(/{{FECHA_GENERACION}}/g, fechaGen);
+  
+  return html;
+}
+
+
+/**
+ * =====================================================
+ * TABLA DE INCIDENCIAS POR ÁREA (GMAIL COMPATIBLE)
+
+ * =====================================================
+ */
+function generarGraficoBarrasPorAreaEjecutivo(datos, nombreMes, anio, ICONOS) {
+  const areas = {
+    'Comercial': { 
+      color: '#f97316',
+      colorClaro: '#fb923c',
+      colorOscuro: '#ea580c',
+      icono: ICONOS.comercial,
+      label: 'Comercial'
+    },
+    'Cartera': { 
+      color: '#ec4899',
+      colorClaro: '#f472b6',
+      colorOscuro: '#db2777',
+      icono: ICONOS.cartera,
+      label: 'Cartera'
+    },
+    'Crédito': { 
+      color: '#06b6d4',
+      colorClaro: '#22d3ee',
+      colorOscuro: '#0891b2',
+      icono: ICONOS.credito,
+      label: 'Crédito'
+    },
+    'Jurídico': { 
+      color: '#84cc16',
+      colorClaro: '#C7FF6C',
+      colorOscuro: '#0DA31A',
+      icono: ICONOS.juridico,
+      label: 'Jurídico'
+    },
+    'PLD': { 
+      color: '#a855f7',
+      colorClaro: '#c084fc',
+      colorOscuro: '#9333ea',
+      icono: ICONOS.pld,
+      label: 'PLD'
+    }
+  };
+  
+  // Contar incidencias por área
+  const totalesPorArea = {};
+  Object.keys(areas).forEach(area => totalesPorArea[area] = 0);
+  
+  if (datos.incidencias && datos.incidencias.length > 0) {
+    datos.incidencias.forEach(row => {
+      const texto = row.areas || '';
+      
+      Object.keys(areas).forEach(nombreArea => {
+        const regex = new RegExp(`${nombreArea.replace('í', '[íi]')}\\s*:\\s*(\\d+)`, 'i');
+        const match = texto.match(regex);
+        
+        if (match) {
+          const cantidad = parseInt(match[1]) || 0;
+          totalesPorArea[nombreArea] += cantidad;
+        }
+      });
+    });
+  }
+  
+  const totalIncidencias = Object.values(totalesPorArea).reduce((a, b) => a + b, 0);
+  
+// Si no hay incidencias
+  if (totalIncidencias === 0) {
+    return `
+      <tr>
+        <td style="padding: 0 60px 40px;">
+          <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); border-radius: 16px; border: 1px solid #86efac;">
+            <tr>
+              <td style="padding: 40px;">
+                <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td width="80" align="center" valign="middle" style="padding-right: 25px;">
+                      <table role="presentation" cellspacing="0" cellpadding="0" style="width: 80px; height: 80px; background: linear-gradient(135deg, #059669 0%, #10b981 100%); border-radius: 50%;">
+                        <tr>
+                          <td align="center" valign="middle">
+                            <img src="https://cdn-icons-png.freepik.com/512/294/294432.png" 
+                                 alt="Check" 
+                                 width="42" 
+                                 height="42" 
+                                 style="display: block;" />
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                    <td align="left" valign="middle">
+                      <table role="presentation" cellspacing="0" cellpadding="0">
+                        <tr>
+                          <td style="padding-right: 10px;" valign="middle">
+                            <img src="https://cdn-icons-png.freepik.com/512/1021/1021182.png" 
+                                 alt="Target" 
+                                 width="26" 
+                                 height="26" 
+                                 style="display: block; vertical-align: middle;" />
+                          </td>
+                          <td valign="middle">
+                            <h3 style="margin: 0 0 8px; font-size: 22px; font-weight: 800; color: #065f46; font-family: 'IBM Plex Sans', sans-serif;">
+                              Desempeño Excelente
+                            </h3>
+                          </td>
+                        </tr>
+                      </table>
+                      <p style="margin: 0; font-size: 15px; color: #047857; font-weight: 500; line-height: 1.5;">
+                        No se registraron incidencias en este período
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    `;
+  }  
+  // Filtrar solo áreas con incidencias y generar filas
+  let filasHTML = '';
+  let index = 0;
+  
+  Object.keys(areas).forEach((nombreArea) => {
+    const areaInfo = areas[nombreArea];
+    const valor = totalesPorArea[nombreArea];
+    
+    // SOLO MOSTRAR SI TIENE INCIDENCIAS
+    if (valor > 0) {
+      const porcentaje = Math.round((valor / totalIncidencias) * 100);
+      const bgColor = index % 2 === 0 ? '#ffffff' : '#f8fafc';
+      
+      // Calcular cuántas áreas con incidencias hay para determinar el último border
+      const areasConIncidencias = Object.keys(areas).filter(a => totalesPorArea[a] > 0);
+      const borderColor = index === areasConIncidencias.length - 1 ? 'transparent' : '#e2e8f0';
+      
+      filasHTML += `
+        <tr>
+          <td style="padding: 14px 20px; border-bottom: 1px solid ${borderColor}; background: ${bgColor};">
+            <table role="presentation" cellspacing="0" cellpadding="0">
+              <tr>
+                <td style="padding-right: 12px;">
+                  <img src="${areaInfo.icono}" alt="${areaInfo.label}" style="width: 36px; height: 36px; display: block;" />
+                </td>
+                <td>
+                  <div style="font-size: 14px; font-weight: 700; color: #1a202c; font-family: 'IBM Plex Sans', sans-serif;">
+                    ${areaInfo.label}
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </td>
+          <td style="padding: 14px 20px; border-bottom: 1px solid ${borderColor}; background: ${bgColor}; text-align: center;">
+            <table role="presentation" cellspacing="0" cellpadding="0" align="center" style="width: 44px; height: 44px; background: linear-gradient(135deg, ${areaInfo.colorClaro} 0%, ${areaInfo.color} 100%); border-radius: 50%; border: 5px solid ${areaInfo.colorOscuro};">
+              <tr>
+                <td align="center" valign="middle" style="color: #ffffff; font-size: 18px; font-weight: 900; font-family: 'IBM Plex Sans', sans-serif; text-shadow: 0 1px 2px rgba(0,0,0,0.1);">
+                  ${valor}
+                </td>
+              </tr>
+            </table>
+          </td>
+          <td style="padding: 14px 20px; border-bottom: 1px solid ${borderColor}; background: ${bgColor};">
+            <div style="color: #4a5568; font-size: 13px; font-weight: 500; line-height: 1.5;">
+              ${valor} incidencia${valor !== 1 ? 's' : ''} registrada${valor !== 1 ? 's' : ''} en el período, representando el ${porcentaje}% del total
+            </div>
+          </td>
+        </tr>
+      `;
+      
+      index++;
+    }
+  });
+  
+  return `
+    <tr>
+      <td style="padding: 0 60px 50px;" class="padding-desktop">
+        
+        <!-- Título HOMOLOGADO -->
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
+          <tr>
+            <td align="center" style="padding-bottom: 32px;">
+              <h2 style="margin: 0 0 8px; font-size: 22px; font-weight: 800; color: #1a202c; font-family: 'IBM Plex Sans', sans-serif; letter-spacing: -0.5px;">
+                Distribución de Incidencias por Área
+              </h2>
+              <p style="margin: 0; font-size: 13px; color: #64748b; font-weight: 500;">
+                Período: ${nombreMes} ${anio} • Total: ${totalIncidencias} incidencias
+              </p>
+            </td>
+          </tr>
+        </table>
+        
+        <!-- Tabla -->
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px;">
+          <thead>
+            <tr style="background: #f8fafc;">
+              <th style="padding: 14px 20px; text-align: left; color: #4a5568; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; font-family: 'Inter', sans-serif; border-bottom: 2px solid #cbd5e1; width: 30%;">
+                Área
+              </th>
+              <th style="padding: 14px 20px; text-align: center; color: #4a5568; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; font-family: 'Inter', sans-serif; border-bottom: 2px solid #cbd5e1; width: 15%;">
+                Incidencias
+              </th>
+              <th style="padding: 14px 20px; text-align: left; color: #4a5568; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; font-family: 'Inter', sans-serif; border-bottom: 2px solid #cbd5e1; width: 55%;">
+                Descripción
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            ${filasHTML}
+          </tbody>
+        </table>
+        
+      </td>
+    </tr>
+  `;
+}
+
+/**
+ * =====================================================
+ * SECCIÓN: EXPEDIENTES CON INCIDENCIAS - HOMOLOGADO
+ * =====================================================
+ */
+function generarSeccionExpedientesIncidenciasEjecutivo(datos) {
+  if (!datos.incidencias || datos.incidencias.length === 0) {
+    return '';
+  }
+  
+  const expedientes = datos.incidencias.sort((a, b) => b.totalIncidencias - a.totalIncidencias);
+  const mostrar = expedientes.slice(0, 15);
+  
+  let filasHTML = mostrar.map((exp, idx) => {
+    const bgColor = idx % 2 === 0 ? '#ffffff' : '#f8fafc';
+    const borderColor = idx === mostrar.length - 1 ? 'transparent' : '#e2e8f0';
+    
+    return `
+      <tr>
+        <td style="padding: 14px 20px; border-bottom: 1px solid ${borderColor}; background: ${bgColor};">
+          <div style="font-weight: 600; color: #1a202c; font-size: 13px; font-family: 'Inter', sans-serif;">
+            ${exp.id}
+          </div>
+        </td>
+        <td style="padding: 14px 20px; border-bottom: 1px solid ${borderColor}; background: ${bgColor};">
+          <div style="color: #718096; font-size: 13px; font-weight: 500;">
+            ${exp.fecha}
+          </div>
+        </td>
+        <td style="padding: 14px 20px; border-bottom: 1px solid ${borderColor}; background: ${bgColor}; text-align: center;">
+          <table role="presentation" cellspacing="0" cellpadding="0" align="center" style="background: #ffffff; border: 2px solid #dc2626; padding: 6px 14px; border-radius: 6px;">
+            <tr>
+              <td style="color: #dc2626; font-weight: 800; font-size: 15px; font-family: 'IBM Plex Sans', sans-serif;">
+                ${exp.totalIncidencias}
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    `;
+  }).join('');
+  
+  return `
+    <tr>
+      <td style="padding: 0 60px 40px;">
+        
+        <!-- Título HOMOLOGADO -->
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
+          <tr>
+            <td align="center" style="padding-bottom: 32px;">
+              <h2 style="margin: 0 0 8px; font-size: 22px; font-weight: 800; color: #1a202c; font-family: 'IBM Plex Sans', sans-serif; letter-spacing: -0.5px;">
+                 Expedientes con Incidencias
+              </h2>
+              <p style="margin: 0; font-size: 13px; color: #64748b; font-weight: 500;">
+                Total: ${expedientes.length} expediente${expedientes.length !== 1 ? 's' : ''} ${mostrar.length < expedientes.length ? `(mostrando top ${mostrar.length})` : ''}
+              </p>
+            </td>
+          </tr>
+        </table>
+        
+        <!-- Tabla ejecutiva -->
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px;">
+          <thead>
+            <tr style="background: #f8fafc;">
+              <th style="padding: 14px 20px; text-align: left; color: #4a5568; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; font-family: 'Inter', sans-serif; border-bottom: 2px solid #cbd5e1; width: 45%;">
+                ID Oportunidad
+              </th>
+              <th style="padding: 14px 20px; text-align: left; color: #4a5568; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; font-family: 'Inter', sans-serif; border-bottom: 2px solid #cbd5e1; width: 35%;">
+                Fecha de Firma
+              </th>
+              <th style="padding: 14px 20px; text-align: center; color: #4a5568; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; font-family: 'Inter', sans-serif; border-bottom: 2px solid #cbd5e1; width: 20%;">
+                Incidencias
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            ${filasHTML}
+          </tbody>
+        </table>
+        
+      </td>
+    </tr>
+  `;
+}
+
+
+/**
+ * =====================================================
+ * SECCIÓN: DETALLE POR ÁREA - HOMOLOGADO
+ * =====================================================
+ */
+function generarSeccionDetalleAreasEjecutivo(datos, ICONOS) {
+  const areas = {
+    'Comercial': { 
+      icono: ICONOS.comercial,
+      color: '#f97316',
+      colorClaro: '#FFA459',
+      colorOscuro: '#ea580c',
+      colorBg: '#fff7ed',
+      colorBorder: '#fed7aa'
+    },
+    'Cartera': { 
+      icono: ICONOS.cartera,
+      color: '#ec4899',
+      colorClaro: '#FF8CC8',
+      colorOscuro: '#db2777',
+      colorBg: '#fdf2f8',
+      colorBorder: '#fbcfe8'
+    },
+    'Crédito': { 
+      icono: ICONOS.credito,
+      color: '#06b6d4',
+      colorClaro: '#78EDFF',
+      colorOscuro: '#0891b2',
+      colorBg: '#ecfeff',
+      colorBorder: '#a5f3fc'
+    },
+    'Jurídico': { 
+      icono: ICONOS.juridico,
+      color: '#84cc16',
+      colorClaro: '#C7FF6C',
+      colorOscuro: '#0DA31A',
+      colorBg: '#f7fee7',
+      colorBorder: '#d9f99d'
+    },
+    'PLD': { 
+      icono: ICONOS.pld,
+      color: '#a855f7',
+      colorClaro: '#D3A7FF',
+      colorOscuro: '#9333ea',
+      colorBg: '#faf5ff',
+      colorBorder: '#e9d5ff'
+    }
+  };
+  
+  let seccionHTML = `
+    <tr>
+      <td style="padding: 0 60px 40px; background: #ffffff;">
+        
+        <!-- Título HOMOLOGADO -->
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
+          <tr>
+            <td align="center" style="padding-bottom: 32px;">
+              <h2 style="margin: 0 0 8px; font-size: 22px; font-weight: 800; color: #1a202c; font-family: 'IBM Plex Sans', sans-serif; letter-spacing: -0.5px;">
+                 Detalle por Área
+              </h2>
+              <p style="margin: 0; font-size: 13px; color: #64748b; font-weight: 500;">
+                Desglose de incidencias por departamento
+              </p>
+            </td>
+          </tr>
+        </table>
+  `;
+  
+  Object.keys(areas).forEach(nombreArea => {
+    const areaInfo = areas[nombreArea];
+    
+    // Extraer expedientes del área
+    const expedientesArea = [];
+    let totalIncidenciasArea = 0;
+    
+    if (datos.incidencias) {
+      datos.incidencias.forEach(row => {
+        const texto = row.areas || '';
+        const regex = new RegExp(`${nombreArea.replace('í', '[íi]')}\\s*:\\s*(\\d+)`, 'i');
+        const match = texto.match(regex);
+        if (match) {
+          const cantidad = parseInt(match[1]) || 0;
+          if (cantidad > 0) {
+            expedientesArea.push({
+              id: row.id,
+              fecha: row.fecha,
+              cantidad: cantidad
+            });
+            totalIncidenciasArea += cantidad;
+          }
+        }
+      });
+    }
+    
+    if (expedientesArea.length > 0) {
+      // Área CON incidencias
+      expedientesArea.sort((a, b) => b.cantidad - a.cantidad);
+      
+      let filasAreaExpedientes = expedientesArea.map((exp, idx) => {
+        const bgColor = idx % 2 === 0 ? '#ffffff' : '#f8fafc';
+        const borderColor = idx === expedientesArea.length - 1 ? 'transparent' : '#e2e8f0';
+        
+        return `
+          <tr>
+            <td style="padding: 12px 18px; border-bottom: 1px solid ${borderColor}; background: ${bgColor};">
+              <div style="font-weight: 600; color: #4a5568; font-size: 12px; font-family: 'Inter', sans-serif;">
+                ${exp.id}
+              </div>
+            </td>
+            <td style="padding: 12px 18px; border-bottom: 1px solid ${borderColor}; background: ${bgColor};">
+              <div style="color: #718096; font-size: 12px; font-weight: 500;">
+                ${exp.fecha}
+              </div>
+            </td>
+            <td style="padding: 12px 18px; border-bottom: 1px solid ${borderColor}; background: ${bgColor}; text-align: center;">
+              <table role="presentation" cellspacing="0" cellpadding="0" align="center" style="background: #ffffff; border: 2px solid ${areaInfo.color}; padding: 6px 14px; border-radius: 6px;">
+                <tr>
+                  <td style="color: ${areaInfo.color}; font-weight: 800; font-size: 15px; font-family: 'IBM Plex Sans', sans-serif;">
+                    ${exp.cantidad}
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        `;
+      }).join('');
+      
+      seccionHTML += `
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin-bottom: 20px; background: #ffffff; border: 1px solid ${areaInfo.colorBorder}; border-radius: 6px;">
+          
+          <!-- Header del Área -->
+          <tr>
+            <td colspan="3" style="background: ${areaInfo.colorBg}; padding: 18px 22px; border-bottom: 1px solid ${areaInfo.colorBorder};">
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td width="48" valign="middle" style="padding-right: 14px;">
+                    <img src="${areaInfo.icono}" alt="${nombreArea}" style="width: 40px; height: 40px; display: block;" />
+                  </td>
+                  <td valign="middle">
+                    <h3 style="margin: 0 0 3px; font-size: 16px; font-weight: 700; color: #1a202c; font-family: 'IBM Plex Sans', sans-serif; letter-spacing: -0.2px;">
+                      ${nombreArea}
+                    </h3>
+                    <p style="margin: 0; font-size: 11px; color: #718096; font-weight: 600;">
+                      ${expedientesArea.length} expediente${expedientesArea.length !== 1 ? 's' : ''} · ${totalIncidenciasArea} incidencia${totalIncidenciasArea !== 1 ? 's' : ''}
+                    </p>
+                  </td>
+                  <td width="70" align="right" valign="middle">
+                    <table role="presentation" cellspacing="0" cellpadding="0" style="width: 40px; height: 40px; background: linear-gradient(135deg, ${areaInfo.colorClaro} 0%, ${areaInfo.color} 100%); border-radius: 50%; border: 5px solid ${areaInfo.colorOscuro};">
+                      <tr>
+                        <td align="center" valign="middle" style="color: #ffffff; font-size: 18px; font-weight: 900; font-family: 'IBM Plex Sans', sans-serif; text-shadow: 0 1px 2px rgba(0,0,0,0.1);">
+                          ${totalIncidenciasArea}
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          
+          <!-- Headers de tabla -->
+          <tr style="background: #f8fafc;">
+            <th style="padding: 12px 18px; text-align: left; color: #4a5568; font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 700; font-family: 'Inter', sans-serif; border-bottom: 1px solid #e2e8f0; width: 45%;">
+              ID Oportunidad
+            </th>
+            <th style="padding: 12px 18px; text-align: left; color: #4a5568; font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 700; font-family: 'Inter', sans-serif; border-bottom: 1px solid #e2e8f0; width: 40%;">
+              Fecha de Firma
+            </th>
+            <th style="padding: 12px 18px; text-align: center; color: #4a5568; font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 700; font-family: 'Inter', sans-serif; border-bottom: 1px solid #e2e8f0; width: 15%;">
+              Cantidad
+            </th>
+          </tr>
+          
+          <!-- Expedientes -->
+          ${filasAreaExpedientes}
+          
+        </table>
+      `;
+      
+    } else {
+      // Área SIN incidencias
+seccionHTML += `
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin-bottom: 16px; background: #f0fdf4; border-radius: 6px; border: 1px solid #86efac;">
+          <tr>
+            <td style="padding: 18px 22px;">
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td width="48" valign="middle" style="padding-right: 14px;">
+                    <img src="${areaInfo.icono}" alt="${nombreArea}" style="width: 40px; height: 40px; display: block;" />
+                  </td>
+                  <td valign="middle">
+                    <h3 style="margin: 0 0 3px; font-size: 16px; font-weight: 700; color: #1a202c; font-family: 'IBM Plex Sans', sans-serif; letter-spacing: -0.2px;">
+                      ${nombreArea}
+                    </h3>
+                    <p style="margin: 0; font-size: 13px; color: #047857; font-weight: 600;">
+                      ✓ Sin incidencias registradas
+                    </p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      `;
+    }
+  });
+  
+  seccionHTML += `
+      </td>
+    </tr>
+  `;
+  
+  return seccionHTML;
+}
+
+/**
+ * =====================================================
+ * UTILIDAD: OBTENER NOMBRE DEL MES
+ * =====================================================
+ */
+function obtenerNombreMes(numeroMes) {
+  const meses = [
+    '', 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+    'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+  ];
+  return meses[numeroMes] || '';
+}
+
+/**
+ * =====================================================
+ * FUNCIÓN PRINCIPAL DE ENVÍO
+ * =====================================================
+ */
+function enviarEmailTESIInfografia(periodo, destinatarios) {
+  try {
+    const datos = obtenerTESIPorPeriodo(periodo);
+    const htmlEmail = generarHTMLEmailInfografia(datos, periodo);
+    
+    const [anio, mes] = periodo.split("-");
+    const nombreMes = obtenerNombreMes(parseInt(mes));
+    
+    const asunto = `📊 EXPEDIENTES CUALLI/Cierre ${nombreMes} ${anio} / Estatus de integración Expedientes Crédito`;
+    
+    MailApp.sendEmail({
+      to: destinatarios,
+      subject: asunto,
+      htmlBody: htmlEmail,
+      name: "Control de Calidad Cualli"
+    });
+    
+    return { 
+      success: true, 
+      mensaje: `Email ejecutivo enviado exitosamente a: ${destinatarios}`,
+      tesi: datos.tesi
+    };
+    
+  } catch (error) {
+    console.error("Error al enviar email ejecutivo:", error);
+    return { 
+      success: false, 
+      error: error.toString() 
+    };
+  }
+}
+
+/**
+ * =====================================================
+ * TEST DEL EMAIL EJECUTIVO
+ * =====================================================
+ */
+function testEmailEjecutivo() {
+  const resultado = enviarEmailTESIInfografia(
+    "2025-01",
+    "tu.email@example.com"  
+  );
+  
+  console.log(resultado);
+}
