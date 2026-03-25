@@ -33,7 +33,7 @@ body { font-family:'IBM Plex Sans',sans-serif; background:#f1f5f9; color:#1a202c
 .periodo-select:focus { outline:none; border-color:#FDB913; box-shadow:0 0 0 3px rgba(253,185,19,0.15); }
 .select-anio { min-width:90px; }
 .select-mes  { min-width:150px; }
-.btn-ver { background:#FDB913; color:#000; border:none; border-radius:8px; padding:9px 20px; font-size:13px; font-weight:800; cursor:pointer; font-family:‘IBM Plex Sans’,sans-serif; letter-spacing:0.3px; transition:all 0.15s; display:flex; align-items:center; gap:6px; flex-shrink:0; }
+.btn-ver { background:#FDB913; color:#000; border:none; border-radius:8px; padding:9px 20px; font-size:13px; font-weight:800; cursor:pointer; font-family:‘IBM Plex Sans’,sans-serif; transition:all 0.15s; display:flex; align-items:center; gap:6px; flex-shrink:0; }
 .btn-ver:hover { background:#e0a90f; transform:translateY(-1px); box-shadow:0 3px 10px rgba(253,185,19,0.35); }
 .periodo-status { margin-left:auto; }
 .status-chip { display:inline-flex; align-items:center; gap:5px; padding:4px 10px; border-radius:20px; font-size:11px; font-weight:600; }
@@ -52,7 +52,7 @@ body { font-family:'IBM Plex Sans',sans-serif; background:#f1f5f9; color:#1a202c
 .skeleton-row  { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:24px; }
 .skeleton-box  { height:90px; border-radius:10px; background:linear-gradient(90deg,#f1f5f9 25%,#e2e8f0 50%,#f1f5f9 75%); background-size:200% 100%; animation:shimmer 1.4s infinite; }
 .skeleton-bar  { height:20px; border-radius:5px; background:linear-gradient(90deg,#f1f5f9 25%,#e2e8f0 50%,#f1f5f9 75%); background-size:200% 100%; animation:shimmer 1.4s infinite; margin-bottom:10px; }
-.skeleton-bar.w80 { width:80%; } .skeleton-bar.w60 { width:60%; } .skeleton-bar.w40 { width:40%; }
+.skeleton-bar.w80{width:80%;} .skeleton-bar.w60{width:60%;} .skeleton-bar.w40{width:40%;}
 @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
 
 /* ══ HEADER REPORTE ══ */
@@ -94,7 +94,7 @@ body { font-family:'IBM Plex Sans',sans-serif; background:#f1f5f9; color:#1a202c
 .rubros-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:10px; }
 .rubro-card { background:#fff; border:1px solid #e2e8f0; border-radius:10px; padding:14px 12px; text-align:center; cursor:pointer; transition:box-shadow 0.2s,transform 0.2s,border-color 0.15s; position:relative; overflow:hidden; user-select:none; }
 .rubro-card:hover { box-shadow:0 4px 14px rgba(0,0,0,0.09); transform:translateY(-2px); }
-.rubro-card.activo { border-color: currentColor; box-shadow:0 4px 16px rgba(0,0,0,0.1); }
+.rubro-card.activo { box-shadow:0 4px 16px rgba(0,0,0,0.1); }
 .rubro-card::before { content:’’; position:absolute; top:0; left:0; right:0; height:3px; }
 .rubro-card.normal::before     { background:#FDB913; }
 .rubro-card.col0::before       { background:#64748b; }
@@ -114,56 +114,23 @@ body { font-family:'IBM Plex Sans',sans-serif; background:#f1f5f9; color:#1a202c
 .rubro-chevron { font-size:11px; color:#94a3b8; margin-top:6px; transition:transform 0.25s; display:block; }
 .rubro-card.activo .rubro-chevron { transform:rotate(180deg); }
 
-/* ══ RUBRO DETALLE ══ */
-.rubro-detalle-wrap {
-max-height: 0;
-overflow: hidden;
-transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1);
-margin-top: 0;
-}
-.rubro-detalle-wrap.open { max-height: 1200px; margin-top: 12px; }
+/* ══ RUBRO DETALLE EXPANDIBLE ══ */
+.rubro-detalle-wrap { max-height:0; overflow:hidden; transition:max-height 0.4s cubic-bezier(0.4,0,0.2,1); }
+.rubro-detalle-wrap.open { max-height:1200px; margin-top:12px; }
+.rubro-detalle-inner { background:#fff; border:1px solid #e2e8f0; border-radius:10px; overflow:hidden; }
+.rubro-detalle-header { padding:12px 18px; border-bottom:1px solid #f1f5f9; }
+.rubro-detalle-titulo { font-size:12px; font-weight:700; color:#64748b; text-transform:uppercase; letter-spacing:0.8px; }
 
-.rubro-detalle-inner {
-background: #fff;
-border: 1px solid #e2e8f0;
-border-radius: 10px;
-overflow: hidden;
-}
-
-.rubro-detalle-header {
-padding: 12px 18px;
-display: flex;
-align-items: center;
-justify-content: space-between;
-border-bottom: 1px solid #f1f5f9;
-}
-
-.rubro-detalle-titulo {
-font-size: 12px;
-font-weight: 700;
-color: #64748b;
-text-transform: uppercase;
-letter-spacing: 0.8px;
-}
-
-/* ══ DISTRIBUCIÓN ══ */
+/* ══ TABLA BASE ══ */
 .tbl { width:100%; border-collapse:collapse; border:1px solid #e2e8f0; border-radius:6px; overflow:hidden; font-family:‘Inter’,sans-serif; }
 .tbl th { background:#f8fafc; padding:11px 18px; text-align:left; font-size:10px; text-transform:uppercase; letter-spacing:1px; font-weight:700; color:#4a5568; border-bottom:2px solid #cbd5e1; }
 .tbl td { padding:12px 18px; font-size:13px; border-bottom:1px solid #f1f5f9; vertical-align:middle; }
 .tbl tr:last-child td { border-bottom:none; }
 .tbl tr:nth-child(even) td { background:#f8fafc; }
-.tbl tbody tr { animation:rowIn 0.22s ease both; }
+.tbl tbody tr:hover td { background:#fffbeb; cursor:pointer; }
+.tbl tfoot tr td { background:#f8fafc; font-weight:700; font-size:12px; color:#1a202c; border-top:2px solid #e2e8f0; padding:10px 18px; }
 @keyframes rowIn { from{opacity:0;transform:translateX(-6px);} to{opacity:1;transform:translateX(0);} }
-
-/* Fila de total en tabla distribución */
-.tbl tfoot tr td {
-background: #f8fafc;
-font-weight: 700;
-font-size: 12px;
-color: #1a202c;
-border-top: 2px solid #e2e8f0;
-padding: 10px 18px;
-}
+.tbl tbody tr { animation:rowIn 0.22s ease both; }
 
 /* ══ TIPO BADGE ══ */
 .tipo-badge { display:inline-block; padding:2px 8px; border-radius:4px; font-size:10px; font-weight:700; letter-spacing:0.3px; text-transform:uppercase; }
@@ -197,34 +164,14 @@ padding: 10px 18px;
 
 /* ══ TABLA DOCUMENTOS ══ */
 .docs-table { width:100%; border-collapse:collapse; font-family:‘Inter’,sans-serif; }
-.docs-table th { background:linear-gradient(135deg,#1e293b 0%,#334155 100%); padding:14px 16px; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#e2e8f0; text-align:left; }
-.docs-table th:first-child { width:40px; text-align:center; }
-.docs-table td { padding:13px 16px; font-size:12px; border-bottom:1px solid #f1f5f9; vertical-align:top; }
+.docs-table thead tr { background:linear-gradient(135deg,#1e293b 0%,#334155 100%); }
+.docs-table th { padding:12px 16px; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#e2e8f0; text-align:left; }
+.docs-table td { padding:12px 16px; font-size:12px; border-bottom:1px solid #f1f5f9; vertical-align:top; line-height:1.5; }
 .docs-table tr:nth-child(even) td { background:#f8fafc; }
 .docs-table tr:last-child td { border-bottom:none; }
 .docs-table tr:hover td { background:#fffbeb; }
-
-.doc-num-circle {
-width: 26px; height: 26px;
-background: linear-gradient(135deg,#3b82f6,#2563eb);
-border-radius: 50%;
-display: inline-flex;
-align-items: center;
-justify-content: center;
-font-size: 11px;
-font-weight: 700;
-color: #fff;
-box-shadow: 0 2px 4px rgba(59,130,246,0.3);
-}
-
-.area-doc-badge {
-display: inline-block;
-border-radius: 5px;
-padding: 2px 9px;
-font-size: 11px;
-font-weight: 700;
-border: 1px solid;
-}
+.doc-num { width:28px; height:28px; background:linear-gradient(135deg,#3b82f6,#2563eb); border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff; box-shadow:0 2px 4px rgba(59,130,246,0.3); flex-shrink:0; }
+.area-doc-badge { display:inline-block; border-radius:5px; padding:2px 9px; font-size:11px; font-weight:700; border:1px solid; white-space:nowrap; }
 
 /* ══ CIERRE ══ */
 .cierre-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
@@ -266,8 +213,8 @@ border: 1px solid;
 .overlay.open{ display:block; }
 .slide-panel { position:fixed; right:-520px; top:0; bottom:0; width:460px; background:#fff; z-index:400; box-shadow:-8px 0 40px rgba(0,0,0,0.15); transition:right 0.35s cubic-bezier(0.4,0,0.2,1); overflow-y:auto; border-left:4px solid #FDB913; }
 .slide-panel.open { right:0; }
-.sp-header   { background:#515151; padding:22px 26px 18px; position:relative; }
-.sp-close    { position:absolute; top:14px; right:14px; width:30px; height:30px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); border-radius:5px; color:#fff; font-size:18px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+.sp-header { background:#515151; padding:22px 26px 18px; position:relative; }
+.sp-close  { position:absolute; top:14px; right:14px; width:30px; height:30px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); border-radius:5px; color:#fff; font-size:18px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
 .sp-close:hover { background:rgba(255,255,255,0.2); }
 .sp-id    { font-size:19px; font-weight:800; color:#fff; padding-right:36px; margin-bottom:3px; }
 .sp-fecha { font-size:12px; color:rgba(255,255,255,0.5); font-family:‘Inter’,sans-serif; }
@@ -291,7 +238,8 @@ border: 1px solid;
 
 <header class="site-header">
   <div class="header-brand">
-    <img src="https://cualli.mx/wp-content/uploads/2022/07/cualli-bl@3x.png" alt="Cualli" style="height:28px;display:block;"
+    <img src="https://cualli.mx/wp-content/uploads/2022/07/cualli-bl@3x.png" alt="Cualli"
+         style="height:28px;display:block;"
          onerror="this.style.display='none';document.getElementById('logoFallback').style.display='flex'">
     <div id="logoFallback" style="display:none;background:#FDB913;border-radius:4px;padding:3px 10px;font-weight:800;font-size:13px;color:#000;">CUALLI</div>
     <div class="header-sep"></div>
@@ -397,7 +345,7 @@ const MESES_L = ['','Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Ag
 // ════════════════════════════════════
 const CACHE    = {};
 const CARGANDO = {};
-let anioActual    = 2026;
+let anioActual     = 2026;
 let datosMostrados = null;
 let rubroAbierto   = null;
 
@@ -409,8 +357,8 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('fechaHoy').textContent =
     hoy.toLocaleDateString('es-MX',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
 
-  document.getElementById('repContenido').innerHTML = `
-    <div class="empty-rep"><div class="empty-rep-icon">⏳</div><div class="empty-rep-text">Cargando datos de 2026...</div></div>`;
+  document.getElementById('repContenido').innerHTML =
+    `<div class="empty-rep"><div class="empty-rep-icon">⏳</div><div class="empty-rep-text">Cargando datos de 2026...</div></div>`;
 
   cargarAnio(2026, () => {
     poblarMeses(2026);
@@ -435,7 +383,6 @@ function cargarAnio(anio, cb) {
   if (CARGANDO[anio]) return;
   CARGANDO[anio] = true;
   setStatus('cargando', `Cargando ${anio}...`);
-
   google.script.run
     .withSuccessHandler(datos => {
       CACHE[anio]    = datos || {};
@@ -464,8 +411,7 @@ function poblarMeses(anio) {
   const disp = Object.keys(data)
     .filter(k => k.startsWith(String(anio)))
     .map(k => parseInt(k.split('-')[1]))
-    .sort((a,b) => a-b);
-
+    .sort((a,b) => a - b);
   sel.innerHTML = '<option value="">— Mes —</option>';
   disp.forEach(m => {
     const o = document.createElement('option');
@@ -473,14 +419,13 @@ function poblarMeses(anio) {
     o.textContent = MESES_L[m];
     sel.appendChild(o);
   });
-
   setStatus(disp.length ? 'cargado' : 'vacio',
     disp.length ? `${disp.length} mes${disp.length!==1?'es':''} disponible${disp.length!==1?'s':''}` : `Sin datos ${anio}`);
 }
 
 function verReporte() {
-  const anio = parseInt(document.getElementById('selectAnio').value);
-  const mes  = parseInt(document.getElementById('selectMes').value);
+  const anio  = parseInt(document.getElementById('selectAnio').value);
+  const mes   = parseInt(document.getElementById('selectMes').value);
   if (!mes) { setStatus('vacio','Selecciona un mes'); return; }
   const clave = `${anio}-${String(mes).padStart(2,'0')}`;
   const datos = CACHE[anio] && CACHE[anio][clave];
@@ -494,7 +439,7 @@ function verReporte() {
 function setStatus(tipo, texto) {
   const chip = document.getElementById('statusChip');
   chip.className = `status-chip ${tipo}`;
-  chip.innerHTML = tipo==='cargando'
+  chip.innerHTML = tipo === 'cargando'
     ? `<div class="dot-anim"></div><span>${texto}</span>`
     : `<span>${texto}</span>`;
 }
@@ -505,15 +450,14 @@ function setStatus(tipo, texto) {
 function renderReporte(datos, nombreMes, anio) {
   const wrap = document.getElementById('repWrap');
   const cont = document.getElementById('repContenido');
-
   cont.innerHTML = htmlSkeleton();
   wrap.classList.remove('visible');
   requestAnimationFrame(() => wrap.classList.add('visible'));
 
-  const pctC     = datos.total ? Math.round((datos.sinIncidencias/datos.total)*100) : 0;
-  const pctI     = datos.total ? Math.round((datos.conIncidencias/datos.total)*100) : 0;
-  const totArea  = totalesPorArea(datos.incidencias||[]);
-  const totalIncs= Object.values(totArea).reduce((s,v)=>s+v,0);
+  const pctC      = datos.total ? Math.round((datos.sinIncidencias/datos.total)*100) : 0;
+  const pctI      = datos.total ? Math.round((datos.conIncidencias/datos.total)*100) : 0;
+  const totArea   = totalesPorArea(datos.incidencias||[]);
+  const totalIncs = Object.values(totArea).reduce((s,v) => s+v, 0);
 
   requestAnimationFrame(() => {
     cont.innerHTML =
@@ -528,7 +472,7 @@ function renderReporte(datos, nombreMes, anio) {
 }
 
 // ════════════════════════════════════
-// HELPERS
+// HELPERS DE DATOS
 // ════════════════════════════════════
 function parsearAreas(texto) {
   const r = {};
@@ -542,17 +486,18 @@ function parsearAreas(texto) {
 
 function totalesPorArea(inc) {
   const t = {};
-  Object.keys(AREAS_CFG).forEach(a => t[a]=0);
+  Object.keys(AREAS_CFG).forEach(a => t[a] = 0);
   inc.forEach(exp => {
     const map = parsearAreas(exp.areas);
-    Object.entries(map).forEach(([a,n]) => { if(t[a]!==undefined) t[a]+=n; });
+    Object.entries(map).forEach(([a,n]) => { if (t[a] !== undefined) t[a] += n; });
   });
   return t;
 }
 
 function colorArea(nombreArea) {
   const key = Object.keys(COLORES_AREA).find(k =>
-    (nombreArea||'').toLowerCase().replace('í','i').includes(k.toLowerCase().replace('í','i'))
+    (nombreArea||'').toLowerCase().replace('í','i').replace('é','e')
+      .includes(k.toLowerCase().replace('í','i').replace('é','e'))
   );
   return COLORES_AREA[key] || { bg:'#f8fafc', border:'#e2e8f0', texto:'#475569' };
 }
@@ -560,11 +505,11 @@ function colorArea(nombreArea) {
 function tipoCSSClass(tipo) {
   if (!tipo) return 'tipo-normal';
   const t = tipo.toLowerCase();
-  if (t==='normal')       return 'tipo-normal';
-  if (t.includes('col'))  return 'tipo-col0';
-  if (t.includes('renov'))return 'tipo-renovacion';
-  if (t.includes('reestr'))return 'tipo-reestruc';
-  if (t.includes('amplia'))return 'tipo-ampliacion';
+  if (t === 'normal')        return 'tipo-normal';
+  if (t.includes('col'))     return 'tipo-col0';
+  if (t.includes('renov'))   return 'tipo-renovacion';
+  if (t.includes('reestr'))  return 'tipo-reestruc';
+  if (t.includes('amplia'))  return 'tipo-ampliacion';
   return 'tipo-normal';
 }
 
@@ -572,22 +517,42 @@ function esJSON(obj) {
   return JSON.stringify(obj).replace(/'/g,"\\'").replace(/"/g,'&quot;');
 }
 
-// Parsear documentos igual que buildIncidenciasTableStyled
-function parsearDocumentos(texto) {
+/**
+ * Parser de documentos — igual que limpiarDocumento en GS
+ * Entrada: "• Comercial | Checklist | 01. Dictamen de la empresa /Nombre de la Operación | Falta"
+ * Salida:  { area, documento:"Dictamen de la empresa", comentario:"Falta", textoLimpio:"Dictamen de la empresa — Falta" }
+ */
+function parsearDocumentosHTML(texto) {
   const raw = (texto == null ? '' : String(texto)).trim();
   if (!raw || raw === '—') return [];
+
   return raw.split('\n')
-    .map(s => s.trim())
-    .filter(s => s && /^[•\-·]/.test(s))
+    .map(l => l.trim())
+    .filter(l => /^[•\-·]/.test(l))
     .map(linea => {
-      const parts = linea.replace(/^[•\-·]\s*/,'').split(' | ');
+      const limpia = linea.replace(/^[•\-·]\s*/, '').trim();
+      const partes = limpia.split(' | ').map(p => p.trim());
+
+      const area       = partes[0] || '';
+      const origen     = partes[1] || '';
+      const docRaw     = partes[2] || '';
+      const comentario = partes[3] || '';
+
+      // Limpiar documento: quitar número inicial y todo desde "/"
+      const documento = docRaw
+        .replace(/^\d+\.\s*/, '')
+        .replace(/\s*\/.*$/, '')
+        .trim();
+
       return {
-        area:        (parts[0]||'—').trim(),
-        origen:      (parts[1]||'—').trim(),
-        documento:   (parts[2]||'—').trim(),
-        observacion: (parts[3]||'—').trim()
+        area,
+        origen,
+        documento,
+        comentario,
+        textoLimpio: documento + (comentario && comentario !== '—' ? ` — ${comentario}` : '')
       };
-    });
+    })
+    .filter(d => d.documento);
 }
 
 // ════════════════════════════════════
@@ -595,8 +560,12 @@ function parsearDocumentos(texto) {
 // ════════════════════════════════════
 function htmlSkeleton() {
   return `<div class="skeleton-wrap">
-    <div class="skeleton-row"><div class="skeleton-box"></div><div class="skeleton-box"></div><div class="skeleton-box"></div></div>
-    <div class="skeleton-bar w80"></div><div class="skeleton-bar w60"></div><div class="skeleton-bar w40"></div>
+    <div class="skeleton-row">
+      <div class="skeleton-box"></div><div class="skeleton-box"></div><div class="skeleton-box"></div>
+    </div>
+    <div class="skeleton-bar w80"></div>
+    <div class="skeleton-bar w60"></div>
+    <div class="skeleton-bar w40"></div>
   </div>`;
 }
 
@@ -642,7 +611,7 @@ function htmlKPIs(total, completos, incidencias, pctC, pctI) {
   </div>`;
 }
 
-// ── RUBROS — con detalle expandible al hacer clic ──
+// ── RUBROS con detalle expandible ──
 function htmlRubros(conteoPorTipo, incidencias, label) {
   if (!conteoPorTipo) return '';
 
@@ -661,18 +630,18 @@ function htmlRubros(conteoPorTipo, incidencias, label) {
       </div>`;
   }).join('');
 
-  // Construir los detalles de cada rubro
   const detalles = Object.entries(RUBROS_CFG).map(([tipo, cfg]) => {
     const d = conteoPorTipo[tipo] || { total:0, conIncidencias:0 };
-    if (!d.conIncidencias) return `<div class="rubro-detalle-wrap" id="rubro-detalle-${cfg.cls}"></div>`;
+    if (!d.conIncidencias) {
+      return `<div class="rubro-detalle-wrap" id="rubro-detalle-${cfg.cls}"></div>`;
+    }
 
-    // Filtrar expedientes de este tipo con incidencias
-    const expsDelTipo = incidencias.filter(exp =>
-      (exp.tipo||'').toLowerCase().replace('ó','o').replace('é','e') ===
-      tipo.toLowerCase().replace('ó','o').replace('é','e')
-    ).sort((a,b) => b.totalIncidencias - a.totalIncidencias);
+    const tipoNorm = tipo.toLowerCase().replace('ó','o').replace('é','e');
+    const exps = incidencias
+      .filter(exp => (exp.tipo||'').toLowerCase().replace('ó','o').replace('é','e') === tipoNorm)
+      .sort((a,b) => b.totalIncidencias - a.totalIncidencias);
 
-    const filas = expsDelTipo.map((exp, idx) => {
+    const filas = exps.map((exp, idx) => {
       const bg = idx%2===0?'#ffffff':'#f8fafc';
       return `
         <tr style="background:${bg};" onclick='abrirDetalle(${esJSON(exp)})'>
@@ -692,7 +661,7 @@ function htmlRubros(conteoPorTipo, incidencias, label) {
       <div class="rubro-detalle-wrap" id="rubro-detalle-${cfg.cls}">
         <div class="rubro-detalle-inner">
           <div class="rubro-detalle-header">
-            <span class="rubro-detalle-titulo">${cfg.emoji} ${cfg.label} — ${expsDelTipo.length} expediente${expsDelTipo.length!==1?'s':''} con incidencias</span>
+            <span class="rubro-detalle-titulo">${cfg.emoji} ${cfg.label} · ${exps.length} expediente${exps.length!==1?'s':''} con incidencias</span>
           </div>
           <table class="tbl" style="border:none;border-radius:0;">
             <thead><tr>
@@ -708,13 +677,16 @@ function htmlRubros(conteoPorTipo, incidencias, label) {
 
   return `
   <div class="rep-section">
-    <div class="sec-titulo"><h2>Expedientes por Tipo</h2><p>Haz clic en un tipo para ver sus expedientes · ${label}</p></div>
+    <div class="sec-titulo">
+      <h2>Expedientes por Tipo</h2>
+      <p>Haz clic en un tipo para ver sus expedientes · ${label}</p>
+    </div>
     <div class="rubros-grid">${tarjetas}</div>
-    <div id="rubros-detalles" style="margin-top:0;">${detalles}</div>
+    <div id="rubros-detalles">${detalles}</div>
   </div>`;
 }
 
-// ── DISTRIBUCIÓN — con fila de total al final ──
+// ── DISTRIBUCIÓN — ordenada por total de incidencias ──
 function htmlDistribucion(totArea, totalIncs, label) {
   if (totalIncs === 0) {
     return `
@@ -732,30 +704,33 @@ function htmlDistribucion(totArea, totalIncs, label) {
     </div>`;
   }
 
-  const areasConInc = Object.entries(totArea).filter(([,v]) => v > 0);
-  const filas = areasConInc.map(([nombre, valor], idx) => {
+  // Ordenar de mayor a menor
+  const areasOrdenadas = Object.entries(totArea)
+    .filter(([,v]) => v > 0)
+    .sort((a, b) => b[1] - a[1]);
+
+  const filas = areasOrdenadas.map(([nombre, valor], idx) => {
     const a   = AREAS_CFG[nombre];
     const pct = Math.round((valor/totalIncs)*100);
     const bg  = idx%2===0?'#ffffff':'#f8fafc';
-    const bc  = '#f1f5f9';
     return `
       <tr style="background:${bg};">
-        <td style="border-bottom:1px solid ${bc};">
+        <td style="border-bottom:1px solid #f1f5f9;">
           <div style="display:flex;align-items:center;gap:10px;">
             <img src="${a.icono}" width="34" height="34" alt="${nombre}" style="border-radius:4px;flex-shrink:0;">
             <span style="font-weight:700;font-size:13px;color:#1a202c;">${nombre}</span>
           </div>
         </td>
-        <td style="border-bottom:1px solid ${bc};text-align:center;">
+        <td style="border-bottom:1px solid #f1f5f9;text-align:center;">
           <div style="width:46px;height:46px;background:linear-gradient(135deg,${a.colorClaro},${a.color});border-radius:50%;border:4px solid ${a.colorOscuro};display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:17px;font-weight:900;">
             ${valor}
           </div>
         </td>
-        <td style="border-bottom:1px solid ${bc};">
+        <td style="border-bottom:1px solid #f1f5f9;">
           <div style="font-size:13px;color:#4a5568;font-weight:500;">${valor} incidencia${valor!==1?'s':''} · ${pct}% del total</div>
-          <div class="prop-bar-bg" style="max-width:none;"><div class="prop-bar" style="background:${a.color};width:${pct}%"></div></div>
+          <div class="prop-bar-bg"><div class="prop-bar" style="background:${a.color};width:${pct}%"></div></div>
         </td>
-        <td style="border-bottom:1px solid ${bc};text-align:right;width:60px;">
+        <td style="border-bottom:1px solid #f1f5f9;text-align:right;width:55px;">
           <span style="font-size:12px;font-weight:700;color:#94a3b8;">${pct}%</span>
         </td>
       </tr>`;
@@ -763,7 +738,10 @@ function htmlDistribucion(totArea, totalIncs, label) {
 
   return `
   <div class="rep-section">
-    <div class="sec-titulo"><h2>Distribución de Incidencias por Área</h2><p>Período: ${label}</p></div>
+    <div class="sec-titulo">
+      <h2>Distribución de Incidencias por Área</h2>
+      <p>Período: ${label} · Ordenado por mayor incidencia</p>
+    </div>
     <table class="tbl">
       <thead><tr>
         <th style="width:28%">Área</th>
@@ -784,10 +762,10 @@ function htmlDistribucion(totArea, totalIncs, label) {
   </div>`;
 }
 
-// ── EXPEDIENTES ──
+// ── EXPEDIENTES CON INCIDENCIAS ──
 function htmlExpedientes(incidencias) {
   if (!incidencias.length) return '';
-  const sorted  = [...incidencias].sort((a,b) => b.totalIncidencias-a.totalIncidencias);
+  const sorted  = [...incidencias].sort((a,b) => b.totalIncidencias - a.totalIncidencias);
   const mostrar = sorted.slice(0,15);
   const filas   = mostrar.map((exp, idx) => {
     const bg  = idx%2===0?'#ffffff':'#f8fafc';
@@ -826,86 +804,103 @@ function htmlExpedientes(incidencias) {
   </div>`;
 }
 
-// ── DETALLE POR ÁREA — documentos con parser correcto ──
+// ── DETALLE POR ÁREA — áreas ordenadas por total, documentos limpios ──
 function htmlDetalleAreas(incidencias, totArea) {
+  // Ordenar áreas de mayor a menor incidencias
+  const areasOrdenadas = Object.entries(AREAS_CFG)
+    .sort(([nA], [nB]) => (totArea[nB]||0) - (totArea[nA]||0));
+
   let html = `
   <div class="rep-section">
-    <div class="sec-titulo"><h2>Detalle por Área</h2><p>Documentos pendientes por departamento · haz clic para expandir</p></div>`;
+    <div class="sec-titulo">
+      <h2>Detalle por Área</h2>
+      <p>Documentos pendientes de integración · haz clic para expandir</p>
+    </div>`;
 
-  Object.entries(AREAS_CFG).forEach(([nombre, a]) => {
+  areasOrdenadas.forEach(([nombre, a]) => {
     const totalArea = totArea[nombre] || 0;
 
-    // Recolectar todos los documentos de esta área usando el parser correcto
+    // Recolectar documentos de esta área
     const todosLosDocs = [];
+
     incidencias.forEach(exp => {
       const mapAreas = parsearAreas(exp.areas);
-      if ((mapAreas[nombre]||0) > 0) {
-        // Usar campo documentos si existe, sino parsear el texto crudo
-        let docs = [];
-        if (exp.documentos && exp.documentos.length > 0) {
-          // Datos ya parseados por el GS
-          docs = exp.documentos.filter(d => {
-            const areaNorm = (d.area||'').toLowerCase().replace('í','i').replace('é','e');
-            const buscar   = nombre.toLowerCase().replace('í','i').replace('é','e');
-            return areaNorm.includes(buscar) || buscar.includes(areaNorm.split(' ')[0]);
-          });
-        } else if (exp.areas && typeof exp.areas === 'string') {
-          // Parsear texto crudo de columna K si documentos no viene
-          const raw = exp.detalleRaw || exp.areas;
-          docs = parsearDocumentos(raw).filter(d => {
-            const areaNorm = (d.area||'').toLowerCase().replace('í','i').replace('é','e');
-            const buscar   = nombre.toLowerCase().replace('í','i').replace('é','e');
-            return areaNorm.includes(buscar) || buscar.includes(areaNorm.split(' ')[0]);
-          });
-        }
-        docs.forEach(d => todosLosDocs.push({ ...d, expId: exp.id }));
+      if ((mapAreas[nombre]||0) === 0) return;
+
+      // Usar documentos ya parseados por el GS si existen
+      if (exp.documentos && exp.documentos.length > 0) {
+        exp.documentos
+          .filter(d => {
+            const aNorm = (d.area||'').toLowerCase().replace('í','i').replace('é','e');
+            const bNorm = nombre.toLowerCase().replace('í','i').replace('é','e');
+            return aNorm.includes(bNorm) || bNorm.includes(aNorm.split(' ')[0]);
+          })
+          .forEach(d => todosLosDocs.push({ ...d, expId: exp.id }));
+      } else {
+        // Fallback: parsear texto crudo si el GS no lo procesó
+        const textoRaw = exp.areas || '';
+        parsearDocumentosHTML(textoRaw)
+          .filter(d => {
+            const aNorm = (d.area||'').toLowerCase().replace('í','i').replace('é','e');
+            const bNorm = nombre.toLowerCase().replace('í','i').replace('é','e');
+            return aNorm.includes(bNorm) || bNorm.includes(aNorm.split(' ')[0]);
+          })
+          .forEach(d => todosLosDocs.push({ ...d, expId: exp.id }));
       }
     });
 
     if (totalArea > 0) {
-      const c = colorArea(nombre);
+      let contenido = '';
 
-      let contenidoDocs = '';
       if (todosLosDocs.length > 0) {
         const filasDocs = todosLosDocs.map((doc, i) => {
           const bg = i%2===0?'#f8fafc':'#ffffff';
-          const ca = colorArea(doc.area);
+          const c  = colorArea(doc.area || nombre);
+          // Limpiar documento por si llegó sin limpiar desde GS
+          const docLimpio = (doc.documento||'')
+            .replace(/^\d+\.\s*/,'')
+            .replace(/\s*\/.*$/,'')
+            .trim() || doc.documento || '—';
+          const obs = doc.observacion || doc.comentario || '—';
+
           return `
             <tr style="background:${bg};">
-              <td style="padding:13px 16px;border-bottom:1px solid #f1f5f9;text-align:center;">
-                <div class="doc-num-circle">${i+1}</div>
+              <td style="padding:12px 16px;border-bottom:1px solid #f1f5f9;text-align:center;width:40px;">
+                <div class="doc-num">${i+1}</div>
               </td>
-              <td style="padding:13px 16px;border-bottom:1px solid #f1f5f9;">
-                <span class="area-doc-badge" style="background:${ca.bg};border-color:${ca.border};color:${ca.texto};">${doc.area}</span>
+              <td style="padding:12px 16px;border-bottom:1px solid #f1f5f9;width:12%;">
+                <span class="area-doc-badge" style="background:${c.bg};border-color:${c.border};color:${c.texto};">
+                  ${doc.area || nombre}
+                </span>
               </td>
-              <td style="padding:13px 16px;border-bottom:1px solid #f1f5f9;">
-                <div style="font-size:12px;font-weight:600;color:#334155;">${doc.origen}</div>
+              <td style="padding:12px 16px;border-bottom:1px solid #f1f5f9;width:13%;">
+                <span style="font-size:11px;font-weight:600;color:#64748b;">${doc.origen||'—'}</span>
               </td>
-              <td style="padding:13px 16px;border-bottom:1px solid #f1f5f9;">
-                <div style="font-size:12px;font-weight:500;color:#475569;line-height:1.4;">${doc.documento}</div>
+              <td style="padding:12px 16px;border-bottom:1px solid #f1f5f9;">
+                <div style="font-size:12px;font-weight:700;color:#1a202c;line-height:1.4;">${docLimpio}</div>
               </td>
-              <td style="padding:13px 16px;border-bottom:1px solid #f1f5f9;">
+              <td style="padding:12px 16px;border-bottom:1px solid #f1f5f9;">
                 <div style="font-size:12px;color:#64748b;line-height:1.5;">
-                  <span style="color:#3b82f6;font-weight:600;">•</span> ${doc.observacion}
+                  <span style="color:#3b82f6;font-weight:700;">•</span> ${obs}
                 </div>
                 <div style="font-size:10px;color:#cbd5e1;margin-top:3px;font-family:'Inter',sans-serif;">${doc.expId}</div>
               </td>
             </tr>`;
         }).join('');
 
-        contenidoDocs = `
+        contenido = `
           <table class="docs-table">
             <thead><tr>
               <th style="width:40px;text-align:center;">#</th>
               <th style="width:12%;">Área</th>
               <th style="width:13%;">Origen</th>
-              <th style="width:30%;">Documento / Campo</th>
-              <th style="width:40%;">Comentario Mesa de Control</th>
+              <th style="width:35%;">Documento</th>
+              <th>Comentario</th>
             </tr></thead>
             <tbody>${filasDocs}</tbody>
           </table>`;
       } else {
-        contenidoDocs = `<div style="padding:20px;font-size:12px;color:#94a3b8;text-align:center;font-style:italic;">Sin detalle de documentos disponible para este período</div>`;
+        contenido = `<div style="padding:20px;font-size:12px;color:#94a3b8;text-align:center;font-style:italic;">Sin detalle de documentos disponible</div>`;
       }
 
       html += `
@@ -923,14 +918,17 @@ function htmlDetalleAreas(incidencias, totArea) {
             <div style="background:${a.colorBg};padding:8px 18px;border-bottom:1px solid ${a.colorBorder};">
               <span style="font-size:10px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:1px;">Documentos pendientes de integración</span>
             </div>
-            ${contenidoDocs}
+            ${contenido}
           </div>
         </div>`;
     } else {
       html += `
         <div class="area-ok">
           <img src="${a.icono}" class="area-icon" alt="${nombre}">
-          <div><div class="area-ok-nombre">${nombre}</div><div class="area-ok-sub">✓ Sin incidencias registradas</div></div>
+          <div>
+            <div class="area-ok-nombre">${nombre}</div>
+            <div class="area-ok-sub">✓ Sin incidencias registradas</div>
+          </div>
         </div>`;
     }
   });
@@ -949,7 +947,10 @@ function htmlEtapasCierre(etapasCierre, totalCompletos) {
   const pct = n => tot>0?Math.round((n/tot)*100):0;
   return `
   <div class="rep-section">
-    <div class="sec-titulo"><h2>Cierre de Incidencias por Etapa</h2><p>De ${totalCompletos} expediente${totalCompletos!==1?'s':''} completo${totalCompletos!==1?'s':''} · ${tot} con etapa registrada</p></div>
+    <div class="sec-titulo">
+      <h2>Cierre de Incidencias por Etapa</h2>
+      <p>De ${totalCompletos} expediente${totalCompletos!==1?'s':''} completo${totalCompletos!==1?'s':''} · ${tot} con etapa registrada</p>
+    </div>
     <div class="cierre-grid">
       <div class="cierre-card e1"><div class="cierre-icon">🥇</div><div><div class="cierre-num num-pop">${e1}</div><div class="cierre-label">Cerró en 1ª Revisión</div><div class="cierre-sub">${pct(e1)}% de los cierres</div></div></div>
       <div class="cierre-card e2"><div class="cierre-icon">🥈</div><div><div class="cierre-num num-pop">${e2}</div><div class="cierre-label">Cerró en 2ª Revisión</div><div class="cierre-sub">${pct(e2)}% de los cierres</div></div></div>
@@ -961,31 +962,23 @@ function htmlEtapasCierre(etapasCierre, totalCompletos) {
 // ════════════════════════════════════
 // INTERACCIONES
 // ════════════════════════════════════
-
-// Rubros expandibles
 function toggleRubro(cls) {
   const detalle = document.getElementById(`rubro-detalle-${cls}`);
-  if (!detalle || !detalle.innerHTML.trim()) return; // sin incidencias, no hace nada
-
-  const card     = document.getElementById(`rubro-card-${cls}`);
+  if (!detalle || !detalle.innerHTML.trim()) return;
+  const card    = document.getElementById(`rubro-card-${cls}`);
   const estaOpen = detalle.classList.contains('open');
-
-  // Cerrar todos
   document.querySelectorAll('.rubro-detalle-wrap').forEach(d => d.classList.remove('open'));
   document.querySelectorAll('.rubro-card').forEach(c => c.classList.remove('activo'));
-
   if (!estaOpen) {
     detalle.classList.add('open');
     card && card.classList.add('activo');
     rubroAbierto = cls;
-    // Scroll suave al detalle
     setTimeout(() => detalle.scrollIntoView({ behavior:'smooth', block:'nearest' }), 50);
   } else {
     rubroAbierto = null;
   }
 }
 
-// Acordeón áreas
 function toggleArea(nombre) {
   const el  = document.getElementById(`acordeon-${nombre}`);
   const hdr = document.getElementById(`hdr-${nombre}`);
@@ -1000,13 +993,12 @@ function toggleArea(nombre) {
   }
 }
 
-// Reordenar expedientes
 function reordenarExpedientes(orden) {
   if (!datosMostrados) return;
   let exps = [...(datosMostrados.incidencias||[])];
-  if (orden==='desc')      exps.sort((a,b) => b.totalIncidencias-a.totalIncidencias);
-  else if (orden==='asc')  exps.sort((a,b) => a.totalIncidencias-b.totalIncidencias);
-  else                     exps.sort((a,b) => a.fecha.localeCompare(b.fecha));
+  if (orden==='desc')     exps.sort((a,b) => b.totalIncidencias - a.totalIncidencias);
+  else if (orden==='asc') exps.sort((a,b) => a.totalIncidencias - b.totalIncidencias);
+  else                    exps.sort((a,b) => a.fecha.localeCompare(b.fecha));
   const mostrar = exps.slice(0,15);
   const tbody   = document.getElementById('tbodyExp');
   if (!tbody) return;
@@ -1023,16 +1015,15 @@ function reordenarExpedientes(orden) {
   }).join('');
 }
 
-// Panel detalle expediente
 function abrirDetalle(exp) {
   document.getElementById('spId').textContent    = exp.id;
   document.getElementById('spFecha').textContent = `Fecha de firma: ${exp.fecha}`;
   document.getElementById('spTotal').textContent = exp.totalIncidencias;
   const map    = parsearAreas(exp.areas);
-  const conInc = Object.entries(map).filter(([,n]) => n>0);
+  const conInc = Object.entries(map).filter(([,n]) => n > 0);
   document.getElementById('spAreas').textContent = conInc.length;
   document.getElementById('spAreasList').innerHTML = conInc
-    .sort((a,b) => b[1]-a[1])
+    .sort((a,b) => b[1] - a[1])
     .map(([nombre,n]) => {
       const a   = AREAS_CFG[nombre];
       const pct = Math.round((n/exp.totalIncidencias)*100);
