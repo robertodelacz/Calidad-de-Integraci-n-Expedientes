@@ -40,49 +40,151 @@ box-shadow: 0 2px 12px rgba(0,0,0,0.18);
 /* ══ WRAPPER ══ */
 .main-wrap { max-width:900px; margin:32px auto; padding:0 20px 60px; }
 
-/* ══ SELECTOR PERÍODO ══ */
+/* ══ SELECTOR ══ */
 .periodo-card {
-background:#fff; border-radius:12px; border:1px solid #e2e8f0;
-padding:22px 26px; margin-bottom:24px; box-shadow:0 1px 4px rgba(0,0,0,0.05);
+background: #fff;
+border-radius: 12px;
+border: 1px solid #e2e8f0;
+padding: 18px 24px;
+margin-bottom: 24px;
+box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+display: flex;
+align-items: center;
+gap: 16px;
+flex-wrap: wrap;
 }
-.periodo-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
-.periodo-label-txt { font-size:11px; font-weight:700; color:#64748b; text-transform:uppercase; letter-spacing:1.2px; display:flex; align-items:center; gap:7px; }
-.year-nav { display:flex; align-items:center; gap:10px; }
-.year-btn { width:28px; height:28px; border:1px solid #e2e8f0; background:#f8fafc; border-radius:5px; cursor:pointer; font-size:15px; color:#515151; display:flex; align-items:center; justify-content:center; transition:all 0.15s; }
-.year-btn:hover { border-color:#FDB913; color:#FDB913; background:#fffbeb; }
-.year-val { font-size:17px; font-weight:800; color:#1a202c; min-width:48px; text-align:center; }
-.meses-row { display:grid; grid-template-columns:repeat(12,1fr); gap:5px; margin-bottom:13px; }
-.mes-chip { padding:7px 3px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:5px; color:#64748b; font-size:11px; font-weight:600; cursor:pointer; text-align:center; transition:all 0.15s; font-family:‘Inter’,sans-serif; }
-.mes-chip:hover:not(:disabled) { border-color:#FDB913; color:#1a202c; }
-.mes-chip.sel { background:#FDB913; border-color:#FDB913; color:#000; font-weight:700; box-shadow:0 2px 6px rgba(253,185,19,0.3); }
-.mes-chip:disabled { opacity:0.3; cursor:not-allowed; }
-.periodo-footer { display:flex; align-items:center; gap:8px; padding-top:12px; border-top:1px solid #f1f5f9; }
-.btn-accion { padding:5px 13px; border:1px solid #e2e8f0; background:#f8fafc; border-radius:5px; font-size:11px; font-weight:700; color:#64748b; cursor:pointer; transition:all 0.15s; font-family:‘Inter’,sans-serif; }
-.btn-accion:hover { border-color:#FDB913; color:#000; background:#fffbeb; }
-.periodo-info { font-size:12px; color:#94a3b8; font-family:‘Inter’,sans-serif; margin-left:auto; }
-.periodo-info b { color:#e09c00; }
+
+.periodo-label-txt {
+font-size: 11px;
+font-weight: 700;
+color: #64748b;
+text-transform: uppercase;
+letter-spacing: 1.2px;
+display: flex;
+align-items: center;
+gap: 7px;
+flex-shrink: 0;
+}
+
+.select-wrap {
+position: relative;
+flex-shrink: 0;
+}
+
+.select-wrap::after {
+content: ‘▾’;
+position: absolute;
+right: 10px;
+top: 50%;
+transform: translateY(-50%);
+font-size: 11px;
+color: #94a3b8;
+pointer-events: none;
+}
+
+.periodo-select {
+appearance: none;
+background: #f8fafc;
+border: 1px solid #e2e8f0;
+border-radius: 8px;
+padding: 9px 32px 9px 14px;
+font-size: 13px;
+font-weight: 700;
+color: #1a202c;
+cursor: pointer;
+font-family: ‘IBM Plex Sans’, sans-serif;
+transition: all 0.15s;
+min-width: 110px;
+}
+.periodo-select:hover { border-color: #FDB913; }
+.periodo-select:focus { outline: none; border-color: #FDB913; box-shadow: 0 0 0 3px rgba(253,185,19,0.15); }
+
+.select-anio { min-width: 90px; }
+.select-mes  { min-width: 150px; }
+
+.btn-ver {
+background: #FDB913;
+color: #000;
+border: none;
+border-radius: 8px;
+padding: 9px 20px;
+font-size: 13px;
+font-weight: 800;
+cursor: pointer;
+font-family: ‘IBM Plex Sans’, sans-serif;
+letter-spacing: 0.3px;
+transition: all 0.15s;
+display: flex;
+align-items: center;
+gap: 6px;
+flex-shrink: 0;
+}
+.btn-ver:hover { background: #e0a90f; transform: translateY(-1px); box-shadow: 0 3px 10px rgba(253,185,19,0.35); }
+.btn-ver:active { transform: translateY(0); }
+
+.periodo-status {
+margin-left: auto;
+font-size: 12px;
+font-family: ‘Inter’, sans-serif;
+display: flex;
+align-items: center;
+gap: 8px;
+}
+
+.status-chip {
+display: inline-flex;
+align-items: center;
+gap: 5px;
+padding: 4px 10px;
+border-radius: 20px;
+font-size: 11px;
+font-weight: 600;
+}
+.status-chip.cargado  { background: #f0fdf4; border: 1px solid #86efac; color: #059669; }
+.status-chip.cargando { background: #fffbeb; border: 1px solid #fde68a; color: #b45309; }
+.status-chip.vacio    { background: #f8fafc; border: 1px solid #e2e8f0; color: #94a3b8; }
+
+.dot-anim {
+width: 6px; height: 6px;
+border-radius: 50%;
+background: currentColor;
+animation: blink 1s infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
 
 /* ══ REPORTE WRAP ══ */
 .reporte-wrap {
-background:#fff; border-radius:12px; overflow:hidden;
-box-shadow:0 4px 24px rgba(0,0,0,0.08); border:1px solid #e2e8f0;
-opacity:0; transform:translateY(14px);
-transition:opacity 0.4s ease, transform 0.4s ease;
+background: #fff;
+border-radius: 12px;
+overflow: hidden;
+box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+border: 1px solid #e2e8f0;
+opacity: 0;
+transform: translateY(14px);
+transition: opacity 0.4s ease, transform 0.4s ease;
 }
 .reporte-wrap.visible { opacity:1; transform:translateY(0); }
 
+/* ══ SKELETON LOADER ══ */
+.skeleton-wrap { padding: 32px 40px; }
+.skeleton-row  { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-bottom: 24px; }
+.skeleton-box  { height: 90px; border-radius: 10px; background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%); background-size: 200% 100%; animation: shimmer 1.4s infinite; }
+.skeleton-bar  { height: 20px; border-radius: 5px; background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%); background-size: 200% 100%; animation: shimmer 1.4s infinite; margin-bottom: 10px; }
+.skeleton-bar.w80 { width: 80%; }
+.skeleton-bar.w60 { width: 60%; }
+.skeleton-bar.w40 { width: 40%; }
+@keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+
 /* ══ HEADER REPORTE ══ */
-.rep-header { background:linear-gradient(135deg,#515151 0%,#3a3a3a 100%); }
+.rep-header { background: linear-gradient(135deg,#515151 0%,#3a3a3a 100%); }
 .rep-header-top { display:flex; align-items:center; justify-content:space-between; padding:22px 40px 18px; border-bottom:1px solid rgba(255,255,255,0.07); }
-.rep-logo-area { display:flex; align-items:center; gap:16px; }
-.rep-logo-bg { background:#fff; border-radius:8px; width:46px; height:46px; display:flex; align-items:center; justify-content:center; flex-shrink:0; padding:6px; }
-.rep-logo-img { max-height:28px; max-width:34px; display:block; object-fit:contain; }
+.rep-logo-area  { display:flex; align-items:center; gap:16px; }
+.rep-logo-bg    { background:#fff; border-radius:8px; width:46px; height:46px; display:flex; align-items:center; justify-content:center; flex-shrink:0; padding:6px; }
+.rep-logo-img   { max-height:28px; max-width:34px; display:block; object-fit:contain; }
 .rep-header-titulo { font-size:17px; font-weight:800; color:#fff; letter-spacing:-0.3px; }
-.rep-header-sub { font-size:11px; color:rgba(255,255,255,0.5); font-weight:500; margin-top:3px; }
+.rep-header-sub    { font-size:11px; color:rgba(255,255,255,0.5); font-weight:500; margin-top:3px; }
 .rep-mes-chip { background:#FDB913; color:#000; font-size:13px; font-weight:800; padding:5px 14px; border-radius:4px; display:inline-block; letter-spacing:0.5px; }
-.rep-anio { font-size:11px; color:rgba(255,255,255,0.4); margin-top:5px; text-align:right; font-family:‘Inter’,sans-serif; }
-.rep-multi-banner { padding:10px 40px; display:flex; align-items:center; gap:8px; }
-.rep-multi-badge { background:rgba(253,185,19,0.14); border:1px solid rgba(253,185,19,0.32); color:#FDB913; font-size:11px; font-weight:600; padding:4px 12px; border-radius:20px; font-family:‘Inter’,sans-serif; }
+.rep-anio     { font-size:11px; color:rgba(255,255,255,0.4); margin-top:5px; text-align:right; font-family:‘Inter’,sans-serif; }
 
 /* ══ KPI SECTION ══ */
 .kpi-section { padding:28px 40px; background:#fafbfc; border-bottom:1px solid #e2e8f0; }
@@ -90,134 +192,61 @@ transition:opacity 0.4s ease, transform 0.4s ease;
 .kpi-box { background:#fff; border:1px solid #e2e8f0; border-radius:10px; padding:16px 18px; display:flex; align-items:center; gap:14px; transition:box-shadow 0.2s,transform 0.2s; }
 .kpi-box:hover { box-shadow:0 4px 16px rgba(0,0,0,0.07); transform:translateY(-1px); }
 .kpi-icon-wrap { width:48px; height:48px; border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
-.kpi-box.total .kpi-icon-wrap    { background:#fffbeb; }
-.kpi-box.completos .kpi-icon-wrap{ background:#f0fdf4; }
-.kpi-box.incidencias .kpi-icon-wrap{ background:#fef2f2; }
+.kpi-box.total .kpi-icon-wrap     { background:#fffbeb; }
+.kpi-box.completos .kpi-icon-wrap { background:#f0fdf4; }
+.kpi-box.incidencias .kpi-icon-wrap { background:#fef2f2; }
 .kpi-icon-img { width:26px; height:26px; }
 .kpi-num { font-size:34px; font-weight:800; line-height:1; letter-spacing:-1.5px; }
 .kpi-box.total .kpi-num      { color:#FDB913; }
 .kpi-box.completos .kpi-num  { color:#059669; }
 .kpi-box.incidencias .kpi-num{ color:#dc2626; }
 .kpi-label { font-size:12px; font-weight:600; color:#64748b; margin-top:3px; }
-.kpi-pct { font-size:11px; color:#94a3b8; margin-top:2px; font-family:‘Inter’,sans-serif; }
+.kpi-pct   { font-size:11px; color:#94a3b8; margin-top:2px; font-family:‘Inter’,sans-serif; }
 
 /* ══ SECCIÓN ══ */
 .rep-section { padding:32px 40px; border-bottom:1px solid #f1f5f9; }
 .rep-section:last-child { border-bottom:none; }
 .sec-titulo { text-align:center; margin-bottom:24px; }
 .sec-titulo h2 { font-size:20px; font-weight:800; color:#1a202c; letter-spacing:-0.4px; margin-bottom:5px; }
-.sec-titulo p { font-size:12px; color:#64748b; font-weight:500; }
+.sec-titulo p  { font-size:12px; color:#64748b; font-weight:500; }
 
-/* ══ RUBROS — tarjetas de tipo ══ */
-.rubros-grid {
-display: grid;
-grid-template-columns: repeat(5, 1fr);
-gap: 10px;
-margin-bottom: 0;
-}
-.rubro-card {
-background: #fff;
-border: 1px solid #e2e8f0;
-border-radius: 10px;
-padding: 14px 12px;
-text-align: center;
-transition: box-shadow 0.2s, transform 0.2s;
-position: relative;
-overflow: hidden;
-}
+/* ══ RUBROS ══ */
+.rubros-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:10px; }
+.rubro-card { background:#fff; border:1px solid #e2e8f0; border-radius:10px; padding:14px 12px; text-align:center; transition:box-shadow 0.2s,transform 0.2s; position:relative; overflow:hidden; }
 .rubro-card:hover { box-shadow:0 4px 14px rgba(0,0,0,0.07); transform:translateY(-1px); }
-.rubro-card::before {
-content:’’;
-position:absolute;
-top:0; left:0; right:0;
-height:3px;
-}
-.rubro-card.normal::before    { background:#FDB913; }
-.rubro-card.col0::before      { background:#64748b; }
-.rubro-card.renovacion::before{ background:#06b6d4; }
-.rubro-card.reestruc::before  { background:#f97316; }
-.rubro-card.ampliacion::before{ background:#a855f7; }
-
-.rubro-nombre {
-font-size: 10px;
-font-weight: 700;
-color: #64748b;
-text-transform: uppercase;
-letter-spacing: 0.8px;
-margin-bottom: 10px;
-}
-.rubro-total {
-font-size: 28px;
-font-weight: 800;
-line-height: 1;
-letter-spacing: -1px;
-margin-bottom: 2px;
-}
-.rubro-card.normal .rubro-total    { color:#FDB913; }
-.rubro-card.col0 .rubro-total      { color:#64748b; }
-.rubro-card.renovacion .rubro-total{ color:#06b6d4; }
-.rubro-card.reestruc .rubro-total  { color:#f97316; }
-.rubro-card.ampliacion .rubro-total{ color:#a855f7; }
-
+.rubro-card::before { content:’’; position:absolute; top:0; left:0; right:0; height:3px; }
+.rubro-card.normal::before     { background:#FDB913; }
+.rubro-card.col0::before       { background:#64748b; }
+.rubro-card.renovacion::before { background:#06b6d4; }
+.rubro-card.reestruc::before   { background:#f97316; }
+.rubro-card.ampliacion::before { background:#a855f7; }
+.rubro-nombre  { font-size:10px; font-weight:700; color:#64748b; text-transform:uppercase; letter-spacing:0.8px; margin-bottom:10px; }
+.rubro-total   { font-size:28px; font-weight:800; line-height:1; letter-spacing:-1px; margin-bottom:2px; }
+.rubro-card.normal .rubro-total     { color:#FDB913; }
+.rubro-card.col0 .rubro-total       { color:#64748b; }
+.rubro-card.renovacion .rubro-total { color:#06b6d4; }
+.rubro-card.reestruc .rubro-total   { color:#f97316; }
+.rubro-card.ampliacion .rubro-total { color:#a855f7; }
 .rubro-sub { font-size:10px; color:#94a3b8; font-weight:500; margin-bottom:8px; }
-.rubro-inc-badge {
-display: inline-flex;
-align-items: center;
-gap: 4px;
-background: #fef2f2;
-border: 1px solid #fecaca;
-border-radius: 4px;
-padding: 3px 8px;
-font-size: 10px;
-font-weight: 700;
-color: #dc2626;
-}
-.rubro-inc-badge.cero {
-background: #f0fdf4;
-border-color: #bbf7d0;
-color: #059669;
-}
+.rubro-inc-badge { display:inline-flex; align-items:center; gap:4px; background:#fef2f2; border:1px solid #fecaca; border-radius:4px; padding:3px 8px; font-size:10px; font-weight:700; color:#dc2626; }
+.rubro-inc-badge.cero { background:#f0fdf4; border-color:#bbf7d0; color:#059669; }
 
-/* ══ TARJETAS ETAPAS CIERRE ══ */
-.cierre-grid {
-display: grid;
-grid-template-columns: repeat(3, 1fr);
-gap: 14px;
-}
-.cierre-card {
-background: #fff;
-border: 1px solid #e2e8f0;
-border-radius: 10px;
-padding: 18px 16px;
-display: flex;
-align-items: center;
-gap: 14px;
-transition: box-shadow 0.2s, transform 0.2s;
-}
+/* ══ CIERRE ══ */
+.cierre-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+.cierre-card { background:#fff; border:1px solid #e2e8f0; border-radius:10px; padding:18px 16px; display:flex; align-items:center; gap:14px; transition:box-shadow 0.2s,transform 0.2s; }
 .cierre-card:hover { box-shadow:0 4px 16px rgba(0,0,0,0.07); transform:translateY(-1px); }
-.cierre-icon {
-width: 44px; height: 44px;
-border-radius: 10px;
-display: flex; align-items:center; justify-content:center;
-font-size: 20px;
-flex-shrink: 0;
-}
+.cierre-icon { width:44px; height:44px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0; }
 .cierre-card.e1 .cierre-icon { background:#eff6ff; }
 .cierre-card.e2 .cierre-icon { background:#fef3c7; }
 .cierre-card.ef .cierre-icon { background:#f0fdf4; }
-.cierre-num {
-font-size: 30px;
-font-weight: 800;
-line-height: 1;
-letter-spacing: -1px;
-}
+.cierre-num   { font-size:30px; font-weight:800; line-height:1; letter-spacing:-1px; }
 .cierre-card.e1 .cierre-num { color:#3b82f6; }
 .cierre-card.e2 .cierre-num { color:#f59e0b; }
 .cierre-card.ef .cierre-num { color:#059669; }
 .cierre-label { font-size:12px; font-weight:600; color:#64748b; margin-top:3px; }
 .cierre-sub   { font-size:10px; color:#94a3b8; margin-top:2px; font-family:‘Inter’,sans-serif; }
 
-/* ══ TABLA BASE ══ */
+/* ══ TABLA ══ */
 .tbl { width:100%; border-collapse:collapse; border:1px solid #e2e8f0; border-radius:6px; overflow:hidden; font-family:‘Inter’,sans-serif; }
 .tbl th { background:#f8fafc; padding:11px 18px; text-align:left; font-size:10px; text-transform:uppercase; letter-spacing:1px; font-weight:700; color:#4a5568; border-bottom:2px solid #cbd5e1; }
 .tbl td { padding:12px 18px; font-size:13px; border-bottom:1px solid #f1f5f9; vertical-align:middle; }
@@ -225,78 +254,48 @@ letter-spacing: -1px;
 .tbl tr:nth-child(even) td { background:#f8fafc; }
 .tbl tbody tr:hover td { background:#fffbeb; cursor:pointer; }
 @keyframes rowIn { from{opacity:0;transform:translateX(-6px);} to{opacity:1;transform:translateX(0);} }
-.tbl tbody tr { animation:rowIn 0.25s ease both; }
+.tbl tbody tr { animation:rowIn 0.22s ease both; }
 
 /* ══ TIPO BADGE ══ */
-.tipo-badge {
-display: inline-block;
-padding: 2px 8px;
-border-radius: 4px;
-font-size: 10px;
-font-weight: 700;
-letter-spacing: 0.3px;
-text-transform: uppercase;
-}
-.tipo-normal    { background:#fffbeb; color:#b45309; border:1px solid #fde68a; }
-.tipo-col0      { background:#f8fafc; color:#475569; border:1px solid #cbd5e1; }
-.tipo-renovacion{ background:#ecfeff; color:#0e7490; border:1px solid #a5f3fc; }
-.tipo-reestruc  { background:#fff7ed; color:#c2410c; border:1px solid #fed7aa; }
-.tipo-ampliacion{ background:#faf5ff; color:#7c3aed; border:1px solid #ddd6fe; }
+.tipo-badge { display:inline-block; padding:2px 8px; border-radius:4px; font-size:10px; font-weight:700; letter-spacing:0.3px; text-transform:uppercase; }
+.tipo-normal     { background:#fffbeb; color:#b45309; border:1px solid #fde68a; }
+.tipo-col0       { background:#f8fafc; color:#475569; border:1px solid #cbd5e1; }
+.tipo-renovacion { background:#ecfeff; color:#0e7490; border:1px solid #a5f3fc; }
+.tipo-reestruc   { background:#fff7ed; color:#c2410c; border:1px solid #fed7aa; }
+.tipo-ampliacion { background:#faf5ff; color:#7c3aed; border:1px solid #ddd6fe; }
 
 /* ══ INC BADGE ══ */
 .inc-badge { display:inline-flex; align-items:center; justify-content:center; border:2px solid; border-radius:5px; padding:3px 11px; font-size:14px; font-weight:800; min-width:36px; }
 
-/* ══ BARRA PROPORCIÓN ══ */
+/* ══ PROP BAR ══ */
 .prop-bar-bg { background:#f1f5f9; border-radius:3px; height:4px; margin-top:6px; max-width:200px; overflow:hidden; }
 .prop-bar { height:100%; border-radius:3px; transition:width 0.9s cubic-bezier(0.4,0,0.2,1); }
 
 /* ══ ÁREA ACORDEÓN ══ */
 .area-header-row { display:flex; align-items:center; gap:12px; padding:14px 18px; border-radius:8px; border:1px solid; cursor:pointer; transition:filter 0.15s,box-shadow 0.15s; margin-bottom:8px; user-select:none; }
 .area-header-row:hover { filter:brightness(0.97); box-shadow:0 2px 8px rgba(0,0,0,0.06); }
-.area-icon { width:38px; height:38px; }
-.area-nombre { font-size:15px; font-weight:700; color:#1a202c; }
+.area-icon    { width:38px; height:38px; }
+.area-nombre  { font-size:15px; font-weight:700; color:#1a202c; }
 .area-subtext { font-size:11px; color:#718096; font-weight:600; margin-top:2px; }
 .area-chevron { margin-left:auto; font-size:18px; color:#94a3b8; transition:transform 0.3s; }
 .area-header-row.open .area-chevron { transform:rotate(180deg); }
 .area-badge-num { width:46px; height:46px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:17px; font-weight:900; color:#fff; flex-shrink:0; text-shadow:0 1px 2px rgba(0,0,0,0.12); }
-.area-ok { padding:14px 18px; border-radius:8px; background:#f0fdf4; border:1px solid #86efac; display:flex; align-items:center; gap:12px; margin-bottom:8px; }
+.area-ok        { padding:14px 18px; border-radius:8px; background:#f0fdf4; border:1px solid #86efac; display:flex; align-items:center; gap:12px; margin-bottom:8px; }
 .area-ok-nombre { font-size:15px; font-weight:700; color:#1a202c; }
-.area-ok-sub { font-size:13px; color:#047857; font-weight:600; margin-top:1px; }
+.area-ok-sub    { font-size:13px; color:#047857; font-weight:600; margin-top:1px; }
 .area-detail-table { max-height:0; overflow:hidden; transition:max-height 0.4s cubic-bezier(0.4,0,0.2,1); margin-bottom:8px; }
 .area-detail-table.open { max-height:2000px; }
 
-/* ══ DOCUMENTO ROW (detalle área) ══ */
-.doc-row {
-display: grid;
-grid-template-columns: auto 1fr;
-gap: 10px 14px;
-padding: 12px 18px;
-border-bottom: 1px solid #f1f5f9;
-align-items: start;
-transition: background 0.15s;
-}
-.doc-row:last-child { border-bottom: none; }
-.doc-row:hover { background: #fffbeb; }
-.doc-nombre {
-font-size: 12px;
-font-weight: 700;
-color: #1a202c;
-line-height: 1.4;
-}
-.doc-obs {
-font-size: 11px;
-color: #718096;
-line-height: 1.4;
-margin-top: 2px;
-}
-.doc-dot {
-width: 8px; height: 8px;
-border-radius: 50%;
-margin-top: 4px;
-flex-shrink: 0;
-}
+/* ══ DOCUMENTO ROW ══ */
+.doc-row { display:grid; grid-template-columns:auto 1fr; gap:10px 14px; padding:12px 18px; border-bottom:1px solid #f1f5f9; align-items:start; transition:background 0.15s; }
+.doc-row:last-child { border-bottom:none; }
+.doc-row:hover { background:#fffbeb; }
+.doc-dot    { width:8px; height:8px; border-radius:50%; margin-top:4px; flex-shrink:0; }
+.doc-nombre { font-size:12px; font-weight:700; color:#1a202c; line-height:1.4; }
+.doc-obs    { font-size:11px; color:#718096; line-height:1.4; margin-top:2px; }
+.doc-expid  { font-size:10px; color:#cbd5e1; margin-top:3px; font-family:‘Inter’,sans-serif; }
 
-/* ══ SORT CONTROL ══ */
+/* ══ SORT ══ */
 .tbl-controls { display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:12px; gap:12px; }
 .sort-sel { background:#f8fafc; border:1px solid #e2e8f0; border-radius:5px; padding:5px 10px; font-size:11px; font-weight:700; color:#515151; cursor:pointer; font-family:‘Inter’,sans-serif; }
 
@@ -307,12 +306,12 @@ flex-shrink: 0;
 
 /* ══ ANIMACIONES ══ */
 @keyframes fadeSlide { from{opacity:0;transform:translateY(10px);} to{opacity:1;transform:translateY(0);} }
-.rep-section { animation:fadeSlide 0.35s ease both; }
-.rep-section:nth-child(2){ animation-delay:0.05s; }
-.rep-section:nth-child(3){ animation-delay:0.10s; }
-.rep-section:nth-child(4){ animation-delay:0.15s; }
-.rep-section:nth-child(5){ animation-delay:0.20s; }
-.rep-section:nth-child(6){ animation-delay:0.25s; }
+.rep-section { animation:fadeSlide 0.3s ease both; }
+.rep-section:nth-child(2){ animation-delay:0.04s; }
+.rep-section:nth-child(3){ animation-delay:0.08s; }
+.rep-section:nth-child(4){ animation-delay:0.12s; }
+.rep-section:nth-child(5){ animation-delay:0.16s; }
+.rep-section:nth-child(6){ animation-delay:0.20s; }
 @keyframes numPop { from{opacity:0;transform:scale(0.82);} to{opacity:1;transform:scale(1);} }
 .num-pop { animation:numPop 0.4s cubic-bezier(0.34,1.56,0.64,1) both; }
 
@@ -322,23 +321,23 @@ flex-shrink: 0;
 .slide-panel { position:fixed; right:-520px; top:0; bottom:0; width:460px; background:#fff; z-index:400; box-shadow:-8px 0 40px rgba(0,0,0,0.15); transition:right 0.35s cubic-bezier(0.4,0,0.2,1); overflow-y:auto; border-left:4px solid #FDB913; }
 .slide-panel.open { right:0; }
 .sp-header { background:#515151; padding:22px 26px 18px; position:relative; }
-.sp-close { position:absolute; top:14px; right:14px; width:30px; height:30px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); border-radius:5px; color:#fff; font-size:18px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background 0.15s; }
+.sp-close  { position:absolute; top:14px; right:14px; width:30px; height:30px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); border-radius:5px; color:#fff; font-size:18px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background 0.15s; }
 .sp-close:hover { background:rgba(255,255,255,0.2); }
-.sp-id { font-size:19px; font-weight:800; color:#fff; letter-spacing:-0.3px; padding-right:36px; margin-bottom:3px; }
+.sp-id    { font-size:19px; font-weight:800; color:#fff; letter-spacing:-0.3px; padding-right:36px; margin-bottom:3px; }
 .sp-fecha { font-size:12px; color:rgba(255,255,255,0.5); font-family:‘Inter’,sans-serif; }
-.sp-body { padding:22px 26px; }
+.sp-body  { padding:22px 26px; }
 .sp-kpi-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:22px; }
-.sp-kpi { background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:14px 16px; }
+.sp-kpi     { background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:14px 16px; }
 .sp-kpi-label { font-size:10px; font-weight:700; color:#94a3b8; text-transform:uppercase; letter-spacing:1px; margin-bottom:6px; }
-.sp-kpi-val { font-size:30px; font-weight:800; color:#dc2626; letter-spacing:-1px; line-height:1; }
+.sp-kpi-val   { font-size:30px; font-weight:800; color:#dc2626; letter-spacing:-1px; line-height:1; }
 .sp-sec-label { font-size:10px; font-weight:700; color:#94a3b8; text-transform:uppercase; letter-spacing:1.2px; margin-bottom:12px; padding-bottom:8px; border-bottom:1px solid #f1f5f9; }
-.sp-area-row { display:flex; align-items:center; justify-content:space-between; padding:11px 0; border-bottom:1px solid #f8fafc; }
+.sp-area-row  { display:flex; align-items:center; justify-content:space-between; padding:11px 0; border-bottom:1px solid #f8fafc; }
 .sp-area-row:last-child { border-bottom:none; }
 .sp-area-left { display:flex; align-items:center; gap:10px; }
-.sp-area-dot { width:10px; height:10px; border-radius:2px; flex-shrink:0; }
+.sp-area-dot  { width:10px; height:10px; border-radius:2px; flex-shrink:0; }
 .sp-area-name { font-size:14px; font-weight:600; color:#1a202c; }
-.sp-area-pct { font-size:11px; color:#94a3b8; margin-top:1px; font-family:‘Inter’,sans-serif; }
-.sp-area-num { font-size:22px; font-weight:800; }
+.sp-area-pct  { font-size:11px; color:#94a3b8; margin-top:1px; font-family:‘Inter’,sans-serif; }
+.sp-area-num  { font-size:22px; font-weight:800; }
 </style>
 
 </head>
@@ -365,26 +364,40 @@ flex-shrink: 0;
 
 <div class="main-wrap">
 
-  <!-- SELECTOR DE PERÍODO -->
+  <!-- SELECTOR -->
 
   <div class="periodo-card">
-    <div class="periodo-top">
-      <div class="periodo-label-txt">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-        Período de análisis
-      </div>
-      <div class="year-nav">
-        <button class="year-btn" onclick="cambiarAnio(-1)">‹</button>
-        <div class="year-val" id="yearVal">2025</div>
-        <button class="year-btn" onclick="cambiarAnio(1)">›</button>
-      </div>
+    <div class="periodo-label-txt">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      Período
     </div>
-    <div class="meses-row" id="mesesRow"></div>
-    <div class="periodo-footer">
-      <button class="btn-accion" onclick="selTodo()">Todo el año</button>
-      <button class="btn-accion" onclick="limpiar()">Limpiar</button>
-      <div class="periodo-info" id="periodoInfo">Selecciona uno o más meses</div>
-    </div>
+
+```
+<div class="select-wrap">
+  <select class="periodo-select select-anio" id="selectAnio" onchange="onCambioAnio()">
+    <option value="2026">2026</option>
+    <option value="2025">2025</option>
+    <option value="2024">2024</option>
+  </select>
+</div>
+
+<div class="select-wrap">
+  <select class="periodo-select select-mes" id="selectMes">
+    <option value="">— Mes —</option>
+  </select>
+</div>
+
+<button class="btn-ver" onclick="verReporte()">
+  Ver reporte →
+</button>
+
+<div class="periodo-status">
+  <div class="status-chip vacio" id="statusChip">
+    <span>Sin selección</span>
+  </div>
+</div>
+```
+
   </div>
 
   <!-- REPORTE -->
@@ -393,7 +406,7 @@ flex-shrink: 0;
     <div id="repContenido">
       <div class="empty-rep">
         <div class="empty-rep-icon">📅</div>
-        <div class="empty-rep-text">Selecciona un período para ver el reporte</div>
+        <div class="empty-rep-text">Selecciona año y mes para ver el reporte</div>
       </div>
     </div>
   </div>
@@ -451,161 +464,183 @@ const RUBROS_CFG = {
   'Ampliación':   { cls:'ampliacion', label:'Ampliación',           emoji:'📈' }
 };
 
-// ════════════════════════════════════════
-// ESTADO
-// ════════════════════════════════════════
-const MESES_S = ['','Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
 const MESES_L = ['','Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-let anio  = 2025;
-let meses = [];
-let BD    = {};
 
 // ════════════════════════════════════════
-// INIT — conexión real con Apps Script
+// CACHÉ POR AÑO — evita recargar
+// ════════════════════════════════════════
+const CACHE = {};          // { "2026": { "2026-01": {...}, ... }, "2025": {...} }
+const CARGANDO = {};       // { "2026": true/false }
+let anioActual = 2026;
+let datosMostrados = null; // datos del período actualmente renderizado
+
+// ════════════════════════════════════════
+// INIT
 // ════════════════════════════════════════
 document.addEventListener('DOMContentLoaded', () => {
   const hoy = new Date();
   document.getElementById('fechaHoy').textContent =
     hoy.toLocaleDateString('es-MX',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
 
-  document.getElementById('repContenido').innerHTML = `
-    <div class="empty-rep">
-      <div class="empty-rep-icon">⏳</div>
-      <div class="empty-rep-text">Cargando datos...</div>
-    </div>`;
-
-  google.script.run
-    .withSuccessHandler(datos => {
-      BD = datos;
-      // Detectar año más reciente con datos
-      const aniosDisp = Object.keys(BD).map(k => parseInt(k.split('-')[0])).filter(Boolean);
-      if (aniosDisp.length) anio = Math.max(...aniosDisp);
-      renderMeses();
-      const mc    = hoy.getMonth() + 1;
-      const clave = `${anio}-${String(mc).padStart(2,'0')}`;
-      if (BD[clave]) {
-        meses = [mc];
-        renderMeses();
-        renderReporte();
-      } else {
-        document.getElementById('repContenido').innerHTML = `
-          <div class="empty-rep">
-            <div class="empty-rep-icon">📅</div>
-            <div class="empty-rep-text">Selecciona un período para ver el reporte</div>
-          </div>`;
-      }
-    })
-    .withFailureHandler(err => {
-      console.error('Error:', err);
-      document.getElementById('repContenido').innerHTML = `
-        <div class="empty-rep">
-          <div class="empty-rep-icon">⚠️</div>
-          <div class="empty-rep-text">Error al cargar datos. Revisa la consola.</div>
-        </div>`;
-    })
-    .getDatosTESI();
+  // Cargar 2026 inmediatamente
+  cargarAnio(2026, () => {
+    poblarMeses(2026);
+    // Auto-seleccionar mes actual si existe
+    const mc = hoy.getMonth() + 1;
+    const clave = `2026-${String(mc).padStart(2,'0')}`;
+    const sel = document.getElementById('selectMes');
+    if (CACHE[2026] && CACHE[2026][clave]) {
+      sel.value = String(mc);
+      verReporte();
+    }
+  });
 });
 
 // ════════════════════════════════════════
-// PERÍODO
+// CARGA POR AÑO (con caché)
 // ════════════════════════════════════════
-function renderMeses() {
-  const row = document.getElementById('mesesRow');
-  row.innerHTML = '';
-  for (let m = 1; m <= 12; m++) {
-    const tiene = !!BD[`${anio}-${String(m).padStart(2,'0')}`];
-    const sel   = meses.includes(m);
-    const btn   = document.createElement('button');
-    btn.className   = 'mes-chip' + (sel ? ' sel' : '');
-    btn.textContent = MESES_S[m];
-    btn.disabled    = !tiene;
-    btn.onclick     = () => toggleMes(m);
-    row.appendChild(btn);
+function cargarAnio(anio, callback) {
+  anio = parseInt(anio);
+
+  // Ya está en caché
+  if (CACHE[anio]) {
+    if (callback) callback();
+    return;
   }
-  document.getElementById('yearVal').textContent = anio;
-  actualizarInfo();
-}
 
-function toggleMes(m) {
-  const i = meses.indexOf(m);
-  i > -1 ? meses.splice(i,1) : meses.push(m);
-  meses.sort((a,b) => a-b);
-  renderMeses();
-  renderReporte();
-}
+  // Ya se está cargando
+  if (CARGANDO[anio]) return;
 
-function selTodo() {
-  meses = [1,2,3,4,5,6,7,8,9,10,11,12].filter(m => BD[`${anio}-${String(m).padStart(2,'0')}`]);
-  renderMeses();
-  renderReporte();
-}
+  CARGANDO[anio] = true;
+  setStatus('cargando', `Cargando ${anio}...`);
 
-function limpiar() {
-  meses = [];
-  renderMeses();
-  renderReporte();
-}
-
-function cambiarAnio(d) {
-  anio += d;
-  meses = [];
-  renderMeses();
-  renderReporte();
-}
-
-function actualizarInfo() {
-  const el = document.getElementById('periodoInfo');
-  if (!meses.length)       { el.innerHTML = 'Selecciona uno o más meses'; return; }
-  if (meses.length === 12) { el.innerHTML = `<b>Año ${anio} completo</b>`; return; }
-  if (meses.length === 1)  { el.innerHTML = `<b>${MESES_L[meses[0]]} ${anio}</b>`; return; }
-  el.innerHTML = `<b>${MESES_S[meses[0]]}–${MESES_S[meses[meses.length-1]]} ${anio}</b> (${meses.length} meses)`;
-}
-
-function getPeriodoLabel() {
-  if (!meses.length)       return '';
-  if (meses.length === 12) return `Año ${anio}`;
-  if (meses.length === 1)  return `${MESES_L[meses[0]]} ${anio}`;
-  return `${MESES_S[meses[0]]}–${MESES_S[meses[meses.length-1]]} ${anio}`;
+  google.script.run
+    .withSuccessHandler(datos => {
+      CACHE[anio] = datos || {};
+      CARGANDO[anio] = false;
+      setStatus('cargado', `${anio} listo`);
+      if (callback) callback();
+    })
+    .withFailureHandler(err => {
+      CARGANDO[anio] = false;
+      console.error('Error cargando año', anio, err);
+      setStatus('vacio', 'Error al cargar');
+    })
+    .getDatosTESIAnio(anio);
 }
 
 // ════════════════════════════════════════
-// DATOS AGREGADOS
+// CAMBIO DE AÑO
 // ════════════════════════════════════════
-function getAgregado() {
-  if (!meses.length) return null;
-  let total=0, sinInc=0, conInc=0, inc=[];
-  const conteoPorTipo  = { 'Normal':{total:0,conIncidencias:0}, 'Colocación 0':{total:0,conIncidencias:0}, 'Renovación':{total:0,conIncidencias:0}, 'Reestructura':{total:0,conIncidencias:0}, 'Ampliación':{total:0,conIncidencias:0} };
-  const etapasCierre   = { '1a Revision':0, '2a Revision':0, 'Final':0 };
+function onCambioAnio() {
+  const anio = parseInt(document.getElementById('selectAnio').value);
+  anioActual = anio;
 
-  meses.forEach(m => {
-    const d = BD[`${anio}-${String(m).padStart(2,'0')}`];
-    if (!d) return;
-    total  += d.total;
-    sinInc += d.sinIncidencias;
-    conInc += d.conIncidencias;
-    d.incidencias.forEach(e => inc.push(e));
+  // Limpiar mes
+  document.getElementById('selectMes').innerHTML = '<option value="">— Cargando... —</option>';
 
-    // Acumular tipos
-    if (d.conteoPorTipo) {
-      Object.entries(d.conteoPorTipo).forEach(([tipo, vals]) => {
-        if (conteoPorTipo[tipo]) {
-          conteoPorTipo[tipo].total          += vals.total          || 0;
-          conteoPorTipo[tipo].conIncidencias += vals.conIncidencias || 0;
-        }
-      });
-    }
+  cargarAnio(anio, () => {
+    poblarMeses(anio);
+  });
+}
 
-    // Acumular etapas cierre
-    if (d.etapasCierre) {
-      Object.entries(d.etapasCierre).forEach(([etapa, n]) => {
-        if (etapasCierre[etapa] !== undefined) etapasCierre[etapa] += n || 0;
-      });
-    }
+// ════════════════════════════════════════
+// POBLAR MESES DISPONIBLES
+// ════════════════════════════════════════
+function poblarMeses(anio) {
+  const sel  = document.getElementById('selectMes');
+  const data = CACHE[anio] || {};
+  const disponibles = Object.keys(data)
+    .filter(k => k.startsWith(String(anio)))
+    .map(k => parseInt(k.split('-')[1]))
+    .sort((a,b) => a-b);
+
+  sel.innerHTML = '<option value="">— Mes —</option>';
+  disponibles.forEach(m => {
+    const opt = document.createElement('option');
+    opt.value       = String(m);
+    opt.textContent = MESES_L[m];
+    sel.appendChild(opt);
   });
 
-  return { total, sinIncidencias:sinInc, conIncidencias:conInc, incidencias:inc, conteoPorTipo, etapasCierre };
+  if (disponibles.length === 0) {
+    sel.innerHTML = '<option value="">Sin datos disponibles</option>';
+    setStatus('vacio', `Sin datos ${anio}`);
+  } else {
+    setStatus('cargado', `${disponibles.length} mes${disponibles.length!==1?'es':''} disponible${disponibles.length!==1?'s':''}`);
+  }
 }
 
+// ════════════════════════════════════════
+// VER REPORTE
+// ════════════════════════════════════════
+function verReporte() {
+  const anio = parseInt(document.getElementById('selectAnio').value);
+  const mes  = parseInt(document.getElementById('selectMes').value);
+
+  if (!mes) {
+    setStatus('vacio', 'Selecciona un mes');
+    return;
+  }
+
+  const clave = `${anio}-${String(mes).padStart(2,'0')}`;
+  const datos = CACHE[anio] && CACHE[anio][clave];
+
+  if (!datos) {
+    setStatus('vacio', 'Sin datos para este período');
+    return;
+  }
+
+  datosMostrados = datos;
+  renderReporte(datos, MESES_L[mes], anio);
+  setStatus('cargado', `${MESES_L[mes]} ${anio}`);
+}
+
+// ════════════════════════════════════════
+// STATUS CHIP
+// ════════════════════════════════════════
+function setStatus(tipo, texto) {
+  const chip = document.getElementById('statusChip');
+  chip.className = `status-chip ${tipo}`;
+  chip.innerHTML = tipo === 'cargando'
+    ? `<div class="dot-anim"></div><span>${texto}</span>`
+    : `<span>${texto}</span>`;
+}
+
+// ════════════════════════════════════════
+// RENDER REPORTE
+// ════════════════════════════════════════
+function renderReporte(datos, nombreMes, anio) {
+  const wrap = document.getElementById('repWrap');
+  const cont = document.getElementById('repContenido');
+
+  // Skeleton mientras renderiza
+  cont.innerHTML = htmlSkeleton();
+  wrap.classList.remove('visible');
+  requestAnimationFrame(() => wrap.classList.add('visible'));
+
+  // Calcular
+  const pctC    = datos.total ? Math.round((datos.sinIncidencias / datos.total) * 100) : 0;
+  const pctI    = datos.total ? Math.round((datos.conIncidencias / datos.total) * 100) : 0;
+  const totArea  = totalesPorArea(datos.incidencias || []);
+  const totalIncs= Object.values(totArea).reduce((s,v) => s+v, 0);
+
+  // Render real en siguiente frame para que skeleton sea visible
+  requestAnimationFrame(() => {
+    cont.innerHTML =
+      htmlHeader(nombreMes.toUpperCase(), `${nombreMes} ${anio}`) +
+      htmlKPIs(datos.total, datos.sinIncidencias, datos.conIncidencias, pctC, pctI) +
+      htmlRubros(datos.conteoPorTipo, `${nombreMes} ${anio}`) +
+      htmlDistribucion(totArea, totalIncs, `${nombreMes} ${anio}`) +
+      htmlExpedientes(datos.incidencias || []) +
+      htmlDetalleAreas(datos.incidencias || [], totArea) +
+      htmlEtapasCierre(datos.etapasCierre, datos.sinIncidencias);
+  });
+}
+
+// ════════════════════════════════════════
+// HELPERS DATOS
+// ════════════════════════════════════════
 function parsearAreas(textoAreas) {
   const resultado = {};
   Object.keys(AREAS_CFG).forEach(nombre => {
@@ -626,43 +661,39 @@ function totalesPorArea(incidencias) {
   return t;
 }
 
-// ════════════════════════════════════════
-// RENDER PRINCIPAL
-// ════════════════════════════════════════
-function renderReporte() {
-  const datos = getAgregado();
-  const wrap  = document.getElementById('repWrap');
-  const cont  = document.getElementById('repContenido');
-
-  if (!datos) {
-    cont.innerHTML = `<div class="empty-rep"><div class="empty-rep-icon">📅</div><div class="empty-rep-text">Selecciona un período para ver el reporte</div></div>`;
-    wrap.classList.remove('visible');
-    return;
-  }
-
-  const pctC    = datos.total ? Math.round((datos.sinIncidencias / datos.total) * 100) : 0;
-  const pctI    = datos.total ? Math.round((datos.conIncidencias / datos.total) * 100) : 0;
-  const label   = getPeriodoLabel();
-  const esMulti = meses.length > 1;
-  const chipTxt = meses.length === 1 ? MESES_L[meses[0]].toUpperCase() : `${meses.length} MESES`;
-  const totArea = totalesPorArea(datos.incidencias);
-  const totalIncs = Object.values(totArea).reduce((s,v) => s+v, 0);
-
-  cont.innerHTML =
-    htmlHeader(chipTxt, label, esMulti) +
-    htmlKPIs(datos.total, datos.sinIncidencias, datos.conIncidencias, pctC, pctI) +
-    htmlRubros(datos.conteoPorTipo, label) +
-    htmlDistribucion(totArea, totalIncs, label) +
-    htmlExpedientes(datos.incidencias) +
-    htmlDetalleAreas(datos.incidencias, totArea) +
-    htmlEtapasCierre(datos.etapasCierre, datos.sinIncidencias);
-
-  wrap.classList.remove('visible');
-  requestAnimationFrame(() => requestAnimationFrame(() => wrap.classList.add('visible')));
+function tipoCSSClass(tipo) {
+  if (!tipo) return 'tipo-normal';
+  const t = tipo.toLowerCase();
+  if (t === 'normal')       return 'tipo-normal';
+  if (t.includes('col'))    return 'tipo-col0';
+  if (t.includes('renov'))  return 'tipo-renovacion';
+  if (t.includes('reestr')) return 'tipo-reestruc';
+  if (t.includes('amplia')) return 'tipo-ampliacion';
+  return 'tipo-normal';
 }
 
-// ── HEADER ──
-function htmlHeader(chipTxt, label, esMulti) {
+function esJSON(obj) {
+  return JSON.stringify(obj).replace(/'/g,"\\'").replace(/"/g,'&quot;');
+}
+
+// ════════════════════════════════════════
+// HTML BUILDERS
+// ════════════════════════════════════════
+
+function htmlSkeleton() {
+  return `<div class="skeleton-wrap">
+    <div class="skeleton-row">
+      <div class="skeleton-box"></div>
+      <div class="skeleton-box"></div>
+      <div class="skeleton-box"></div>
+    </div>
+    <div class="skeleton-bar w80"></div>
+    <div class="skeleton-bar w60"></div>
+    <div class="skeleton-bar w40"></div>
+  </div>`;
+}
+
+function htmlHeader(chipTxt, label) {
   return `
   <div class="rep-header">
     <div class="rep-header-top">
@@ -681,11 +712,9 @@ function htmlHeader(chipTxt, label, esMulti) {
         <div class="rep-anio">${label}</div>
       </div>
     </div>
-    ${esMulti ? `<div class="rep-multi-banner"><div class="rep-multi-badge">📊 Período acumulado · ${label}</div></div>` : ''}
   </div>`;
 }
 
-// ── KPIs ──
 function htmlKPIs(total, completos, incidencias, pctC, pctI) {
   return `
   <div class="kpi-section">
@@ -706,35 +735,28 @@ function htmlKPIs(total, completos, incidencias, pctC, pctI) {
   </div>`;
 }
 
-// ── RUBROS POR TIPO ──
 function htmlRubros(conteoPorTipo, label) {
   if (!conteoPorTipo) return '';
-
   const tarjetas = Object.entries(RUBROS_CFG).map(([tipo, cfg]) => {
-    const datos = conteoPorTipo[tipo] || { total:0, conIncidencias:0 };
-    const tieneInc = datos.conIncidencias > 0;
+    const d = conteoPorTipo[tipo] || { total:0, conIncidencias:0 };
+    const tieneInc = d.conIncidencias > 0;
     return `
       <div class="rubro-card ${cfg.cls}">
         <div class="rubro-nombre">${cfg.emoji} ${cfg.label}</div>
-        <div class="rubro-total num-pop">${datos.total}</div>
-        <div class="rubro-sub">expediente${datos.total !== 1 ? 's' : ''}</div>
-        <div class="${tieneInc ? 'rubro-inc-badge' : 'rubro-inc-badge cero'}">
-          ${tieneInc ? '⚠️' : '✓'} ${datos.conIncidencias} inc.
+        <div class="rubro-total num-pop">${d.total}</div>
+        <div class="rubro-sub">expediente${d.total!==1?'s':''}</div>
+        <div class="${tieneInc?'rubro-inc-badge':'rubro-inc-badge cero'}">
+          ${tieneInc?'⚠️':'✓'} ${d.conIncidencias} inc.
         </div>
       </div>`;
   }).join('');
-
   return `
   <div class="rep-section">
-    <div class="sec-titulo">
-      <h2>Expedientes por Tipo</h2>
-      <p>Distribución de incidencias según el tipo de operación · ${label}</p>
-    </div>
+    <div class="sec-titulo"><h2>Expedientes por Tipo</h2><p>Distribución de incidencias según el tipo de operación · ${label}</p></div>
     <div class="rubros-grid">${tarjetas}</div>
   </div>`;
 }
 
-// ── DISTRIBUCIÓN POR ÁREA ──
 function htmlDistribucion(totArea, totalIncs, label) {
   if (totalIncs === 0) {
     return `
@@ -751,82 +773,49 @@ function htmlDistribucion(totArea, totalIncs, label) {
       </div>
     </div>`;
   }
-
   const areasConInc = Object.entries(totArea).filter(([,v]) => v > 0);
   const filas = areasConInc.map(([nombre, valor], idx) => {
     const a   = AREAS_CFG[nombre];
-    const pct = Math.round((valor / totalIncs) * 100);
-    const bg  = idx % 2 === 0 ? '#ffffff' : '#f8fafc';
-    const bc  = idx === areasConInc.length - 1 ? 'transparent' : '#e2e8f0';
+    const pct = Math.round((valor/totalIncs)*100);
+    const bg  = idx%2===0?'#ffffff':'#f8fafc';
+    const bc  = idx===areasConInc.length-1?'transparent':'#e2e8f0';
     return `
       <tr style="background:${bg};border-bottom:1px solid ${bc};" onclick="abrirDetalleArea('${nombre}')">
-        <td>
-          <div style="display:flex;align-items:center;gap:10px;">
-            <img src="${a.icono}" width="34" height="34" alt="${nombre}" style="border-radius:4px;flex-shrink:0;">
-            <span style="font-weight:700;font-size:13px;color:#1a202c;">${nombre}</span>
-          </div>
-        </td>
-        <td style="text-align:center;">
-          <div style="width:46px;height:46px;background:linear-gradient(135deg,${a.colorClaro},${a.color});border-radius:50%;border:4px solid ${a.colorOscuro};display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:17px;font-weight:900;text-shadow:0 1px 2px rgba(0,0,0,0.1);">
-            ${valor}
-          </div>
-        </td>
-        <td>
-          <div style="font-size:13px;color:#4a5568;font-weight:500;">
-            ${valor} incidencia${valor!==1?'s':''} registrada${valor!==1?'s':''} en el período, representando el ${pct}% del total
-          </div>
-          <div class="prop-bar-bg"><div class="prop-bar" style="background:${a.color};width:${pct}%"></div></div>
-        </td>
+        <td><div style="display:flex;align-items:center;gap:10px;"><img src="${a.icono}" width="34" height="34" alt="${nombre}" style="border-radius:4px;flex-shrink:0;"><span style="font-weight:700;font-size:13px;color:#1a202c;">${nombre}</span></div></td>
+        <td style="text-align:center;"><div style="width:46px;height:46px;background:linear-gradient(135deg,${a.colorClaro},${a.color});border-radius:50%;border:4px solid ${a.colorOscuro};display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:17px;font-weight:900;">${valor}</div></td>
+        <td><div style="font-size:13px;color:#4a5568;font-weight:500;">${valor} incidencia${valor!==1?'s':''} · ${pct}% del total</div><div class="prop-bar-bg"><div class="prop-bar" style="background:${a.color};width:${pct}%"></div></div></td>
       </tr>`;
   }).join('');
-
   return `
   <div class="rep-section">
-    <div class="sec-titulo">
-      <h2>Distribución de Incidencias por Área</h2>
-      <p>Período: ${label} · Total: ${totalIncs} incidencias</p>
-    </div>
+    <div class="sec-titulo"><h2>Distribución de Incidencias por Área</h2><p>Período: ${label} · Total: ${totalIncs} incidencias</p></div>
     <table class="tbl">
-      <thead><tr>
-        <th style="width:30%">Área</th>
-        <th style="width:15%;text-align:center;">Incidencias</th>
-        <th style="width:55%">Descripción</th>
-      </tr></thead>
+      <thead><tr><th style="width:30%">Área</th><th style="width:15%;text-align:center;">Incidencias</th><th style="width:55%">Descripción</th></tr></thead>
       <tbody>${filas}</tbody>
     </table>
   </div>`;
 }
 
-// ── EXPEDIENTES CON INCIDENCIAS ──
 function htmlExpedientes(incidencias) {
   if (!incidencias.length) return '';
   const sorted  = [...incidencias].sort((a,b) => b.totalIncidencias - a.totalIncidencias);
-  const mostrar = sorted.slice(0, 15);
-
-  const filas = mostrar.map((exp, idx) => {
-    const bg  = idx % 2 === 0 ? '#ffffff' : '#f8fafc';
-    const bc  = idx === mostrar.length - 1 ? 'transparent' : '#e2e8f0';
-    const tipoCls = tipoCSSClass(exp.tipo);
+  const mostrar = sorted.slice(0,15);
+  const filas   = mostrar.map((exp, idx) => {
+    const bg  = idx%2===0?'#ffffff':'#f8fafc';
+    const bc  = idx===mostrar.length-1?'transparent':'#e2e8f0';
+    const cls = tipoCSSClass(exp.tipo);
     return `
       <tr style="background:${bg};" onclick='abrirDetalle(${esJSON(exp)})'>
         <td style="border-bottom:1px solid ${bc};"><span style="font-weight:600;font-size:13px;">${exp.id}</span></td>
         <td style="border-bottom:1px solid ${bc};"><span style="color:#718096;font-size:13px;">${exp.fecha}</span></td>
-        <td style="border-bottom:1px solid ${bc};"><span class="tipo-badge ${tipoCls}">${exp.tipo || '—'}</span></td>
-        <td style="border-bottom:1px solid ${bc};text-align:center;">
-          <span class="inc-badge" style="border-color:#dc2626;color:#dc2626;">${exp.totalIncidencias}</span>
-        </td>
+        <td style="border-bottom:1px solid ${bc};"><span class="tipo-badge ${cls}">${exp.tipo||'—'}</span></td>
+        <td style="border-bottom:1px solid ${bc};text-align:center;"><span class="inc-badge" style="border-color:#dc2626;color:#dc2626;">${exp.totalIncidencias}</span></td>
       </tr>`;
   }).join('');
-
   return `
   <div class="rep-section">
     <div class="tbl-controls">
-      <div>
-        <div class="sec-titulo" style="text-align:left;margin-bottom:0;">
-          <h2 style="font-size:20px;">Expedientes con Incidencias</h2>
-          <p>Total: ${incidencias.length} expediente${incidencias.length!==1?'s':''}${mostrar.length<incidencias.length?' (mostrando top '+mostrar.length+')':''}</p>
-        </div>
-      </div>
+      <div><div class="sec-titulo" style="text-align:left;margin-bottom:0;"><h2 style="font-size:20px;">Expedientes con Incidencias</h2><p>Total: ${incidencias.length} expediente${incidencias.length!==1?'s':''}${mostrar.length<incidencias.length?' (top '+mostrar.length+')':''}</p></div></div>
       <select class="sort-sel" onchange="reordenarExpedientes(this.value)">
         <option value="desc">↓ Más incidencias</option>
         <option value="asc">↑ Menos incidencias</option>
@@ -845,64 +834,46 @@ function htmlExpedientes(incidencias) {
   </div>`;
 }
 
-// ── DETALLE POR ÁREA — muestra documentos pendientes ──
 function htmlDetalleAreas(incidencias, totArea) {
   let html = `
   <div class="rep-section">
-    <div class="sec-titulo">
-      <h2>Detalle por Área</h2>
-      <p>Documentos pendientes por departamento · haz clic para expandir</p>
-    </div>`;
+    <div class="sec-titulo"><h2>Detalle por Área</h2><p>Documentos pendientes por departamento · haz clic para expandir</p></div>`;
 
   Object.entries(AREAS_CFG).forEach(([nombre, a]) => {
     const totalArea = totArea[nombre] || 0;
-
-    // Recolectar todos los documentos del área de todos los expedientes
     const todosLosDocs = [];
+
     incidencias.forEach(exp => {
       const map = exp._areasMap || parsearAreas(exp.areas);
-      if ((map[nombre] || 0) > 0 && exp.documentos && exp.documentos.length > 0) {
+      if ((map[nombre]||0) > 0 && exp.documentos && exp.documentos.length > 0) {
         exp.documentos
-          .filter(doc => doc.area && doc.area.toLowerCase().includes(nombre.toLowerCase().replace('é','e').replace('í','i')))
-          .forEach(doc => {
-            todosLosDocs.push({
-              expId:       exp.id,
-              documento:   doc.documento   || '',
-              observacion: doc.observacion || ''
-            });
-          });
+          .filter(doc => doc.area && doc.area.toLowerCase().replace('é','e').replace('í','i')
+                        .includes(nombre.toLowerCase().replace('é','e').replace('í','i')))
+          .forEach(doc => todosLosDocs.push({ expId:exp.id, documento:doc.documento||'', observacion:doc.observacion||'' }));
       }
     });
 
     if (totalArea > 0) {
-      // Construir filas de documentos
-      let filaDocs = '';
-      if (todosLosDocs.length > 0) {
-        filaDocs = todosLosDocs.map(doc => `
-          <div class="doc-row">
-            <div class="doc-dot" style="background:${a.color}"></div>
-            <div>
-              <div class="doc-nombre">${doc.documento}</div>
-              ${doc.observacion ? `<div class="doc-obs">${doc.observacion}</div>` : ''}
-              <div style="font-size:10px;color:#cbd5e1;margin-top:3px;font-family:'Inter',sans-serif;">${doc.expId}</div>
-            </div>
-          </div>`).join('');
-      } else {
-        filaDocs = `<div style="padding:16px 18px;font-size:12px;color:#94a3b8;font-style:italic;">Sin detalle de documentos disponible</div>`;
-      }
+      const filaDocs = todosLosDocs.length > 0
+        ? todosLosDocs.map(doc => `
+            <div class="doc-row">
+              <div class="doc-dot" style="background:${a.color}"></div>
+              <div>
+                <div class="doc-nombre">${doc.documento}</div>
+                ${doc.observacion ? `<div class="doc-obs">${doc.observacion}</div>` : ''}
+                <div class="doc-expid">${doc.expId}</div>
+              </div>
+            </div>`).join('')
+        : `<div style="padding:16px 18px;font-size:12px;color:#94a3b8;font-style:italic;">Sin detalle de documentos disponible</div>`;
 
       html += `
-        <div class="area-header-row" id="hdr-${nombre}"
-             style="background:${a.colorBg};border-color:${a.colorBorder};"
-             onclick="toggleArea('${nombre}')">
+        <div class="area-header-row" id="hdr-${nombre}" style="background:${a.colorBg};border-color:${a.colorBorder};" onclick="toggleArea('${nombre}')">
           <img src="${a.icono}" class="area-icon" alt="${nombre}">
           <div>
             <div class="area-nombre">${nombre}</div>
-            <div class="area-subtext">${totalArea} incidencia${totalArea!==1?'s':''} · ${todosLosDocs.length} documento${todosLosDocs.length!==1?'s':''} pendiente${todosLosDocs.length!==1?'s':''}</div>
+            <div class="area-subtext">${totalArea} incidencia${totalArea!==1?'s':''} · ${todosLosDocs.length} doc${todosLosDocs.length!==1?'s':''} pendiente${todosLosDocs.length!==1?'s':''}</div>
           </div>
-          <div class="area-badge-num" style="background:linear-gradient(135deg,${a.colorClaro},${a.color});border:4px solid ${a.colorOscuro};">
-            ${totalArea}
-          </div>
+          <div class="area-badge-num" style="background:linear-gradient(135deg,${a.colorClaro},${a.color});border:4px solid ${a.colorOscuro};">${totalArea}</div>
           <span class="area-chevron">▾</span>
         </div>
         <div class="area-detail-table" id="acordeon-${nombre}">
@@ -917,10 +888,7 @@ function htmlDetalleAreas(incidencias, totArea) {
       html += `
         <div class="area-ok">
           <img src="${a.icono}" class="area-icon" alt="${nombre}">
-          <div>
-            <div class="area-ok-nombre">${nombre}</div>
-            <div class="area-ok-sub">✓ Sin incidencias registradas</div>
-          </div>
+          <div><div class="area-ok-nombre">${nombre}</div><div class="area-ok-sub">✓ Sin incidencias registradas</div></div>
         </div>`;
     }
   });
@@ -929,53 +897,26 @@ function htmlDetalleAreas(incidencias, totArea) {
   return html;
 }
 
-// ── ETAPAS DE CIERRE ──
 function htmlEtapasCierre(etapasCierre, totalCompletos) {
   if (!etapasCierre) return '';
   const e1  = etapasCierre['1a Revision'] || 0;
   const e2  = etapasCierre['2a Revision'] || 0;
   const ef  = etapasCierre['Final']       || 0;
   const tot = e1 + e2 + ef;
-
   const pct = n => tot > 0 ? Math.round((n/tot)*100) : 0;
-
   return `
   <div class="rep-section">
-    <div class="sec-titulo">
-      <h2>Cierre de Incidencias por Etapa</h2>
-      <p>De ${totalCompletos} expediente${totalCompletos!==1?'s':''} completo${totalCompletos!==1?'s':''} · ${tot} con etapa de cierre registrada</p>
-    </div>
+    <div class="sec-titulo"><h2>Cierre de Incidencias por Etapa</h2><p>De ${totalCompletos} expediente${totalCompletos!==1?'s':''} completo${totalCompletos!==1?'s':''} · ${tot} con etapa registrada</p></div>
     <div class="cierre-grid">
-      <div class="cierre-card e1">
-        <div class="cierre-icon">🥇</div>
-        <div>
-          <div class="cierre-num num-pop">${e1}</div>
-          <div class="cierre-label">Cerró en 1ª Revisión</div>
-          <div class="cierre-sub">${pct(e1)}% de los cierres</div>
-        </div>
-      </div>
-      <div class="cierre-card e2">
-        <div class="cierre-icon">🥈</div>
-        <div>
-          <div class="cierre-num num-pop">${e2}</div>
-          <div class="cierre-label">Cerró en 2ª Revisión</div>
-          <div class="cierre-sub">${pct(e2)}% de los cierres</div>
-        </div>
-      </div>
-      <div class="cierre-card ef">
-        <div class="cierre-icon">🏁</div>
-        <div>
-          <div class="cierre-num num-pop">${ef}</div>
-          <div class="cierre-label">Cerró en Revisión Final</div>
-          <div class="cierre-sub">${pct(ef)}% de los cierres</div>
-        </div>
-      </div>
+      <div class="cierre-card e1"><div class="cierre-icon">🥇</div><div><div class="cierre-num num-pop">${e1}</div><div class="cierre-label">Cerró en 1ª Revisión</div><div class="cierre-sub">${pct(e1)}% de los cierres</div></div></div>
+      <div class="cierre-card e2"><div class="cierre-icon">🥈</div><div><div class="cierre-num num-pop">${e2}</div><div class="cierre-label">Cerró en 2ª Revisión</div><div class="cierre-sub">${pct(e2)}% de los cierres</div></div></div>
+      <div class="cierre-card ef"><div class="cierre-icon">🏁</div><div><div class="cierre-num num-pop">${ef}</div><div class="cierre-label">Cerró en Revisión Final</div><div class="cierre-sub">${pct(ef)}% de los cierres</div></div></div>
     </div>
   </div>`;
 }
 
 // ════════════════════════════════════════
-// ACORDEÓN
+// INTERACCIONES
 // ════════════════════════════════════════
 function toggleArea(nombre) {
   const el  = document.getElementById(`acordeon-${nombre}`);
@@ -987,20 +928,16 @@ function toggleArea(nombre) {
   if (!abierto) { el.classList.add('open'); hdr && hdr.classList.add('open'); }
 }
 
-// ════════════════════════════════════════
-// REORDENAR EXPEDIENTES
-// ════════════════════════════════════════
 function reordenarExpedientes(orden) {
-  const datos = getAgregado();
-  if (!datos) return;
-  let exps = [...datos.incidencias];
-  if (orden === 'desc') exps.sort((a,b) => b.totalIncidencias - a.totalIncidencias);
-  else if (orden === 'asc') exps.sort((a,b) => a.totalIncidencias - b.totalIncidencias);
+  if (!datosMostrados) return;
+  let exps = [...(datosMostrados.incidencias||[])];
+  if (orden==='desc') exps.sort((a,b) => b.totalIncidencias - a.totalIncidencias);
+  else if (orden==='asc') exps.sort((a,b) => a.totalIncidencias - b.totalIncidencias);
   else exps.sort((a,b) => a.fecha.localeCompare(b.fecha));
   const mostrar = exps.slice(0,15);
   const tbody   = document.getElementById('tbodyExp');
   if (!tbody) return;
-  tbody.innerHTML = mostrar.map((exp, idx) => {
+  tbody.innerHTML = mostrar.map((exp,idx) => {
     const bg  = idx%2===0?'#ffffff':'#f8fafc';
     const bc  = idx===mostrar.length-1?'transparent':'#e2e8f0';
     const cls = tipoCSSClass(exp.tipo);
@@ -1013,9 +950,6 @@ function reordenarExpedientes(orden) {
   }).join('');
 }
 
-// ════════════════════════════════════════
-// PANEL DETALLE EXPEDIENTE
-// ════════════════════════════════════════
 function abrirDetalle(exp) {
   document.getElementById('spId').textContent    = exp.id;
   document.getElementById('spFecha').textContent = `Fecha de firma: ${exp.fecha}`;
@@ -1025,17 +959,14 @@ function abrirDetalle(exp) {
   document.getElementById('spAreas').textContent = conInc.length;
   document.getElementById('spAreasList').innerHTML = conInc
     .sort((a,b) => b[1]-a[1])
-    .map(([nombre, n]) => {
+    .map(([nombre,n]) => {
       const a   = AREAS_CFG[nombre];
-      const pct = Math.round((n / exp.totalIncidencias) * 100);
+      const pct = Math.round((n/exp.totalIncidencias)*100);
       return `
         <div class="sp-area-row">
           <div class="sp-area-left">
             <div class="sp-area-dot" style="background:${a?.color||'#888'}"></div>
-            <div>
-              <div class="sp-area-name">${nombre}</div>
-              <div class="sp-area-pct">${pct}% del total de incidencias</div>
-            </div>
+            <div><div class="sp-area-name">${nombre}</div><div class="sp-area-pct">${pct}% del total</div></div>
           </div>
           <div class="sp-area-num" style="color:${a?.color||'#888'}">${n}</div>
         </div>`;
@@ -1045,38 +976,19 @@ function abrirDetalle(exp) {
 }
 
 function abrirDetalleArea(nombre) {
-  const datos = getAgregado();
-  if (!datos) return;
+  if (!datosMostrados) return;
   const map = {};
   let tot   = 0;
-  datos.incidencias.forEach(exp => {
+  (datosMostrados.incidencias||[]).forEach(exp => {
     const m = exp._areasMap || parsearAreas(exp.areas);
-    if (m[nombre]) { map[nombre] = (map[nombre]||0) + m[nombre]; tot += m[nombre]; }
+    if (m[nombre]) { map[nombre]=(map[nombre]||0)+m[nombre]; tot+=m[nombre]; }
   });
-  abrirDetalle({ id:`Área: ${nombre}`, fecha:getPeriodoLabel(), totalIncidencias:tot, _areasMap:map });
+  abrirDetalle({ id:`Área: ${nombre}`, fecha: document.getElementById('repContenido').querySelector('.rep-anio')?.textContent||'', totalIncidencias:tot, _areasMap:map });
 }
 
 function cerrarPanel() {
   document.getElementById('overlay').classList.remove('open');
   document.getElementById('slidePanel').classList.remove('open');
-}
-
-// ════════════════════════════════════════
-// HELPERS
-// ════════════════════════════════════════
-function tipoCSSClass(tipo) {
-  if (!tipo) return 'tipo-normal';
-  const t = tipo.toLowerCase();
-  if (t === 'normal')        return 'tipo-normal';
-  if (t.includes('col'))     return 'tipo-col0';
-  if (t.includes('renov'))   return 'tipo-renovacion';
-  if (t.includes('reestr'))  return 'tipo-reestruc';
-  if (t.includes('amplia'))  return 'tipo-ampliacion';
-  return 'tipo-normal';
-}
-
-function esJSON(obj) {
-  return JSON.stringify(obj).replace(/'/g,"\\'").replace(/"/g,'&quot;');
 }
 </script>
 
