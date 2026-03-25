@@ -17,7 +17,7 @@ color: #1a202c;
 min-height: 100vh;
 }
 
-/* ══ HEADER INSTITUCIONAL ══ */
+/* ══ HEADER ══ */
 .site-header {
 background: #515151;
 padding: 0 40px;
@@ -30,614 +30,309 @@ top: 0;
 z-index: 100;
 box-shadow: 0 2px 12px rgba(0,0,0,0.18);
 }
-
-.header-brand {
-display: flex;
-align-items: center;
-gap: 14px;
-}
-
-.header-sep {
-width: 1px;
-height: 22px;
-background: rgba(255,255,255,0.25);
-}
-
-.header-title {
-font-size: 13px;
-font-weight: 700;
-color: #ffffff;
-letter-spacing: 0.8px;
-text-transform: uppercase;
-}
-
-.header-right {
-display: flex;
-align-items: center;
-gap: 14px;
-}
-
-.badge-comite {
-background: #FDB913;
-color: #000;
-font-size: 10px;
-font-weight: 800;
-letter-spacing: 1.2px;
-text-transform: uppercase;
-padding: 4px 12px;
-border-radius: 3px;
-}
-
-.header-fecha {
-font-size: 11px;
-color: rgba(255,255,255,0.55);
-font-family: ‘Inter’, sans-serif;
-}
+.header-brand { display:flex; align-items:center; gap:14px; }
+.header-sep { width:1px; height:22px; background:rgba(255,255,255,0.25); }
+.header-title { font-size:13px; font-weight:700; color:#fff; letter-spacing:0.8px; text-transform:uppercase; }
+.header-right { display:flex; align-items:center; gap:14px; }
+.badge-comite { background:#FDB913; color:#000; font-size:10px; font-weight:800; letter-spacing:1.2px; text-transform:uppercase; padding:4px 12px; border-radius:3px; }
+.header-fecha { font-size:11px; color:rgba(255,255,255,0.55); font-family:‘Inter’,sans-serif; }
 
 /* ══ WRAPPER ══ */
-.main-wrap {
-max-width: 900px;
-margin: 32px auto;
-padding: 0 20px 60px;
-}
+.main-wrap { max-width:900px; margin:32px auto; padding:0 20px 60px; }
 
-/* ══ SELECTOR DE PERÍODO ══ */
+/* ══ SELECTOR PERÍODO ══ */
 .periodo-card {
-background: #ffffff;
-border-radius: 12px;
-border: 1px solid #e2e8f0;
-padding: 22px 26px;
-margin-bottom: 24px;
-box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+background:#fff; border-radius:12px; border:1px solid #e2e8f0;
+padding:22px 26px; margin-bottom:24px; box-shadow:0 1px 4px rgba(0,0,0,0.05);
 }
-
-.periodo-top {
-display: flex;
-align-items: center;
-justify-content: space-between;
-margin-bottom: 14px;
-}
-
-.periodo-label-txt {
-font-size: 11px;
-font-weight: 700;
-color: #64748b;
-text-transform: uppercase;
-letter-spacing: 1.2px;
-display: flex;
-align-items: center;
-gap: 7px;
-}
-
-.year-nav {
-display: flex;
-align-items: center;
-gap: 10px;
-}
-
-.year-btn {
-width: 28px; height: 28px;
-border: 1px solid #e2e8f0;
-background: #f8fafc;
-border-radius: 5px;
-cursor: pointer;
-font-size: 15px;
-color: #515151;
-display: flex; align-items: center; justify-content: center;
-transition: all 0.15s;
-}
-.year-btn:hover { border-color: #FDB913; color: #FDB913; background: #fffbeb; }
-
-.year-val {
-font-size: 17px;
-font-weight: 800;
-color: #1a202c;
-min-width: 48px;
-text-align: center;
-}
-
-.meses-row {
-display: grid;
-grid-template-columns: repeat(12, 1fr);
-gap: 5px;
-margin-bottom: 13px;
-}
-
-.mes-chip {
-padding: 7px 3px;
-background: #f8fafc;
-border: 1px solid #e2e8f0;
-border-radius: 5px;
-color: #64748b;
-font-size: 11px;
-font-weight: 600;
-cursor: pointer;
-text-align: center;
-transition: all 0.15s;
-font-family: ‘Inter’, sans-serif;
-}
-.mes-chip:hover:not(:disabled) { border-color: #FDB913; color: #1a202c; }
-.mes-chip.sel {
-background: #FDB913;
-border-color: #FDB913;
-color: #000;
-font-weight: 700;
-box-shadow: 0 2px 6px rgba(253,185,19,0.3);
-}
-.mes-chip:disabled { opacity: 0.3; cursor: not-allowed; }
-
-.periodo-footer {
-display: flex;
-align-items: center;
-gap: 8px;
-padding-top: 12px;
-border-top: 1px solid #f1f5f9;
-}
-
-.btn-accion {
-padding: 5px 13px;
-border: 1px solid #e2e8f0;
-background: #f8fafc;
-border-radius: 5px;
-font-size: 11px;
-font-weight: 700;
-color: #64748b;
-cursor: pointer;
-transition: all 0.15s;
-font-family: ‘Inter’, sans-serif;
-}
-.btn-accion:hover { border-color: #FDB913; color: #000; background: #fffbeb; }
-
-.periodo-info {
-font-size: 12px;
-color: #94a3b8;
-font-family: ‘Inter’, sans-serif;
-margin-left: auto;
-}
-.periodo-info b { color: #e09c00; }
+.periodo-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
+.periodo-label-txt { font-size:11px; font-weight:700; color:#64748b; text-transform:uppercase; letter-spacing:1.2px; display:flex; align-items:center; gap:7px; }
+.year-nav { display:flex; align-items:center; gap:10px; }
+.year-btn { width:28px; height:28px; border:1px solid #e2e8f0; background:#f8fafc; border-radius:5px; cursor:pointer; font-size:15px; color:#515151; display:flex; align-items:center; justify-content:center; transition:all 0.15s; }
+.year-btn:hover { border-color:#FDB913; color:#FDB913; background:#fffbeb; }
+.year-val { font-size:17px; font-weight:800; color:#1a202c; min-width:48px; text-align:center; }
+.meses-row { display:grid; grid-template-columns:repeat(12,1fr); gap:5px; margin-bottom:13px; }
+.mes-chip { padding:7px 3px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:5px; color:#64748b; font-size:11px; font-weight:600; cursor:pointer; text-align:center; transition:all 0.15s; font-family:‘Inter’,sans-serif; }
+.mes-chip:hover:not(:disabled) { border-color:#FDB913; color:#1a202c; }
+.mes-chip.sel { background:#FDB913; border-color:#FDB913; color:#000; font-weight:700; box-shadow:0 2px 6px rgba(253,185,19,0.3); }
+.mes-chip:disabled { opacity:0.3; cursor:not-allowed; }
+.periodo-footer { display:flex; align-items:center; gap:8px; padding-top:12px; border-top:1px solid #f1f5f9; }
+.btn-accion { padding:5px 13px; border:1px solid #e2e8f0; background:#f8fafc; border-radius:5px; font-size:11px; font-weight:700; color:#64748b; cursor:pointer; transition:all 0.15s; font-family:‘Inter’,sans-serif; }
+.btn-accion:hover { border-color:#FDB913; color:#000; background:#fffbeb; }
+.periodo-info { font-size:12px; color:#94a3b8; font-family:‘Inter’,sans-serif; margin-left:auto; }
+.periodo-info b { color:#e09c00; }
 
 /* ══ REPORTE WRAP ══ */
 .reporte-wrap {
-background: #ffffff;
-border-radius: 12px;
-overflow: hidden;
-box-shadow: 0 4px 24px rgba(0,0,0,0.08);
-border: 1px solid #e2e8f0;
-opacity: 0;
-transform: translateY(14px);
-transition: opacity 0.4s ease, transform 0.4s ease;
+background:#fff; border-radius:12px; overflow:hidden;
+box-shadow:0 4px 24px rgba(0,0,0,0.08); border:1px solid #e2e8f0;
+opacity:0; transform:translateY(14px);
+transition:opacity 0.4s ease, transform 0.4s ease;
 }
-.reporte-wrap.visible {
-opacity: 1;
-transform: translateY(0);
-}
+.reporte-wrap.visible { opacity:1; transform:translateY(0); }
 
-/* ══ HEADER DEL REPORTE ══ */
-.rep-header {
-background: linear-gradient(135deg, #515151 0%, #3a3a3a 100%);
-}
-
-.rep-header-top {
-display: flex;
-align-items: center;
-justify-content: space-between;
-padding: 22px 40px 18px;
-border-bottom: 1px solid rgba(255,255,255,0.07);
-}
-
-.rep-logo-area { display: flex; align-items: center; gap: 16px; }
-
-.rep-logo-bg {
-background: #fff;
-border-radius: 8px;
-width: 46px; height: 46px;
-display: flex; align-items: center; justify-content: center;
-flex-shrink: 0;
-padding: 6px;
-}
-
-.rep-logo-img { max-height: 28px; max-width: 34px; display: block; object-fit: contain; }
-
-.rep-header-titulo {
-font-size: 17px;
-font-weight: 800;
-color: #fff;
-letter-spacing: -0.3px;
-}
-
-.rep-header-sub {
-font-size: 11px;
-color: rgba(255,255,255,0.5);
-font-weight: 500;
-margin-top: 3px;
-}
-
-.rep-mes-chip {
-background: #FDB913;
-color: #000;
-font-size: 13px;
-font-weight: 800;
-padding: 5px 14px;
-border-radius: 4px;
-display: inline-block;
-letter-spacing: 0.5px;
-}
-
-.rep-anio {
-font-size: 11px;
-color: rgba(255,255,255,0.4);
-margin-top: 5px;
-text-align: right;
-font-family: ‘Inter’, sans-serif;
-}
-
-.rep-multi-banner {
-padding: 10px 40px;
-display: flex;
-align-items: center;
-gap: 8px;
-}
-
-.rep-multi-badge {
-background: rgba(253,185,19,0.14);
-border: 1px solid rgba(253,185,19,0.32);
-color: #FDB913;
-font-size: 11px;
-font-weight: 600;
-padding: 4px 12px;
-border-radius: 20px;
-font-family: ‘Inter’, sans-serif;
-}
+/* ══ HEADER REPORTE ══ */
+.rep-header { background:linear-gradient(135deg,#515151 0%,#3a3a3a 100%); }
+.rep-header-top { display:flex; align-items:center; justify-content:space-between; padding:22px 40px 18px; border-bottom:1px solid rgba(255,255,255,0.07); }
+.rep-logo-area { display:flex; align-items:center; gap:16px; }
+.rep-logo-bg { background:#fff; border-radius:8px; width:46px; height:46px; display:flex; align-items:center; justify-content:center; flex-shrink:0; padding:6px; }
+.rep-logo-img { max-height:28px; max-width:34px; display:block; object-fit:contain; }
+.rep-header-titulo { font-size:17px; font-weight:800; color:#fff; letter-spacing:-0.3px; }
+.rep-header-sub { font-size:11px; color:rgba(255,255,255,0.5); font-weight:500; margin-top:3px; }
+.rep-mes-chip { background:#FDB913; color:#000; font-size:13px; font-weight:800; padding:5px 14px; border-radius:4px; display:inline-block; letter-spacing:0.5px; }
+.rep-anio { font-size:11px; color:rgba(255,255,255,0.4); margin-top:5px; text-align:right; font-family:‘Inter’,sans-serif; }
+.rep-multi-banner { padding:10px 40px; display:flex; align-items:center; gap:8px; }
+.rep-multi-badge { background:rgba(253,185,19,0.14); border:1px solid rgba(253,185,19,0.32); color:#FDB913; font-size:11px; font-weight:600; padding:4px 12px; border-radius:20px; font-family:‘Inter’,sans-serif; }
 
 /* ══ KPI SECTION ══ */
-.kpi-section {
-padding: 28px 40px;
-background: #fafbfc;
-border-bottom: 1px solid #e2e8f0;
+.kpi-section { padding:28px 40px; background:#fafbfc; border-bottom:1px solid #e2e8f0; }
+.kpi-row { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+.kpi-box { background:#fff; border:1px solid #e2e8f0; border-radius:10px; padding:16px 18px; display:flex; align-items:center; gap:14px; transition:box-shadow 0.2s,transform 0.2s; }
+.kpi-box:hover { box-shadow:0 4px 16px rgba(0,0,0,0.07); transform:translateY(-1px); }
+.kpi-icon-wrap { width:48px; height:48px; border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.kpi-box.total .kpi-icon-wrap    { background:#fffbeb; }
+.kpi-box.completos .kpi-icon-wrap{ background:#f0fdf4; }
+.kpi-box.incidencias .kpi-icon-wrap{ background:#fef2f2; }
+.kpi-icon-img { width:26px; height:26px; }
+.kpi-num { font-size:34px; font-weight:800; line-height:1; letter-spacing:-1.5px; }
+.kpi-box.total .kpi-num      { color:#FDB913; }
+.kpi-box.completos .kpi-num  { color:#059669; }
+.kpi-box.incidencias .kpi-num{ color:#dc2626; }
+.kpi-label { font-size:12px; font-weight:600; color:#64748b; margin-top:3px; }
+.kpi-pct { font-size:11px; color:#94a3b8; margin-top:2px; font-family:‘Inter’,sans-serif; }
+
+/* ══ SECCIÓN ══ */
+.rep-section { padding:32px 40px; border-bottom:1px solid #f1f5f9; }
+.rep-section:last-child { border-bottom:none; }
+.sec-titulo { text-align:center; margin-bottom:24px; }
+.sec-titulo h2 { font-size:20px; font-weight:800; color:#1a202c; letter-spacing:-0.4px; margin-bottom:5px; }
+.sec-titulo p { font-size:12px; color:#64748b; font-weight:500; }
+
+/* ══ RUBROS — tarjetas de tipo ══ */
+.rubros-grid {
+display: grid;
+grid-template-columns: repeat(5, 1fr);
+gap: 10px;
+margin-bottom: 0;
+}
+.rubro-card {
+background: #fff;
+border: 1px solid #e2e8f0;
+border-radius: 10px;
+padding: 14px 12px;
+text-align: center;
+transition: box-shadow 0.2s, transform 0.2s;
+position: relative;
+overflow: hidden;
+}
+.rubro-card:hover { box-shadow:0 4px 14px rgba(0,0,0,0.07); transform:translateY(-1px); }
+.rubro-card::before {
+content:’’;
+position:absolute;
+top:0; left:0; right:0;
+height:3px;
+}
+.rubro-card.normal::before    { background:#FDB913; }
+.rubro-card.col0::before      { background:#64748b; }
+.rubro-card.renovacion::before{ background:#06b6d4; }
+.rubro-card.reestruc::before  { background:#f97316; }
+.rubro-card.ampliacion::before{ background:#a855f7; }
+
+.rubro-nombre {
+font-size: 10px;
+font-weight: 700;
+color: #64748b;
+text-transform: uppercase;
+letter-spacing: 0.8px;
+margin-bottom: 10px;
+}
+.rubro-total {
+font-size: 28px;
+font-weight: 800;
+line-height: 1;
+letter-spacing: -1px;
+margin-bottom: 2px;
+}
+.rubro-card.normal .rubro-total    { color:#FDB913; }
+.rubro-card.col0 .rubro-total      { color:#64748b; }
+.rubro-card.renovacion .rubro-total{ color:#06b6d4; }
+.rubro-card.reestruc .rubro-total  { color:#f97316; }
+.rubro-card.ampliacion .rubro-total{ color:#a855f7; }
+
+.rubro-sub { font-size:10px; color:#94a3b8; font-weight:500; margin-bottom:8px; }
+.rubro-inc-badge {
+display: inline-flex;
+align-items: center;
+gap: 4px;
+background: #fef2f2;
+border: 1px solid #fecaca;
+border-radius: 4px;
+padding: 3px 8px;
+font-size: 10px;
+font-weight: 700;
+color: #dc2626;
+}
+.rubro-inc-badge.cero {
+background: #f0fdf4;
+border-color: #bbf7d0;
+color: #059669;
 }
 
-.kpi-row {
+/* ══ TARJETAS ETAPAS CIERRE ══ */
+.cierre-grid {
 display: grid;
 grid-template-columns: repeat(3, 1fr);
 gap: 14px;
 }
-
-.kpi-box {
+.cierre-card {
 background: #fff;
 border: 1px solid #e2e8f0;
 border-radius: 10px;
-padding: 16px 18px;
+padding: 18px 16px;
 display: flex;
 align-items: center;
 gap: 14px;
 transition: box-shadow 0.2s, transform 0.2s;
 }
-.kpi-box:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.07); transform: translateY(-1px); }
-
-.kpi-icon-wrap {
-width: 48px; height: 48px;
+.cierre-card:hover { box-shadow:0 4px 16px rgba(0,0,0,0.07); transform:translateY(-1px); }
+.cierre-icon {
+width: 44px; height: 44px;
 border-radius: 10px;
-display: flex; align-items: center; justify-content: center;
+display: flex; align-items:center; justify-content:center;
+font-size: 20px;
 flex-shrink: 0;
 }
-.kpi-box.total .kpi-icon-wrap   { background: #fffbeb; }
-.kpi-box.completos .kpi-icon-wrap { background: #f0fdf4; }
-.kpi-box.incidencias .kpi-icon-wrap { background: #fef2f2; }
-
-.kpi-icon-img { width: 26px; height: 26px; }
-
-.kpi-num {
-font-size: 34px;
+.cierre-card.e1 .cierre-icon { background:#eff6ff; }
+.cierre-card.e2 .cierre-icon { background:#fef3c7; }
+.cierre-card.ef .cierre-icon { background:#f0fdf4; }
+.cierre-num {
+font-size: 30px;
 font-weight: 800;
 line-height: 1;
-letter-spacing: -1.5px;
+letter-spacing: -1px;
 }
-.kpi-box.total .kpi-num      { color: #FDB913; }
-.kpi-box.completos .kpi-num  { color: #059669; }
-.kpi-box.incidencias .kpi-num { color: #dc2626; }
-
-.kpi-label {
-font-size: 12px;
-font-weight: 600;
-color: #64748b;
-margin-top: 3px;
-}
-
-.kpi-pct {
-font-size: 11px;
-color: #94a3b8;
-margin-top: 2px;
-font-family: ‘Inter’, sans-serif;
-}
-
-/* ══ SECCIÓN INTERNA ══ */
-.rep-section {
-padding: 32px 40px;
-border-bottom: 1px solid #f1f5f9;
-}
-.rep-section:last-child { border-bottom: none; }
-
-.sec-titulo {
-text-align: center;
-margin-bottom: 24px;
-}
-.sec-titulo h2 {
-font-size: 20px;
-font-weight: 800;
-color: #1a202c;
-letter-spacing: -0.4px;
-margin-bottom: 5px;
-}
-.sec-titulo p {
-font-size: 12px;
-color: #64748b;
-font-weight: 500;
-}
+.cierre-card.e1 .cierre-num { color:#3b82f6; }
+.cierre-card.e2 .cierre-num { color:#f59e0b; }
+.cierre-card.ef .cierre-num { color:#059669; }
+.cierre-label { font-size:12px; font-weight:600; color:#64748b; margin-top:3px; }
+.cierre-sub   { font-size:10px; color:#94a3b8; margin-top:2px; font-family:‘Inter’,sans-serif; }
 
 /* ══ TABLA BASE ══ */
-.tbl {
-width: 100%;
-border-collapse: collapse;
-border: 1px solid #e2e8f0;
-border-radius: 6px;
-overflow: hidden;
-font-family: ‘Inter’, sans-serif;
-}
-.tbl th {
-background: #f8fafc;
-padding: 11px 18px;
-text-align: left;
+.tbl { width:100%; border-collapse:collapse; border:1px solid #e2e8f0; border-radius:6px; overflow:hidden; font-family:‘Inter’,sans-serif; }
+.tbl th { background:#f8fafc; padding:11px 18px; text-align:left; font-size:10px; text-transform:uppercase; letter-spacing:1px; font-weight:700; color:#4a5568; border-bottom:2px solid #cbd5e1; }
+.tbl td { padding:12px 18px; font-size:13px; border-bottom:1px solid #f1f5f9; vertical-align:middle; }
+.tbl tr:last-child td { border-bottom:none; }
+.tbl tr:nth-child(even) td { background:#f8fafc; }
+.tbl tbody tr:hover td { background:#fffbeb; cursor:pointer; }
+@keyframes rowIn { from{opacity:0;transform:translateX(-6px);} to{opacity:1;transform:translateX(0);} }
+.tbl tbody tr { animation:rowIn 0.25s ease both; }
+
+/* ══ TIPO BADGE ══ */
+.tipo-badge {
+display: inline-block;
+padding: 2px 8px;
+border-radius: 4px;
 font-size: 10px;
-text-transform: uppercase;
-letter-spacing: 1px;
 font-weight: 700;
-color: #4a5568;
-border-bottom: 2px solid #cbd5e1;
+letter-spacing: 0.3px;
+text-transform: uppercase;
 }
-.tbl td {
-padding: 12px 18px;
-font-size: 13px;
-border-bottom: 1px solid #f1f5f9;
-vertical-align: middle;
-}
-.tbl tr:last-child td { border-bottom: none; }
-.tbl tr:nth-child(even) td { background: #f8fafc; }
-.tbl tbody tr:hover td { background: #fffbeb; cursor: pointer; }
+.tipo-normal    { background:#fffbeb; color:#b45309; border:1px solid #fde68a; }
+.tipo-col0      { background:#f8fafc; color:#475569; border:1px solid #cbd5e1; }
+.tipo-renovacion{ background:#ecfeff; color:#0e7490; border:1px solid #a5f3fc; }
+.tipo-reestruc  { background:#fff7ed; color:#c2410c; border:1px solid #fed7aa; }
+.tipo-ampliacion{ background:#faf5ff; color:#7c3aed; border:1px solid #ddd6fe; }
 
-/* Animar aparición de filas */
-@keyframes rowIn {
-from { opacity:0; transform:translateX(-6px); }
-to   { opacity:1; transform:translateX(0); }
-}
-.tbl tbody tr { animation: rowIn 0.25s ease both; }
-
-/* ══ BADGE INCIDENCIA ══ */
-.inc-badge {
-display: inline-flex;
-align-items: center;
-justify-content: center;
-border: 2px solid;
-border-radius: 5px;
-padding: 3px 11px;
-font-size: 14px;
-font-weight: 800;
-min-width: 36px;
-}
+/* ══ INC BADGE ══ */
+.inc-badge { display:inline-flex; align-items:center; justify-content:center; border:2px solid; border-radius:5px; padding:3px 11px; font-size:14px; font-weight:800; min-width:36px; }
 
 /* ══ BARRA PROPORCIÓN ══ */
-.prop-bar-bg {
-background: #f1f5f9;
-border-radius: 3px;
-height: 4px;
-margin-top: 6px;
-max-width: 200px;
-overflow: hidden;
-}
-.prop-bar {
-height: 100%;
-border-radius: 3px;
-transition: width 0.9s cubic-bezier(0.4,0,0.2,1);
-}
+.prop-bar-bg { background:#f1f5f9; border-radius:3px; height:4px; margin-top:6px; max-width:200px; overflow:hidden; }
+.prop-bar { height:100%; border-radius:3px; transition:width 0.9s cubic-bezier(0.4,0,0.2,1); }
 
-/* ══ ÁREA HEADER (acordeón) ══ */
-.area-header-row {
-display: flex;
-align-items: center;
-gap: 12px;
-padding: 14px 18px;
-border-radius: 8px;
-border: 1px solid;
-cursor: pointer;
-transition: filter 0.15s, box-shadow 0.15s;
-margin-bottom: 8px;
-user-select: none;
-}
-.area-header-row:hover { filter: brightness(0.97); box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+/* ══ ÁREA ACORDEÓN ══ */
+.area-header-row { display:flex; align-items:center; gap:12px; padding:14px 18px; border-radius:8px; border:1px solid; cursor:pointer; transition:filter 0.15s,box-shadow 0.15s; margin-bottom:8px; user-select:none; }
+.area-header-row:hover { filter:brightness(0.97); box-shadow:0 2px 8px rgba(0,0,0,0.06); }
+.area-icon { width:38px; height:38px; }
+.area-nombre { font-size:15px; font-weight:700; color:#1a202c; }
+.area-subtext { font-size:11px; color:#718096; font-weight:600; margin-top:2px; }
+.area-chevron { margin-left:auto; font-size:18px; color:#94a3b8; transition:transform 0.3s; }
+.area-header-row.open .area-chevron { transform:rotate(180deg); }
+.area-badge-num { width:46px; height:46px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:17px; font-weight:900; color:#fff; flex-shrink:0; text-shadow:0 1px 2px rgba(0,0,0,0.12); }
+.area-ok { padding:14px 18px; border-radius:8px; background:#f0fdf4; border:1px solid #86efac; display:flex; align-items:center; gap:12px; margin-bottom:8px; }
+.area-ok-nombre { font-size:15px; font-weight:700; color:#1a202c; }
+.area-ok-sub { font-size:13px; color:#047857; font-weight:600; margin-top:1px; }
+.area-detail-table { max-height:0; overflow:hidden; transition:max-height 0.4s cubic-bezier(0.4,0,0.2,1); margin-bottom:8px; }
+.area-detail-table.open { max-height:2000px; }
 
-.area-icon { width: 38px; height: 38px; }
-
-.area-nombre {
-font-size: 15px;
-font-weight: 700;
-color: #1a202c;
-}
-.area-subtext {
-font-size: 11px;
-color: #718096;
-font-weight: 600;
-margin-top: 2px;
-}
-
-.area-chevron {
-margin-left: auto;
-font-size: 18px;
-color: #94a3b8;
-transition: transform 0.3s;
-}
-.area-header-row.open .area-chevron { transform: rotate(180deg); }
-
-.area-badge-num {
-width: 46px; height: 46px;
-border-radius: 50%;
-display: flex; align-items: center; justify-content: center;
-font-size: 17px;
-font-weight: 900;
-color: #fff;
-flex-shrink: 0;
-text-shadow: 0 1px 2px rgba(0,0,0,0.12);
-}
-
-.area-ok {
-padding: 14px 18px;
-border-radius: 8px;
-background: #f0fdf4;
-border: 1px solid #86efac;
-display: flex;
-align-items: center;
-gap: 12px;
-margin-bottom: 8px;
-}
-.area-ok-nombre { font-size: 15px; font-weight: 700; color: #1a202c; }
-.area-ok-sub { font-size: 13px; color: #047857; font-weight: 600; margin-top: 1px; }
-
-/* Acordeón */
-.area-detail-table {
-max-height: 0;
-overflow: hidden;
-transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1);
-margin-bottom: 8px;
-}
-.area-detail-table.open { max-height: 1000px; }
-
-/* ══ SORT CONTROL ══ */
-.tbl-controls {
-display: flex;
-align-items: flex-end;
-justify-content: space-between;
-margin-bottom: 12px;
-gap: 12px;
-}
-.sort-sel {
-background: #f8fafc;
-border: 1px solid #e2e8f0;
-border-radius: 5px;
-padding: 5px 10px;
-font-size: 11px;
-font-weight: 700;
-color: #515151;
-cursor: pointer;
-font-family: ‘Inter’, sans-serif;
-}
-
-/* ══ EMPTY STATE ══ */
-.empty-rep {
-text-align: center;
-padding: 60px 20px;
-color: #94a3b8;
-}
-.empty-rep-icon { font-size: 40px; margin-bottom: 12px; }
-.empty-rep-text { font-size: 15px; font-weight: 500; }
-
-/* ══ ANIMACIONES ══ */
-@keyframes fadeSlide {
-from { opacity:0; transform:translateY(10px); }
-to   { opacity:1; transform:translateY(0); }
-}
-.rep-section { animation: fadeSlide 0.35s ease both; }
-.rep-section:nth-child(2) { animation-delay: 0.05s; }
-.rep-section:nth-child(3) { animation-delay: 0.10s; }
-.rep-section:nth-child(4) { animation-delay: 0.15s; }
-
-@keyframes numPop {
-from { opacity:0; transform:scale(0.82); }
-to   { opacity:1; transform:scale(1); }
-}
-.num-pop { animation: numPop 0.4s cubic-bezier(0.34,1.56,0.64,1) both; }
-
-/* ══ PANEL DETALLE SLIDE ══ */
-.overlay {
-position: fixed; inset:0;
-background: rgba(0,0,0,0.32);
-z-index: 300;
-display: none;
-backdrop-filter: blur(2px);
-}
-.overlay.open { display: block; }
-
-.slide-panel {
-position: fixed;
-right: -520px; top:0; bottom:0;
-width: 460px;
-background: #fff;
-z-index: 400;
-box-shadow: -8px 0 40px rgba(0,0,0,0.15);
-transition: right 0.35s cubic-bezier(0.4,0,0.2,1);
-overflow-y: auto;
-border-left: 4px solid #FDB913;
-}
-.slide-panel.open { right: 0; }
-
-.sp-header {
-background: #515151;
-padding: 22px 26px 18px;
-position: relative;
-}
-.sp-close {
-position: absolute; top:14px; right:14px;
-width: 30px; height:30px;
-background: rgba(255,255,255,0.1);
-border: 1px solid rgba(255,255,255,0.2);
-border-radius: 5px;
-color: #fff; font-size:18px;
-cursor: pointer;
-display: flex; align-items:center; justify-content:center;
+/* ══ DOCUMENTO ROW (detalle área) ══ */
+.doc-row {
+display: grid;
+grid-template-columns: auto 1fr;
+gap: 10px 14px;
+padding: 12px 18px;
+border-bottom: 1px solid #f1f5f9;
+align-items: start;
 transition: background 0.15s;
 }
-.sp-close:hover { background: rgba(255,255,255,0.2); }
-
-.sp-id {
-font-size: 19px; font-weight:800; color:#fff;
-letter-spacing:-0.3px; padding-right:36px; margin-bottom:3px;
+.doc-row:last-child { border-bottom: none; }
+.doc-row:hover { background: #fffbeb; }
+.doc-nombre {
+font-size: 12px;
+font-weight: 700;
+color: #1a202c;
+line-height: 1.4;
 }
-.sp-fecha {
-font-size:12px; color:rgba(255,255,255,0.5);
-font-family:‘Inter’,sans-serif;
+.doc-obs {
+font-size: 11px;
+color: #718096;
+line-height: 1.4;
+margin-top: 2px;
 }
-
-.sp-body { padding: 22px 26px; }
-
-.sp-kpi-row {
-display: grid;
-grid-template-columns: 1fr 1fr;
-gap: 12px;
-margin-bottom: 22px;
-}
-.sp-kpi {
-background: #f8fafc;
-border: 1px solid #e2e8f0;
-border-radius: 8px;
-padding: 14px 16px;
-}
-.sp-kpi-label {
-font-size: 10px; font-weight:700; color:#94a3b8;
-text-transform:uppercase; letter-spacing:1px; margin-bottom:6px;
-}
-.sp-kpi-val {
-font-size:30px; font-weight:800;
-color:#dc2626; letter-spacing:-1px; line-height:1;
+.doc-dot {
+width: 8px; height: 8px;
+border-radius: 50%;
+margin-top: 4px;
+flex-shrink: 0;
 }
 
-.sp-sec-label {
-font-size:10px; font-weight:700; color:#94a3b8;
-text-transform:uppercase; letter-spacing:1.2px;
-margin-bottom:12px; padding-bottom:8px;
-border-bottom:1px solid #f1f5f9;
-}
+/* ══ SORT CONTROL ══ */
+.tbl-controls { display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:12px; gap:12px; }
+.sort-sel { background:#f8fafc; border:1px solid #e2e8f0; border-radius:5px; padding:5px 10px; font-size:11px; font-weight:700; color:#515151; cursor:pointer; font-family:‘Inter’,sans-serif; }
 
-.sp-area-row {
-display:flex; align-items:center; justify-content:space-between;
-padding:11px 0; border-bottom:1px solid #f8fafc;
-}
+/* ══ EMPTY ══ */
+.empty-rep { text-align:center; padding:60px 20px; color:#94a3b8; }
+.empty-rep-icon { font-size:40px; margin-bottom:12px; }
+.empty-rep-text { font-size:15px; font-weight:500; }
+
+/* ══ ANIMACIONES ══ */
+@keyframes fadeSlide { from{opacity:0;transform:translateY(10px);} to{opacity:1;transform:translateY(0);} }
+.rep-section { animation:fadeSlide 0.35s ease both; }
+.rep-section:nth-child(2){ animation-delay:0.05s; }
+.rep-section:nth-child(3){ animation-delay:0.10s; }
+.rep-section:nth-child(4){ animation-delay:0.15s; }
+.rep-section:nth-child(5){ animation-delay:0.20s; }
+.rep-section:nth-child(6){ animation-delay:0.25s; }
+@keyframes numPop { from{opacity:0;transform:scale(0.82);} to{opacity:1;transform:scale(1);} }
+.num-pop { animation:numPop 0.4s cubic-bezier(0.34,1.56,0.64,1) both; }
+
+/* ══ PANEL DETALLE ══ */
+.overlay { position:fixed; inset:0; background:rgba(0,0,0,0.32); z-index:300; display:none; backdrop-filter:blur(2px); }
+.overlay.open { display:block; }
+.slide-panel { position:fixed; right:-520px; top:0; bottom:0; width:460px; background:#fff; z-index:400; box-shadow:-8px 0 40px rgba(0,0,0,0.15); transition:right 0.35s cubic-bezier(0.4,0,0.2,1); overflow-y:auto; border-left:4px solid #FDB913; }
+.slide-panel.open { right:0; }
+.sp-header { background:#515151; padding:22px 26px 18px; position:relative; }
+.sp-close { position:absolute; top:14px; right:14px; width:30px; height:30px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); border-radius:5px; color:#fff; font-size:18px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background 0.15s; }
+.sp-close:hover { background:rgba(255,255,255,0.2); }
+.sp-id { font-size:19px; font-weight:800; color:#fff; letter-spacing:-0.3px; padding-right:36px; margin-bottom:3px; }
+.sp-fecha { font-size:12px; color:rgba(255,255,255,0.5); font-family:‘Inter’,sans-serif; }
+.sp-body { padding:22px 26px; }
+.sp-kpi-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:22px; }
+.sp-kpi { background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:14px 16px; }
+.sp-kpi-label { font-size:10px; font-weight:700; color:#94a3b8; text-transform:uppercase; letter-spacing:1px; margin-bottom:6px; }
+.sp-kpi-val { font-size:30px; font-weight:800; color:#dc2626; letter-spacing:-1px; line-height:1; }
+.sp-sec-label { font-size:10px; font-weight:700; color:#94a3b8; text-transform:uppercase; letter-spacing:1.2px; margin-bottom:12px; padding-bottom:8px; border-bottom:1px solid #f1f5f9; }
+.sp-area-row { display:flex; align-items:center; justify-content:space-between; padding:11px 0; border-bottom:1px solid #f8fafc; }
 .sp-area-row:last-child { border-bottom:none; }
 .sp-area-left { display:flex; align-items:center; gap:10px; }
 .sp-area-dot { width:10px; height:10px; border-radius:2px; flex-shrink:0; }
@@ -653,8 +348,7 @@ padding:11px 0; border-bottom:1px solid #f8fafc;
 
 <header class="site-header">
   <div class="header-brand">
-    <img src="https://cualli.mx/wp-content/uploads/2022/07/cualli-bl@3x.png"
-         alt="Cualli"
+    <img src="https://cualli.mx/wp-content/uploads/2022/07/cualli-bl@3x.png" alt="Cualli"
          style="height:28px;display:block;"
          onerror="this.style.display='none';document.getElementById('logoFallback').style.display='flex'">
     <div id="logoFallback" style="display:none;background:#FDB913;border-radius:4px;padding:3px 10px;font-weight:800;font-size:13px;color:#000;">CUALLI</div>
@@ -706,7 +400,7 @@ padding:11px 0; border-bottom:1px solid #f8fafc;
 
 </div>
 
-<!-- OVERLAY + PANEL DETALLE EXPEDIENTE -->
+<!-- PANEL DETALLE -->
 
 <div class="overlay" id="overlay" onclick="cerrarPanel()"></div>
 <div class="slide-panel" id="slidePanel">
@@ -733,34 +427,14 @@ padding:11px 0; border-bottom:1px solid #f8fafc;
 
 <script>
 // ════════════════════════════════════════
-// CONFIG ÁREAS — IDÉNTICA A TU CÓDIGO ORIGINAL
+// CONFIG
 // ════════════════════════════════════════
 const AREAS_CFG = {
-  'Comercial': {
-    color:'#f97316', colorClaro:'#fb923c', colorOscuro:'#ea580c',
-    colorBg:'#fff7ed', colorBorder:'#fed7aa',
-    icono:'https://cdn-icons-png.freepik.com/512/14598/14598062.png'
-  },
-  'Cartera': {
-    color:'#ec4899', colorClaro:'#f472b6', colorOscuro:'#db2777',
-    colorBg:'#fdf2f8', colorBorder:'#fbcfe8',
-    icono:'https://cdn-icons-png.freepik.com/512/8376/8376410.png'
-  },
-  'Crédito': {
-    color:'#06b6d4', colorClaro:'#22d3ee', colorOscuro:'#0891b2',
-    colorBg:'#ecfeff', colorBorder:'#a5f3fc',
-    icono:'https://cdn-icons-png.freepik.com/512/1674/1674640.png'
-  },
-  'Jurídico': {
-    color:'#84cc16', colorClaro:'#C7FF6C', colorOscuro:'#0DA31A',
-    colorBg:'#f7fee7', colorBorder:'#d9f99d',
-    icono:'https://cdn-icons-png.freepik.com/512/4252/4252349.png'
-  },
-  'PLD': {
-    color:'#a855f7', colorClaro:'#D3A7FF', colorOscuro:'#9333ea',
-    colorBg:'#faf5ff', colorBorder:'#e9d5ff',
-    icono:'https://cdn-icons-png.freepik.com/512/3359/3359520.png'
-  }
+  'Comercial': { color:'#f97316', colorClaro:'#fb923c', colorOscuro:'#ea580c', colorBg:'#fff7ed', colorBorder:'#fed7aa', icono:'https://cdn-icons-png.freepik.com/512/14598/14598062.png' },
+  'Cartera':   { color:'#ec4899', colorClaro:'#f472b6', colorOscuro:'#db2777', colorBg:'#fdf2f8', colorBorder:'#fbcfe8', icono:'https://cdn-icons-png.freepik.com/512/8376/8376410.png' },
+  'Crédito':   { color:'#06b6d4', colorClaro:'#22d3ee', colorOscuro:'#0891b2', colorBg:'#ecfeff', colorBorder:'#a5f3fc', icono:'https://cdn-icons-png.freepik.com/512/1674/1674640.png' },
+  'Jurídico':  { color:'#84cc16', colorClaro:'#C7FF6C', colorOscuro:'#0DA31A', colorBg:'#f7fee7', colorBorder:'#d9f99d', icono:'https://cdn-icons-png.freepik.com/512/4252/4252349.png' },
+  'PLD':       { color:'#a855f7', colorClaro:'#D3A7FF', colorOscuro:'#9333ea', colorBg:'#faf5ff', colorBorder:'#e9d5ff', icono:'https://cdn-icons-png.freepik.com/512/3359/3359520.png' }
 };
 
 const ICONOS_KPI = {
@@ -769,66 +443,67 @@ const ICONOS_KPI = {
   incidencias: 'https://cdn-icons-png.freepik.com/512/7100/7100197.png'
 };
 
-// ════════════════════════════════════════
-// DATOS DEMO — sustituir por google.script.run
-// ════════════════════════════════════════
-function generarDemo() {
-  const bd = {};
-  [2024, 2025].forEach(a => {
-    for (let m = 1; m <= 12; m++) {
-      const k = `${a}-${String(m).padStart(2,'0')}`;
-      const total = Math.floor(Math.random() * 26) + 12;
-      const conInc = Math.floor(total * (Math.random() * 0.4 + 0.08));
-      const sinInc = total - conInc;
-      const inc = [];
-      const aKeys = Object.keys(AREAS_CFG);
-      for (let i = 0; i < conInc; i++) {
-        const n = Math.floor(Math.random() * 3) + 1;
-        const sel = [...aKeys].sort(() => Math.random() - 0.5).slice(0, n);
-        const areasObj = {};
-        let tot = 0;
-        sel.forEach(ar => { const v = Math.floor(Math.random()*4)+1; areasObj[ar]=v; tot+=v; });
-        const d = Math.floor(Math.random()*28)+1;
-        // Construir "areas" en texto igual que tu función original
-        const areasTexto = sel.map(ar => `${ar}: ${areasObj[ar]}`).join(', ');
-        inc.push({
-          id:    `OPP-${a}${String(m).padStart(2,'0')}-${1000+i}`,
-          fecha: `${String(d).padStart(2,'0')}/${String(m).padStart(2,'0')}/${a}`,
-          totalIncidencias: tot,
-          areas: areasTexto,   // formato texto como en tu código original
-          _areasMap: areasObj  // mapa para uso interno
-        });
-      }
-      bd[k] = { total, sinIncidencias: sinInc, conIncidencias: conInc, incidencias: inc };
-    }
-  });
-  return bd;
-}
-
-const BD = generarDemo();
+const RUBROS_CFG = {
+  'Normal':       { cls:'normal',     label:'Normal / Originación', emoji:'🏠' },
+  'Colocación 0': { cls:'col0',       label:'Colocación 0',         emoji:'🔵' },
+  'Renovación':   { cls:'renovacion', label:'Renovación',           emoji:'🔄' },
+  'Reestructura': { cls:'reestruc',   label:'Reestructura',         emoji:'🔧' },
+  'Ampliación':   { cls:'ampliacion', label:'Ampliación',           emoji:'📈' }
+};
 
 // ════════════════════════════════════════
 // ESTADO
 // ════════════════════════════════════════
 const MESES_S = ['','Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
 const MESES_L = ['','Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-let anio = 2025;
+let anio  = 2025;
 let meses = [];
+let BD    = {};
 
 // ════════════════════════════════════════
-// INIT
+// INIT — conexión real con Apps Script
 // ════════════════════════════════════════
 document.addEventListener('DOMContentLoaded', () => {
   const hoy = new Date();
   document.getElementById('fechaHoy').textContent =
     hoy.toLocaleDateString('es-MX',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
-  renderMeses();
-  const mc = hoy.getMonth() + 1;
-  if (BD[`${anio}-${String(mc).padStart(2,'0')}`]) {
-    meses = [mc];
-    renderMeses();
-    renderReporte();
-  }
+
+  document.getElementById('repContenido').innerHTML = `
+    <div class="empty-rep">
+      <div class="empty-rep-icon">⏳</div>
+      <div class="empty-rep-text">Cargando datos...</div>
+    </div>`;
+
+  google.script.run
+    .withSuccessHandler(datos => {
+      BD = datos;
+      // Detectar año más reciente con datos
+      const aniosDisp = Object.keys(BD).map(k => parseInt(k.split('-')[0])).filter(Boolean);
+      if (aniosDisp.length) anio = Math.max(...aniosDisp);
+      renderMeses();
+      const mc    = hoy.getMonth() + 1;
+      const clave = `${anio}-${String(mc).padStart(2,'0')}`;
+      if (BD[clave]) {
+        meses = [mc];
+        renderMeses();
+        renderReporte();
+      } else {
+        document.getElementById('repContenido').innerHTML = `
+          <div class="empty-rep">
+            <div class="empty-rep-icon">📅</div>
+            <div class="empty-rep-text">Selecciona un período para ver el reporte</div>
+          </div>`;
+      }
+    })
+    .withFailureHandler(err => {
+      console.error('Error:', err);
+      document.getElementById('repContenido').innerHTML = `
+        <div class="empty-rep">
+          <div class="empty-rep-icon">⚠️</div>
+          <div class="empty-rep-text">Error al cargar datos. Revisa la consola.</div>
+        </div>`;
+    })
+    .getDatosTESI();
 });
 
 // ════════════════════════════════════════
@@ -840,11 +515,11 @@ function renderMeses() {
   for (let m = 1; m <= 12; m++) {
     const tiene = !!BD[`${anio}-${String(m).padStart(2,'0')}`];
     const sel   = meses.includes(m);
-    const btn = document.createElement('button');
-    btn.className = 'mes-chip' + (sel ? ' sel' : '');
+    const btn   = document.createElement('button');
+    btn.className   = 'mes-chip' + (sel ? ' sel' : '');
     btn.textContent = MESES_S[m];
-    btn.disabled = !tiene;
-    btn.onclick = () => toggleMes(m);
+    btn.disabled    = !tiene;
+    btn.onclick     = () => toggleMes(m);
     row.appendChild(btn);
   }
   document.getElementById('yearVal').textContent = anio;
@@ -853,8 +528,8 @@ function renderMeses() {
 
 function toggleMes(m) {
   const i = meses.indexOf(m);
-  i > -1 ? meses.splice(i, 1) : meses.push(m);
-  meses.sort((a, b) => a - b);
+  i > -1 ? meses.splice(i,1) : meses.push(m);
+  meses.sort((a,b) => a-b);
   renderMeses();
   renderReporte();
 }
@@ -880,14 +555,14 @@ function cambiarAnio(d) {
 
 function actualizarInfo() {
   const el = document.getElementById('periodoInfo');
-  if (!meses.length) { el.innerHTML = 'Selecciona uno o más meses'; return; }
+  if (!meses.length)       { el.innerHTML = 'Selecciona uno o más meses'; return; }
   if (meses.length === 12) { el.innerHTML = `<b>Año ${anio} completo</b>`; return; }
   if (meses.length === 1)  { el.innerHTML = `<b>${MESES_L[meses[0]]} ${anio}</b>`; return; }
   el.innerHTML = `<b>${MESES_S[meses[0]]}–${MESES_S[meses[meses.length-1]]} ${anio}</b> (${meses.length} meses)`;
 }
 
 function getPeriodoLabel() {
-  if (!meses.length)      return '';
+  if (!meses.length)       return '';
   if (meses.length === 12) return `Año ${anio}`;
   if (meses.length === 1)  return `${MESES_L[meses[0]]} ${anio}`;
   return `${MESES_S[meses[0]]}–${MESES_S[meses[meses.length-1]]} ${anio}`;
@@ -899,6 +574,9 @@ function getPeriodoLabel() {
 function getAgregado() {
   if (!meses.length) return null;
   let total=0, sinInc=0, conInc=0, inc=[];
+  const conteoPorTipo  = { 'Normal':{total:0,conIncidencias:0}, 'Colocación 0':{total:0,conIncidencias:0}, 'Renovación':{total:0,conIncidencias:0}, 'Reestructura':{total:0,conIncidencias:0}, 'Ampliación':{total:0,conIncidencias:0} };
+  const etapasCierre   = { '1a Revision':0, '2a Revision':0, 'Final':0 };
+
   meses.forEach(m => {
     const d = BD[`${anio}-${String(m).padStart(2,'0')}`];
     if (!d) return;
@@ -906,11 +584,28 @@ function getAgregado() {
     sinInc += d.sinIncidencias;
     conInc += d.conIncidencias;
     d.incidencias.forEach(e => inc.push(e));
+
+    // Acumular tipos
+    if (d.conteoPorTipo) {
+      Object.entries(d.conteoPorTipo).forEach(([tipo, vals]) => {
+        if (conteoPorTipo[tipo]) {
+          conteoPorTipo[tipo].total          += vals.total          || 0;
+          conteoPorTipo[tipo].conIncidencias += vals.conIncidencias || 0;
+        }
+      });
+    }
+
+    // Acumular etapas cierre
+    if (d.etapasCierre) {
+      Object.entries(d.etapasCierre).forEach(([etapa, n]) => {
+        if (etapasCierre[etapa] !== undefined) etapasCierre[etapa] += n || 0;
+      });
+    }
   });
-  return { total, sinIncidencias: sinInc, conIncidencias: conInc, incidencias: inc };
+
+  return { total, sinIncidencias:sinInc, conIncidencias:conInc, incidencias:inc, conteoPorTipo, etapasCierre };
 }
 
-// Parsear texto "Area: N, Area2: N2" igual que tu regex original
 function parsearAreas(textoAreas) {
   const resultado = {};
   Object.keys(AREAS_CFG).forEach(nombre => {
@@ -926,7 +621,7 @@ function totalesPorArea(incidencias) {
   Object.keys(AREAS_CFG).forEach(a => t[a] = 0);
   incidencias.forEach(exp => {
     const map = exp._areasMap || parsearAreas(exp.areas);
-    Object.entries(map).forEach(([a, n]) => { if (t[a] !== undefined) t[a] += n; });
+    Object.entries(map).forEach(([a,n]) => { if (t[a] !== undefined) t[a] += n; });
   });
   return t;
 }
@@ -935,9 +630,9 @@ function totalesPorArea(incidencias) {
 // RENDER PRINCIPAL
 // ════════════════════════════════════════
 function renderReporte() {
-  const datos   = getAgregado();
-  const wrap    = document.getElementById('repWrap');
-  const cont    = document.getElementById('repContenido');
+  const datos = getAgregado();
+  const wrap  = document.getElementById('repWrap');
+  const cont  = document.getElementById('repContenido');
 
   if (!datos) {
     cont.innerHTML = `<div class="empty-rep"><div class="empty-rep-icon">📅</div><div class="empty-rep-text">Selecciona un período para ver el reporte</div></div>`;
@@ -945,20 +640,22 @@ function renderReporte() {
     return;
   }
 
-  const pctC   = datos.total ? Math.round((datos.sinIncidencias / datos.total) * 100) : 0;
-  const pctI   = datos.total ? Math.round((datos.conIncidencias / datos.total) * 100) : 0;
-  const label  = getPeriodoLabel();
-  const esMulti= meses.length > 1;
-  const chipTxt= meses.length === 1 ? MESES_L[meses[0]].toUpperCase() : `${meses.length} MESES`;
+  const pctC    = datos.total ? Math.round((datos.sinIncidencias / datos.total) * 100) : 0;
+  const pctI    = datos.total ? Math.round((datos.conIncidencias / datos.total) * 100) : 0;
+  const label   = getPeriodoLabel();
+  const esMulti = meses.length > 1;
+  const chipTxt = meses.length === 1 ? MESES_L[meses[0]].toUpperCase() : `${meses.length} MESES`;
   const totArea = totalesPorArea(datos.incidencias);
-  const totalIncs = Object.values(totArea).reduce((s,v)=>s+v, 0);
+  const totalIncs = Object.values(totArea).reduce((s,v) => s+v, 0);
 
   cont.innerHTML =
     htmlHeader(chipTxt, label, esMulti) +
     htmlKPIs(datos.total, datos.sinIncidencias, datos.conIncidencias, pctC, pctI) +
+    htmlRubros(datos.conteoPorTipo, label) +
     htmlDistribucion(totArea, totalIncs, label) +
     htmlExpedientes(datos.incidencias) +
-    htmlDetalleAreas(datos.incidencias, totArea);
+    htmlDetalleAreas(datos.incidencias, totArea) +
+    htmlEtapasCierre(datos.etapasCierre, datos.sinIncidencias);
 
   wrap.classList.remove('visible');
   requestAnimationFrame(() => requestAnimationFrame(() => wrap.classList.add('visible')));
@@ -971,8 +668,7 @@ function htmlHeader(chipTxt, label, esMulti) {
     <div class="rep-header-top">
       <div class="rep-logo-area">
         <div class="rep-logo-bg">
-          <img src="https://cualli.mx/wp-content/uploads/2022/07/logo-cualli@3x.png"
-               class="rep-logo-img" alt="Cualli"
+          <img src="https://cualli.mx/wp-content/uploads/2022/07/logo-cualli@3x.png" class="rep-logo-img" alt="Cualli"
                onerror="this.src='https://cualli.mx/wp-content/uploads/2022/07/cualli-bl@3x.png'">
         </div>
         <div>
@@ -996,33 +692,49 @@ function htmlKPIs(total, completos, incidencias, pctC, pctI) {
     <div class="kpi-row">
       <div class="kpi-box total">
         <div class="kpi-icon-wrap"><img src="${ICONOS_KPI.total}" class="kpi-icon-img" alt="total"></div>
-        <div>
-          <div class="kpi-num num-pop">${total}</div>
-          <div class="kpi-label">Expedientes Evaluados</div>
-          <div class="kpi-pct">Total del período</div>
-        </div>
+        <div><div class="kpi-num num-pop">${total}</div><div class="kpi-label">Expedientes Evaluados</div><div class="kpi-pct">Total del período</div></div>
       </div>
       <div class="kpi-box completos">
         <div class="kpi-icon-wrap"><img src="${ICONOS_KPI.completos}" class="kpi-icon-img" alt="completos"></div>
-        <div>
-          <div class="kpi-num num-pop">${completos}</div>
-          <div class="kpi-label">Sin Incidencias</div>
-          <div class="kpi-pct">${pctC}% conformes</div>
-        </div>
+        <div><div class="kpi-num num-pop">${completos}</div><div class="kpi-label">Sin Incidencias</div><div class="kpi-pct">${pctC}% conformes</div></div>
       </div>
       <div class="kpi-box incidencias">
         <div class="kpi-icon-wrap"><img src="${ICONOS_KPI.incidencias}" class="kpi-icon-img" alt="incidencias"></div>
-        <div>
-          <div class="kpi-num num-pop">${incidencias}</div>
-          <div class="kpi-label">Con Incidencias</div>
-          <div class="kpi-pct">${pctI}% con observaciones</div>
-        </div>
+        <div><div class="kpi-num num-pop">${incidencias}</div><div class="kpi-label">Con Incidencias</div><div class="kpi-pct">${pctI}% con observaciones</div></div>
       </div>
     </div>
   </div>`;
 }
 
-// ── DISTRIBUCIÓN POR ÁREA (idéntica a generarGraficoBarrasPorAreaEjecutivo) ──
+// ── RUBROS POR TIPO ──
+function htmlRubros(conteoPorTipo, label) {
+  if (!conteoPorTipo) return '';
+
+  const tarjetas = Object.entries(RUBROS_CFG).map(([tipo, cfg]) => {
+    const datos = conteoPorTipo[tipo] || { total:0, conIncidencias:0 };
+    const tieneInc = datos.conIncidencias > 0;
+    return `
+      <div class="rubro-card ${cfg.cls}">
+        <div class="rubro-nombre">${cfg.emoji} ${cfg.label}</div>
+        <div class="rubro-total num-pop">${datos.total}</div>
+        <div class="rubro-sub">expediente${datos.total !== 1 ? 's' : ''}</div>
+        <div class="${tieneInc ? 'rubro-inc-badge' : 'rubro-inc-badge cero'}">
+          ${tieneInc ? '⚠️' : '✓'} ${datos.conIncidencias} inc.
+        </div>
+      </div>`;
+  }).join('');
+
+  return `
+  <div class="rep-section">
+    <div class="sec-titulo">
+      <h2>Expedientes por Tipo</h2>
+      <p>Distribución de incidencias según el tipo de operación · ${label}</p>
+    </div>
+    <div class="rubros-grid">${tarjetas}</div>
+  </div>`;
+}
+
+// ── DISTRIBUCIÓN POR ÁREA ──
 function htmlDistribucion(totArea, totalIncs, label) {
   if (totalIncs === 0) {
     return `
@@ -1041,14 +753,13 @@ function htmlDistribucion(totArea, totalIncs, label) {
   }
 
   const areasConInc = Object.entries(totArea).filter(([,v]) => v > 0);
-
   const filas = areasConInc.map(([nombre, valor], idx) => {
     const a   = AREAS_CFG[nombre];
     const pct = Math.round((valor / totalIncs) * 100);
     const bg  = idx % 2 === 0 ? '#ffffff' : '#f8fafc';
-    const borderColor = idx === areasConInc.length - 1 ? 'transparent' : '#e2e8f0';
+    const bc  = idx === areasConInc.length - 1 ? 'transparent' : '#e2e8f0';
     return `
-      <tr style="background:${bg};border-bottom:1px solid ${borderColor};" onclick="abrirDetalleArea('${nombre}')">
+      <tr style="background:${bg};border-bottom:1px solid ${bc};" onclick="abrirDetalleArea('${nombre}')">
         <td>
           <div style="display:flex;align-items:center;gap:10px;">
             <img src="${a.icono}" width="34" height="34" alt="${nombre}" style="border-radius:4px;flex-shrink:0;">
@@ -1076,32 +787,32 @@ function htmlDistribucion(totArea, totalIncs, label) {
       <p>Período: ${label} · Total: ${totalIncs} incidencias</p>
     </div>
     <table class="tbl">
-      <thead>
-        <tr>
-          <th style="width:30%">Área</th>
-          <th style="width:15%;text-align:center;">Incidencias</th>
-          <th style="width:55%">Descripción</th>
-        </tr>
-      </thead>
+      <thead><tr>
+        <th style="width:30%">Área</th>
+        <th style="width:15%;text-align:center;">Incidencias</th>
+        <th style="width:55%">Descripción</th>
+      </tr></thead>
       <tbody>${filas}</tbody>
     </table>
   </div>`;
 }
 
-// ── EXPEDIENTES CON INCIDENCIAS (idéntica a generarSeccionExpedientesIncidenciasEjecutivo) ──
+// ── EXPEDIENTES CON INCIDENCIAS ──
 function htmlExpedientes(incidencias) {
   if (!incidencias.length) return '';
   const sorted  = [...incidencias].sort((a,b) => b.totalIncidencias - a.totalIncidencias);
   const mostrar = sorted.slice(0, 15);
 
   const filas = mostrar.map((exp, idx) => {
-    const bg          = idx % 2 === 0 ? '#ffffff' : '#f8fafc';
-    const borderColor = idx === mostrar.length - 1 ? 'transparent' : '#e2e8f0';
+    const bg  = idx % 2 === 0 ? '#ffffff' : '#f8fafc';
+    const bc  = idx === mostrar.length - 1 ? 'transparent' : '#e2e8f0';
+    const tipoCls = tipoCSSClass(exp.tipo);
     return `
       <tr style="background:${bg};" onclick='abrirDetalle(${esJSON(exp)})'>
-        <td style="border-bottom:1px solid ${borderColor};"><span style="font-weight:600;font-size:13px;">${exp.id}</span></td>
-        <td style="border-bottom:1px solid ${borderColor};"><span style="color:#718096;font-size:13px;">${exp.fecha}</span></td>
-        <td style="border-bottom:1px solid ${borderColor};text-align:center;">
+        <td style="border-bottom:1px solid ${bc};"><span style="font-weight:600;font-size:13px;">${exp.id}</span></td>
+        <td style="border-bottom:1px solid ${bc};"><span style="color:#718096;font-size:13px;">${exp.fecha}</span></td>
+        <td style="border-bottom:1px solid ${bc};"><span class="tipo-badge ${tipoCls}">${exp.tipo || '—'}</span></td>
+        <td style="border-bottom:1px solid ${bc};text-align:center;">
           <span class="inc-badge" style="border-color:#dc2626;color:#dc2626;">${exp.totalIncidencias}</span>
         </td>
       </tr>`;
@@ -1123,54 +834,62 @@ function htmlExpedientes(incidencias) {
       </select>
     </div>
     <table class="tbl">
-      <thead>
-        <tr>
-          <th style="width:45%">ID Oportunidad</th>
-          <th style="width:35%">Fecha de Firma</th>
-          <th style="width:20%;text-align:center;">Incidencias</th>
-        </tr>
-      </thead>
+      <thead><tr>
+        <th style="width:35%">ID Oportunidad</th>
+        <th style="width:20%">Fecha de Firma</th>
+        <th style="width:25%">Tipo</th>
+        <th style="width:20%;text-align:center;">Incidencias</th>
+      </tr></thead>
       <tbody id="tbodyExp">${filas}</tbody>
     </table>
   </div>`;
 }
 
-// ── DETALLE POR ÁREA (idéntica a generarSeccionDetalleAreasEjecutivo) ──
+// ── DETALLE POR ÁREA — muestra documentos pendientes ──
 function htmlDetalleAreas(incidencias, totArea) {
   let html = `
   <div class="rep-section">
     <div class="sec-titulo">
       <h2>Detalle por Área</h2>
-      <p>Desglose de incidencias por departamento · haz clic para expandir</p>
+      <p>Documentos pendientes por departamento · haz clic para expandir</p>
     </div>`;
 
   Object.entries(AREAS_CFG).forEach(([nombre, a]) => {
-    const expsArea = incidencias
-      .filter(exp => {
-        const map = exp._areasMap || parsearAreas(exp.areas);
-        return (map[nombre] || 0) > 0;
-      })
-      .map(exp => ({
-        ...exp,
-        _cantidad: (exp._areasMap || parsearAreas(exp.areas))[nombre] || 0
-      }))
-      .sort((x, y) => y._cantidad - x._cantidad);
-
     const totalArea = totArea[nombre] || 0;
 
-    if (expsArea.length > 0) {
-      const filas = expsArea.map((exp, idx) => {
-        const bg          = idx % 2 === 0 ? '#ffffff' : '#f8fafc';
-        const borderColor = idx === expsArea.length - 1 ? 'transparent' : '#e2e8f0';
-        return `
-          <tr style="background:${bg};" onclick='abrirDetalle(${esJSON(exp)})'>
-            <td style="border-bottom:1px solid ${borderColor};"><span style="font-weight:600;font-size:12px;color:#4a5568;">${exp.id}</span></td>
-            <td style="border-bottom:1px solid ${borderColor};"><span style="color:#718096;font-size:12px;">${exp.fecha}</span></td>
-            <td style="border-bottom:1px solid ${borderColor};text-align:center;">
-              <span class="inc-badge" style="border-color:${a.color};color:${a.color};font-size:13px;">${exp._cantidad}</span>
-            </td>
-          </tr>`;
-      }).join('');
+    // Recolectar todos los documentos del área de todos los expedientes
+    const todosLosDocs = [];
+    incidencias.forEach(exp => {
+      const map = exp._areasMap || parsearAreas(exp.areas);
+      if ((map[nombre] || 0) > 0 && exp.documentos && exp.documentos.length > 0) {
+        exp.documentos
+          .filter(doc => doc.area && doc.area.toLowerCase().includes(nombre.toLowerCase().replace('é','e').replace('í','i')))
+          .forEach(doc => {
+            todosLosDocs.push({
+              expId:       exp.id,
+              documento:   doc.documento   || '',
+              observacion: doc.observacion || ''
+            });
+          });
+      }
+    });
+
+    if (totalArea > 0) {
+      // Construir filas de documentos
+      let filaDocs = '';
+      if (todosLosDocs.length > 0) {
+        filaDocs = todosLosDocs.map(doc => `
+          <div class="doc-row">
+            <div class="doc-dot" style="background:${a.color}"></div>
+            <div>
+              <div class="doc-nombre">${doc.documento}</div>
+              ${doc.observacion ? `<div class="doc-obs">${doc.observacion}</div>` : ''}
+              <div style="font-size:10px;color:#cbd5e1;margin-top:3px;font-family:'Inter',sans-serif;">${doc.expId}</div>
+            </div>
+          </div>`).join('');
+      } else {
+        filaDocs = `<div style="padding:16px 18px;font-size:12px;color:#94a3b8;font-style:italic;">Sin detalle de documentos disponible</div>`;
+      }
 
       html += `
         <div class="area-header-row" id="hdr-${nombre}"
@@ -1179,7 +898,7 @@ function htmlDetalleAreas(incidencias, totArea) {
           <img src="${a.icono}" class="area-icon" alt="${nombre}">
           <div>
             <div class="area-nombre">${nombre}</div>
-            <div class="area-subtext">${expsArea.length} expediente${expsArea.length!==1?'s':''} · ${totalArea} incidencia${totalArea!==1?'s':''}</div>
+            <div class="area-subtext">${totalArea} incidencia${totalArea!==1?'s':''} · ${todosLosDocs.length} documento${todosLosDocs.length!==1?'s':''} pendiente${todosLosDocs.length!==1?'s':''}</div>
           </div>
           <div class="area-badge-num" style="background:linear-gradient(135deg,${a.colorClaro},${a.color});border:4px solid ${a.colorOscuro};">
             ${totalArea}
@@ -1187,16 +906,12 @@ function htmlDetalleAreas(incidencias, totArea) {
           <span class="area-chevron">▾</span>
         </div>
         <div class="area-detail-table" id="acordeon-${nombre}">
-          <table class="tbl" style="border-top:none;border-radius:0 0 6px 6px;margin-bottom:8px;">
-            <thead>
-              <tr>
-                <th style="width:45%;background:#f0f4f8;">ID Oportunidad</th>
-                <th style="width:40%;background:#f0f4f8;">Fecha de Firma</th>
-                <th style="width:15%;text-align:center;background:#f0f4f8;">Cantidad</th>
-              </tr>
-            </thead>
-            <tbody>${filas}</tbody>
-          </table>
+          <div style="background:#fff;border:1px solid ${a.colorBorder};border-top:none;border-radius:0 0 8px 8px;margin-bottom:8px;overflow:hidden;">
+            <div style="background:${a.colorBg};padding:8px 18px;border-bottom:1px solid ${a.colorBorder};">
+              <span style="font-size:10px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:1px;">Documentos pendientes</span>
+            </div>
+            ${filaDocs}
+          </div>
         </div>`;
     } else {
       html += `
@@ -1212,6 +927,51 @@ function htmlDetalleAreas(incidencias, totArea) {
 
   html += `</div>`;
   return html;
+}
+
+// ── ETAPAS DE CIERRE ──
+function htmlEtapasCierre(etapasCierre, totalCompletos) {
+  if (!etapasCierre) return '';
+  const e1  = etapasCierre['1a Revision'] || 0;
+  const e2  = etapasCierre['2a Revision'] || 0;
+  const ef  = etapasCierre['Final']       || 0;
+  const tot = e1 + e2 + ef;
+
+  const pct = n => tot > 0 ? Math.round((n/tot)*100) : 0;
+
+  return `
+  <div class="rep-section">
+    <div class="sec-titulo">
+      <h2>Cierre de Incidencias por Etapa</h2>
+      <p>De ${totalCompletos} expediente${totalCompletos!==1?'s':''} completo${totalCompletos!==1?'s':''} · ${tot} con etapa de cierre registrada</p>
+    </div>
+    <div class="cierre-grid">
+      <div class="cierre-card e1">
+        <div class="cierre-icon">🥇</div>
+        <div>
+          <div class="cierre-num num-pop">${e1}</div>
+          <div class="cierre-label">Cerró en 1ª Revisión</div>
+          <div class="cierre-sub">${pct(e1)}% de los cierres</div>
+        </div>
+      </div>
+      <div class="cierre-card e2">
+        <div class="cierre-icon">🥈</div>
+        <div>
+          <div class="cierre-num num-pop">${e2}</div>
+          <div class="cierre-label">Cerró en 2ª Revisión</div>
+          <div class="cierre-sub">${pct(e2)}% de los cierres</div>
+        </div>
+      </div>
+      <div class="cierre-card ef">
+        <div class="cierre-icon">🏁</div>
+        <div>
+          <div class="cierre-num num-pop">${ef}</div>
+          <div class="cierre-label">Cerró en Revisión Final</div>
+          <div class="cierre-sub">${pct(ef)}% de los cierres</div>
+        </div>
+      </div>
+    </div>
+  </div>`;
 }
 
 // ════════════════════════════════════════
@@ -1237,15 +997,17 @@ function reordenarExpedientes(orden) {
   if (orden === 'desc') exps.sort((a,b) => b.totalIncidencias - a.totalIncidencias);
   else if (orden === 'asc') exps.sort((a,b) => a.totalIncidencias - b.totalIncidencias);
   else exps.sort((a,b) => a.fecha.localeCompare(b.fecha));
-  const mostrar = exps.slice(0, 15);
-  const tbody = document.getElementById('tbodyExp');
+  const mostrar = exps.slice(0,15);
+  const tbody   = document.getElementById('tbodyExp');
   if (!tbody) return;
   tbody.innerHTML = mostrar.map((exp, idx) => {
-    const bg = idx%2===0?'#ffffff':'#f8fafc';
-    const bc = idx===mostrar.length-1?'transparent':'#e2e8f0';
+    const bg  = idx%2===0?'#ffffff':'#f8fafc';
+    const bc  = idx===mostrar.length-1?'transparent':'#e2e8f0';
+    const cls = tipoCSSClass(exp.tipo);
     return `<tr style="background:${bg};" onclick='abrirDetalle(${esJSON(exp)})'>
       <td style="border-bottom:1px solid ${bc};"><span style="font-weight:600;font-size:13px;">${exp.id}</span></td>
       <td style="border-bottom:1px solid ${bc};"><span style="color:#718096;font-size:13px;">${exp.fecha}</span></td>
+      <td style="border-bottom:1px solid ${bc};"><span class="tipo-badge ${cls}">${exp.tipo||'—'}</span></td>
       <td style="border-bottom:1px solid ${bc};text-align:center;"><span class="inc-badge" style="border-color:#dc2626;color:#dc2626;">${exp.totalIncidencias}</span></td>
     </tr>`;
   }).join('');
@@ -1258,11 +1020,11 @@ function abrirDetalle(exp) {
   document.getElementById('spId').textContent    = exp.id;
   document.getElementById('spFecha').textContent = `Fecha de firma: ${exp.fecha}`;
   document.getElementById('spTotal').textContent = exp.totalIncidencias;
-  const map = exp._areasMap || parsearAreas(exp.areas);
+  const map    = exp._areasMap || parsearAreas(exp.areas);
   const conInc = Object.entries(map).filter(([,n]) => n > 0);
   document.getElementById('spAreas').textContent = conInc.length;
   document.getElementById('spAreasList').innerHTML = conInc
-    .sort((a,b) => b[1] - a[1])
+    .sort((a,b) => b[1]-a[1])
     .map(([nombre, n]) => {
       const a   = AREAS_CFG[nombre];
       const pct = Math.round((n / exp.totalIncidencias) * 100);
@@ -1282,23 +1044,16 @@ function abrirDetalle(exp) {
   document.getElementById('slidePanel').classList.add('open');
 }
 
-// Desde click en fila de distribución — abre el panel con resumen del área
 function abrirDetalleArea(nombre) {
   const datos = getAgregado();
   if (!datos) return;
-  const map   = {};
-  let tot = 0;
+  const map = {};
+  let tot   = 0;
   datos.incidencias.forEach(exp => {
     const m = exp._areasMap || parsearAreas(exp.areas);
     if (m[nombre]) { map[nombre] = (map[nombre]||0) + m[nombre]; tot += m[nombre]; }
   });
-  const exp = {
-    id:               `Área: ${nombre}`,
-    fecha:            getPeriodoLabel(),
-    totalIncidencias: tot,
-    _areasMap:        map
-  };
-  abrirDetalle(exp);
+  abrirDetalle({ id:`Área: ${nombre}`, fecha:getPeriodoLabel(), totalIncidencias:tot, _areasMap:map });
 }
 
 function cerrarPanel() {
@@ -1306,7 +1061,20 @@ function cerrarPanel() {
   document.getElementById('slidePanel').classList.remove('open');
 }
 
-// Helper: serializar objeto para onclick inline
+// ════════════════════════════════════════
+// HELPERS
+// ════════════════════════════════════════
+function tipoCSSClass(tipo) {
+  if (!tipo) return 'tipo-normal';
+  const t = tipo.toLowerCase();
+  if (t === 'normal')        return 'tipo-normal';
+  if (t.includes('col'))     return 'tipo-col0';
+  if (t.includes('renov'))   return 'tipo-renovacion';
+  if (t.includes('reestr'))  return 'tipo-reestruc';
+  if (t.includes('amplia'))  return 'tipo-ampliacion';
+  return 'tipo-normal';
+}
+
 function esJSON(obj) {
   return JSON.stringify(obj).replace(/'/g,"\\'").replace(/"/g,'&quot;');
 }
