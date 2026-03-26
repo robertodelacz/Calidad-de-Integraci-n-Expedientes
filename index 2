@@ -7,54 +7,66 @@
 <title>TESI · Control de Calidad · Financiera Cualli</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+<!-- ✦ Chart.js SIN el bundle que auto-registra DataLabels -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+<!-- ✦ DataLabels como plugin separado, se registra manualmente UNA sola vez -->
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
 <style>
-* { margin:0; padding:0; box-sizing:border-box; }
-body { font-family:'IBM Plex Sans',sans-serif; background:#f1f5f9; color:#1a202c; min-height:100vh; }
+:root {
+  --yellow:   #FDB913;
+  --yellow-d: #E0A90F;
+  --gray:     #515151;
+  --gray-d:   #3a3a3a;
+  --bg:       #f1f5f9;
+  --white:    #ffffff;
+  --border:   #e2e8f0;
+  --text:     #1a202c;
+  --muted:    #64748b;
+  --faint:    #94a3b8;
+}
+
+- { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:‘IBM Plex Sans’,sans-serif; background:var(–bg); color:var(–text); min-height:100vh; }
 
 /* ══ HEADER ══ */
-.site-header { background:#515151; padding:0 40px; height:60px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:100; box-shadow:0 2px 12px rgba(0,0,0,0.18); }
+.site-header { background:var(–gray); padding:0 40px; height:60px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:100; box-shadow:0 2px 12px rgba(0,0,0,0.18); }
 .header-brand { display:flex; align-items:center; gap:14px; }
 .header-sep   { width:1px; height:22px; background:rgba(255,255,255,0.25); }
 .header-title { font-size:13px; font-weight:700; color:#fff; letter-spacing:0.8px; text-transform:uppercase; }
 .header-right { display:flex; align-items:center; gap:14px; }
-.badge-comite { background:#FDB913; color:#000; font-size:10px; font-weight:800; letter-spacing:1.2px; text-transform:uppercase; padding:4px 12px; border-radius:3px; }
 .header-fecha { font-size:11px; color:rgba(255,255,255,0.55); font-family:‘Inter’,sans-serif; }
-
-/* ══ LOGO PRINCIPAL ══ */
 .header-logo-wrap { background:#fff; border-radius:6px; padding:4px; display:flex; align-items:center; justify-content:center; width:45px; height:45px; overflow:hidden; }
 .header-logo-img { max-height:100%; max-width:100%; object-fit:contain; }
 
+/* ══ MAIN ══ */
+.main-wrap { padding:24px 40px; max-width:1400px; margin:0 auto; }
+
 /* ══ SELECTOR ══ */
-.periodo-card { background:#fff; border-radius:12px; border:1px solid #e2e8f0; padding:18px 24px; margin-bottom:24px; box-shadow:0 1px 4px rgba(0,0,0,0.05); display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
-.periodo-label-txt { font-size:11px; font-weight:700; color:#64748b; text-transform:uppercase; letter-spacing:1.2px; display:flex; align-items:center; gap:7px; flex-shrink:0; }
+.periodo-card { background:#fff; border-radius:12px; border:1px solid var(–border); padding:18px 24px; margin-bottom:24px; box-shadow:0 1px 4px rgba(0,0,0,0.05); display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+.periodo-label-txt { font-size:11px; font-weight:700; color:var(–muted); text-transform:uppercase; letter-spacing:1.2px; display:flex; align-items:center; gap:7px; flex-shrink:0; }
 .select-wrap { position:relative; flex-shrink:0; }
-.select-wrap::after { content:‘▾’; position:absolute; right:10px; top:50%; transform:translateY(-50%); font-size:11px; color:#94a3b8; pointer-events:none; }
-.periodo-select { appearance:none; background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:9px 32px 9px 14px; font-size:13px; font-weight:700; color:#1a202c; cursor:pointer; font-family:‘IBM Plex Sans’,sans-serif; transition:all 0.15s; }
-.periodo-select:hover { border-color:#FDB913; }
-.periodo-select:focus { outline:none; border-color:#FDB913; box-shadow:0 0 0 3px rgba(253,185,19,0.15); }
+.select-wrap::after { content:‘▾’; position:absolute; right:10px; top:50%; transform:translateY(-50%); font-size:11px; color:var(–faint); pointer-events:none; }
+.periodo-select { appearance:none; background:#f8fafc; border:1px solid var(–border); border-radius:8px; padding:9px 32px 9px 14px; font-size:13px; font-weight:700; color:var(–text); cursor:pointer; font-family:‘IBM Plex Sans’,sans-serif; transition:all 0.15s; }
+.periodo-select:hover { border-color:var(–yellow); }
+.periodo-select:focus { outline:none; border-color:var(–yellow); box-shadow:0 0 0 3px rgba(253,185,19,0.15); }
 .select-anio { min-width:90px; }
 .select-mes  { min-width:150px; }
-.btn-ver { background:#FDB913; color:#000; border:none; border-radius:8px; padding:9px 20px; font-size:13px; font-weight:800; cursor:pointer; font-family:‘IBM Plex Sans’,sans-serif; transition:all 0.15s; display:flex; align-items:center; gap:6px; flex-shrink:0; }
-.btn-ver:hover { background:#e0a90f; transform:translateY(-1px); box-shadow:0 3px 10px rgba(253,185,19,0.35); }
+.btn-ver { background:var(–yellow); color:#000; border:none; border-radius:8px; padding:9px 20px; font-size:13px; font-weight:800; cursor:pointer; font-family:‘IBM Plex Sans’,sans-serif; transition:all 0.15s; display:flex; align-items:center; gap:6px; flex-shrink:0; }
+.btn-ver:hover { background:var(–yellow-d); transform:translateY(-1px); box-shadow:0 3px 10px rgba(253,185,19,0.35); }
 .periodo-status { margin-left:auto; }
 .status-chip { display:inline-flex; align-items:center; gap:5px; padding:4px 10px; border-radius:20px; font-size:11px; font-weight:600; }
 .status-chip.cargado  { background:#f0fdf4; border:1px solid #86efac; color:#059669; }
 .status-chip.cargando { background:#fffbeb; border:1px solid #fde68a; color:#b45309; }
-.status-chip.vacio    { background:#f8fafc; border:1px solid #e2e8f0; color:#94a3b8; }
+.status-chip.vacio    { background:#f8fafc; border:1px solid var(–border); color:var(–faint); }
 .dot-anim { width:6px; height:6px; border-radius:50%; background:currentColor; animation:blink 1s infinite; }
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
-
-/* ══ BOTÓN REFRESCAR ══ */
-.btn-refresh { background:#ebeff3; color:#64748b; border:none; border-radius:8px; width:38px; height:38px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.2s; flex-shrink:0; }
-.btn-refresh:hover { background:#e2e8f0; color:#1a202c; }
-.btn-refresh:active { transform:scale(0.92); }
-.btn-refresh.cargando svg { animation: spin-refresh 1s linear infinite; }
+.btn-refresh { background:#ebeff3; color:var(–muted); border:none; border-radius:8px; width:38px; height:38px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.2s; flex-shrink:0; }
+.btn-refresh:hover { background:var(–border); color:var(–text); }
+.btn-refresh.cargando svg { animation:spin-refresh 1s linear infinite; }
 @keyframes spin-refresh { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
 
-/* ══ REPORTE ══ */
-.reporte-wrap { background:#fff; border-radius:12px; overflow:hidden; box-shadow:0 4px 24px rgba(0,0,0,0.08); border:1px solid #e2e8f0; opacity:0; transform:translateY(14px); transition:opacity 0.4s ease,transform 0.4s ease; }
+/* ══ REPORTE WRAPPER ══ */
+.reporte-wrap { background:#fff; border-radius:16px; overflow:hidden; box-shadow:0 4px 24px rgba(0,0,0,0.08); border:1px solid var(–border); opacity:0; transform:translateY(14px); transition:opacity 0.4s ease,transform 0.4s ease; }
 .reporte-wrap.visible { opacity:1; transform:translateY(0); }
 
 /* ══ SKELETON ══ */
@@ -66,88 +78,130 @@ body { font-family:'IBM Plex Sans',sans-serif; background:#f1f5f9; color:#1a202c
 @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
 
 /* ══ HEADER REPORTE ══ */
-.rep-header { background:linear-gradient(135deg,#515151 0%,#3a3a3a 100%); }
+.rep-header { background:linear-gradient(135deg,var(–gray) 0%,var(–gray-d) 100%); }
 .rep-header-top { display:flex; align-items:center; justify-content:space-between; padding:22px 40px 18px; border-bottom:1px solid rgba(255,255,255,0.07); }
 .rep-logo-area  { display:flex; align-items:center; gap:16px; }
 .rep-logo-bg    { background:#fff; border-radius:8px; width:46px; height:46px; display:flex; align-items:center; justify-content:center; flex-shrink:0; padding:6px; }
 .rep-logo-img   { max-height:28px; max-width:34px; display:block; object-fit:contain; }
 .rep-header-titulo { font-size:17px; font-weight:800; color:#fff; letter-spacing:-0.3px; }
 .rep-header-sub    { font-size:11px; color:rgba(255,255,255,0.5); font-weight:500; margin-top:3px; }
-.rep-mes-chip { background:#FDB913; color:#000; font-size:13px; font-weight:800; padding:5px 14px; border-radius:4px; display:inline-block; }
+.rep-mes-chip { background:var(–yellow); color:#000; font-size:13px; font-weight:800; padding:5px 14px; border-radius:4px; display:inline-block; }
 .rep-anio     { font-size:11px; color:rgba(255,255,255,0.4); margin-top:5px; text-align:right; font-family:‘Inter’,sans-serif; }
 
 /* ══ KPIs ══ */
-.kpi-section { padding:28px 40px; background:#fafbfc; border-bottom:1px solid #e2e8f0; }
+.kpi-section { padding:28px 40px; background:#fafbfc; border-bottom:1px solid var(–border); }
 .kpi-row { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:20px; }
-.kpi-box { background:#fff; border:1px solid #e2e8f0; border-radius:10px; padding:16px 18px; display:flex; align-items:center; gap:14px; transition:box-shadow 0.2s,transform 0.2s; }
-.kpi-box:hover { box-shadow:0 4px 16px rgba(0,0,0,0.07); transform:translateY(-1px); }
+.kpi-box { background:#fff; border:1px solid var(–border); border-radius:12px; padding:16px 18px; display:flex; align-items:center; gap:14px; transition:box-shadow 0.2s,transform 0.2s; cursor:pointer; position:relative; overflow:hidden; }
+.kpi-box::before { content:’’; position:absolute; left:0; top:0; bottom:0; width:4px; border-radius:12px 0 0 12px; }
+.kpi-box.total::before      { background:var(–yellow); }
+.kpi-box.completos::before  { background:#059669; }
+.kpi-box.incidencias::before{ background:#dc2626; }
+.kpi-box:hover { box-shadow:0 6px 20px rgba(0,0,0,0.09); transform:translateY(-2px); }
 .kpi-icon-wrap { width:48px; height:48px; border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
-.kpi-box.total .kpi-icon-wrap      { background:#fffbeb; }
-.kpi-box.completos .kpi-icon-wrap  { background:#f0fdf4; }
-.kpi-box.incidencias .kpi-icon-wrap{ background:#fef2f2; }
+.kpi-box.total .kpi-icon-wrap       { background:#fffbeb; }
+.kpi-box.completos .kpi-icon-wrap   { background:#f0fdf4; }
+.kpi-box.incidencias .kpi-icon-wrap { background:#fef2f2; }
 .kpi-icon-img { width:46px; height:46px; object-fit:cover; border-radius:3px; }
-.kpi-num { font-size:34px; font-weight:800; line-height:1; letter-spacing:-1.5px; }
-.kpi-box.total .kpi-num      { color:#FDB913; }
-.kpi-box.completos .kpi-num  { color:#059669; }
-.kpi-box.incidencias .kpi-num{ color:#dc2626; }
-.kpi-label { font-size:12px; font-weight:600; color:#64748b; margin-top:3px; }
-.kpi-pct   { font-size:11px; color:#94a3b8; margin-top:2px; font-family:‘Inter’,sans-serif; }
+.kpi-num   { font-size:34px; font-weight:800; line-height:1; letter-spacing:-1.5px; }
+.kpi-box.total .kpi-num       { color:var(–yellow); }
+.kpi-box.completos .kpi-num   { color:#059669; }
+.kpi-box.incidencias .kpi-num { color:#dc2626; }
+.kpi-label { font-size:12px; font-weight:600; color:var(–muted); margin-top:3px; }
+@keyframes numPop { from{opacity:0;transform:scale(0.82);} to{opacity:1;transform:scale(1);} }
+.num-pop { animation:numPop 0.4s cubic-bezier(0.34,1.56,0.64,1) both; }
 
-/* ══ INTERACTIVIDAD PREMIUM ══ */
-.kpi-box, .rubro-card, .cierre-card { cursor:pointer; transition:all 0.3s cubic-bezier(0.4,0,0.2,1); position:relative; }
-.kpi-box:active, .rubro-card:active { transform:scale(0.95); }
-.highlight-card { border-color:#FDB913 !important; box-shadow:0 0 15px rgba(253,185,19,0.3) !important; }
-.kpi-box::after, .rubro-card::after { content:””; position:absolute; inset:0; border-radius:inherit; opacity:0; transition:opacity 0.3s; pointer-events:none; }
-.highlight-card::after { opacity:1; box-shadow:0 0 0 4px rgba(253,185,19,0.15) inset; }
-
-/* ══ CONTENEDOR GRÁFICOS — ✦ FIX PRINCIPAL ══ */
+/* ══ CHART PANEL — SISTEMA REDISEÑADO ══ */
 .chart-panel {
 width: 100%;
 display: flex;
 gap: 20px;
-/* ✦ FIX: sin margin-top conflictivo, lo maneja el padre */
 }
+
+/* Carta base para cualquier gráfico */
 .chart-card {
 flex: 1;
-background: #fff;
-border-radius: 24px;
-padding: 20px;
-border: 1px solid #f1f5f9;
-box-shadow: 0 10px 40px rgba(0,0,0,0.03);
 position: relative;
-/* ✦ FIX: altura explícita en px, no en %, para que Chart.js la respete */
-height: 260px;
-/* ✦ FIX: overflow hidden evita que el canvas desborde */
+/* ✦ altura explícita: Chart.js mide este valor con maintainAspectRatio:false */
+height: 300px;
+background: #fff;
+border-radius: 20px;
+padding: 44px 20px 20px;
+/* ✦ Bordes y sombras premium */
+border: 1px solid rgba(226,232,240,0.8);
+box-shadow:
+0 1px 0 rgba(255,255,255,0.9) inset,
+0 4px 6px -1px rgba(0,0,0,0.04),
+0 10px 30px -5px rgba(0,0,0,0.06),
+0 20px 60px -10px rgba(0,0,0,0.04);
 overflow: hidden;
+transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
+.chart-card:hover {
+box-shadow:
+0 1px 0 rgba(255,255,255,0.9) inset,
+0 4px 6px -1px rgba(0,0,0,0.06),
+0 12px 40px -5px rgba(0,0,0,0.10),
+0 24px 64px -10px rgba(0,0,0,0.07);
+transform: translateY(-2px);
+}
+/* Borde superior decorativo tipo “accent bar” */
+.chart-card::before {
+content: ‘’;
+position: absolute;
+top: 0; left: 0; right: 0;
+height: 3px;
+background: linear-gradient(90deg, var(–yellow) 0%, #FDD835 50%, var(–yellow) 100%);
+border-radius: 20px 20px 0 0;
+}
+/* Fondo glass sutil */
+.chart-card::after {
+content: ‘’;
+position: absolute;
+top: 0; left: 0; right: 0;
+height: 50%;
+background: linear-gradient(180deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0) 100%);
+pointer-events: none;
+border-radius: 20px 20px 0 0;
+}
+
 .chart-title {
 position: absolute;
-top: 12px;
-left: 16px;
-font-size: 10px;
-font-weight: 700;
-color: #94a3b8;
+top: 14px;
+left: 18px;
+font-size: 9px;
+font-weight: 800;
+color: var(–faint);
 text-transform: uppercase;
-letter-spacing: 1px;
-/* ✦ FIX: z-index para que quede sobre el canvas */
+letter-spacing: 1.5px;
+z-index: 2;
+}
+/* Pequeño badge tipo “chip” en el título */
+.chart-title-badge {
+position: absolute;
+top: 10px;
+right: 14px;
+background: #f8fafc;
+border: 1px solid var(–border);
+border-radius: 20px;
+padding: 2px 8px;
+font-size: 9px;
+font-weight: 700;
+color: var(–muted);
+z-index: 2;
+}
+
+/* ✦ El canvas ocupa todo el espacio del card (sin height:auto) */
+canvas {
+display: block !important;
+position: relative;
 z-index: 1;
 }
 
-/* ✦ FIX: canvas block + sin height auto que rompe Chart.js */
-canvas {
-display: block !important;
-/* NO poner height:auto — Chart.js necesita leer la altura del contenedor */
-}
-
-/* ══ WRAPPER DOUGHNUT con total al centro ══ */
+/* Wrapper para donut con número central */
 .doughnut-wrap {
 position: relative;
 width: 100%;
-/* ✦ FIX: altura explícita para el wrapper interno también */
 height: 100%;
-display: flex;
-align-items: center;
-justify-content: center;
 }
 .doughnut-center {
 position: absolute;
@@ -156,89 +210,91 @@ left: 50%;
 transform: translate(-50%, -50%);
 text-align: center;
 pointer-events: none;
-/* ✦ FIX: no interfiere con el canvas */
-z-index: 1;
+z-index: 2;
 }
+.doughnut-center-label { font-size:9px; font-weight:700; color:var(–faint); text-transform:uppercase; letter-spacing:1px; margin-bottom:2px; }
+.doughnut-center-num   { font-size:32px; font-weight:800; color:var(–text); line-height:1; letter-spacing:-1px; }
 
 /* ══ SECCIÓN ══ */
 .rep-section { padding:32px 40px; border-bottom:1px solid #f1f5f9; }
 .rep-section:last-child { border-bottom:none; }
 .sec-titulo { text-align:center; margin-bottom:24px; }
-.sec-titulo h2 { font-size:20px; font-weight:800; color:#1a202c; letter-spacing:-0.4px; margin-bottom:5px; }
-.sec-titulo p  { font-size:12px; color:#64748b; font-weight:500; }
+.sec-titulo h2 { font-size:20px; font-weight:800; color:var(–text); letter-spacing:-0.4px; margin-bottom:5px; }
+.sec-titulo p  { font-size:12px; color:var(–muted); font-weight:500; }
 
 /* ══ RUBROS ══ */
 .rubros-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:10px; margin-bottom:20px; }
-.rubro-card { background:#fff; border:1px solid #e2e8f0; border-radius:10px; padding:14px 12px; text-align:center; cursor:pointer; transition:box-shadow 0.2s,transform 0.2s,border-color 0.15s; position:relative; overflow:hidden; user-select:none; }
-.rubro-card:hover { box-shadow:0 4px 14px rgba(0,0,0,0.09); transform:translateY(-2px); }
-.rubro-card.activo { box-shadow:0 4px 16px rgba(0,0,0,0.1); }
+.rubro-card { background:#fff; border:1px solid var(–border); border-radius:12px; padding:14px 12px; text-align:center; cursor:pointer; transition:all 0.25s ease; position:relative; overflow:hidden; user-select:none; }
+.rubro-card:hover { box-shadow:0 8px 24px rgba(0,0,0,0.09); transform:translateY(-3px); }
 .rubro-card::before { content:’’; position:absolute; top:0; left:0; right:0; height:3px; }
-.rubro-card.normal::before     { background:#FDB913; }
+.rubro-card.normal::before     { background:var(–yellow); }
 .rubro-card.col0::before       { background:#64748b; }
 .rubro-card.renovacion::before { background:#06b6d4; }
 .rubro-card.reestruc::before   { background:#f97316; }
 .rubro-card.ampliacion::before { background:#a855f7; }
-.rubro-nombre  { font-size:10px; font-weight:700; color:#64748b; text-transform:uppercase; letter-spacing:0.8px; margin-bottom:10px; }
+.rubro-nombre  { font-size:10px; font-weight:700; color:var(–muted); text-transform:uppercase; letter-spacing:0.8px; margin-bottom:10px; }
 .rubro-total   { font-size:28px; font-weight:800; line-height:1; letter-spacing:-1px; margin-bottom:2px; }
-.rubro-card.normal .rubro-total     { color:#FDB913; }
+.rubro-card.normal .rubro-total     { color:var(–yellow); }
 .rubro-card.col0 .rubro-total       { color:#64748b; }
 .rubro-card.renovacion .rubro-total { color:#06b6d4; }
 .rubro-card.reestruc .rubro-total   { color:#f97316; }
 .rubro-card.ampliacion .rubro-total { color:#a855f7; }
-.rubro-sub { font-size:10px; color:#94a3b8; font-weight:500; margin-bottom:8px; }
 .rubro-inc-badge { display:inline-flex; align-items:center; gap:4px; background:#fef2f2; border:1px solid #fecaca; border-radius:4px; padding:3px 8px; font-size:10px; font-weight:700; color:#dc2626; }
 .rubro-inc-badge.cero { background:#f0fdf4; border-color:#bbf7d0; color:#059669; }
-.rubro-chevron { font-size:11px; color:#94a3b8; margin-top:6px; transition:transform 0.25s; display:block; }
-.rubro-card.activo .rubro-chevron { transform:rotate(180deg); }
 
-/* ══ RUBRO DETALLE EXPANDIBLE ══ */
-.rubro-detalle-wrap { max-height:0; overflow:hidden; transition:max-height 0.4s cubic-bezier(0.4,0,0.2,1); }
-.rubro-detalle-wrap.open { max-height:1200px; margin-top:12px; }
-.rubro-detalle-inner { background:#fff; border:1px solid #e2e8f0; border-radius:10px; overflow:hidden; }
-.rubro-detalle-header { padding:12px 18px; border-bottom:1px solid #f1f5f9; }
-.rubro-detalle-titulo { font-size:12px; font-weight:700; color:#64748b; text-transform:uppercase; letter-spacing:0.8px; }
+/* ══ CIERRE ══ */
+.cierre-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:20px; }
+.cierre-card { background:#fff; border:1px solid var(–border); border-radius:12px; padding:18px 16px; display:flex; align-items:center; gap:14px; transition:all 0.3s ease; cursor:pointer; }
+.cierre-card:hover { box-shadow:0 8px 24px rgba(0,0,0,0.08); transform:translateY(-2px); }
+.cierre-icon { width:54px; height:54px; border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:all 0.3s ease; }
+.cierre-card.e1 .cierre-icon { background:#eff6ff; color:#3b82f6; }
+.cierre-card.e2 .cierre-icon { background:#fef3c7; color:#f59e0b; }
+.cierre-card.ef .cierre-icon { background:#f0fdf4; color:#059669; }
+.cierre-card:hover .cierre-icon { transform:scale(1.08); }
+.cierre-num   { font-size:30px; font-weight:800; line-height:1; letter-spacing:-1px; }
+.cierre-card.e1 .cierre-num { color:#3b82f6; }
+.cierre-card.e2 .cierre-num { color:#f59e0b; }
+.cierre-card.ef .cierre-num { color:#059669; }
+.cierre-label { font-size:12px; font-weight:600; color:var(–muted); margin-top:3px; }
 
 /* ══ TABLA BASE ══ */
-.tbl { width:100%; border-collapse:collapse; border:1px solid #e2e8f0; border-radius:6px; overflow:hidden; font-family:‘Inter’,sans-serif; }
+.tbl { width:100%; border-collapse:collapse; border:1px solid var(–border); border-radius:8px; overflow:hidden; font-family:‘Inter’,sans-serif; }
 .tbl th { background:#f8fafc; padding:11px 18px; text-align:left; font-size:10px; text-transform:uppercase; letter-spacing:1px; font-weight:700; color:#4a5568; border-bottom:2px solid #cbd5e1; }
 .tbl td { padding:12px 18px; font-size:13px; border-bottom:1px solid #f1f5f9; vertical-align:middle; }
 .tbl tr:last-child td { border-bottom:none; }
 .tbl tr:nth-child(even) td { background:#f8fafc; }
 .tbl tbody tr:hover td { background:#fffbeb; cursor:pointer; }
-.tbl tfoot tr td { background:#f8fafc; font-weight:700; font-size:12px; color:#1a202c; border-top:2px solid #e2e8f0; padding:10px 18px; }
+.tbl tfoot tr td { background:#f8fafc; font-weight:700; font-size:12px; color:var(–text); border-top:2px solid var(–border); padding:10px 18px; }
 @keyframes rowIn { from{opacity:0;transform:translateX(-6px);} to{opacity:1;transform:translateX(0);} }
 .tbl tbody tr { animation:rowIn 0.22s ease both; }
 
-/* ══ TIPO BADGE ══ */
+/* ══ BADGES ══ */
 .tipo-badge { display:inline-block; padding:2px 8px; border-radius:4px; font-size:10px; font-weight:700; letter-spacing:0.3px; text-transform:uppercase; }
 .tipo-normal     { background:#fffbeb; color:#b45309; border:1px solid #fde68a; }
 .tipo-col0       { background:#f8fafc; color:#475569; border:1px solid #cbd5e1; }
 .tipo-renovacion { background:#ecfeff; color:#0e7490; border:1px solid #a5f3fc; }
 .tipo-reestruc   { background:#fff7ed; color:#c2410c; border:1px solid #fed7aa; }
 .tipo-ampliacion { background:#faf5ff; color:#7c3aed; border:1px solid #ddd6fe; }
-
-/* ══ INC BADGE ══ */
 .inc-badge { display:inline-flex; align-items:center; justify-content:center; border:2px solid; border-radius:5px; padding:3px 11px; font-size:14px; font-weight:800; min-width:36px; }
 
 /* ══ PROP BAR ══ */
-.prop-bar-bg { background:#cbd5e1; border-radius:10px; height:7px; margin-top:6px; overflow:hidden; box-shadow:inset 0 1px 2px rgba(0,0,0,0.1); }
+.prop-bar-bg { background:#e2e8f0; border-radius:10px; height:8px; margin-top:6px; overflow:hidden; }
 .prop-bar { height:100%; border-radius:10px; transition:width 1s ease; position:relative; overflow:hidden; }
-.prop-bar::before { content:””; position:absolute; inset:0; background:linear-gradient(180deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 50%, rgba(0,0,0,0.1) 100%); }
-.prop-bar::after { content:””; position:absolute; top:0; left:-150%; width:150%; height:100%; background:linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.6) 50%, transparent 100%); animation:flow-light 2s infinite linear; }
-@keyframes flow-light { 0%{left:-150%} 50%{left:100%} 100%{left:100%} }
+.prop-bar::after { content:””; position:absolute; top:0; left:-150%; width:150%; height:100%; background:linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.55) 50%, transparent 100%); animation:flow-light 2.5s infinite linear; }
+@keyframes flow-light { 0%{left:-150%} 60%{left:100%} 100%{left:100%} }
 video { pointer-events:none; outline:none; }
 
-/* ══ ÁREA ACORDEÓN ══ */
-.area-header-row { display:flex; align-items:center; gap:12px; padding:14px 18px; border-radius:8px; border:1px solid; cursor:pointer; transition:filter 0.15s,box-shadow 0.15s; margin-bottom:8px; user-select:none; }
+/* ══ ÁREAS ACORDEÓN ══ */
+.area-header-row { display:flex; align-items:center; gap:12px; padding:14px 18px; border-radius:10px; border:1px solid; cursor:pointer; transition:filter 0.15s,box-shadow 0.15s; margin-bottom:8px; user-select:none; }
 .area-header-row:hover { filter:brightness(0.97); box-shadow:0 2px 8px rgba(0,0,0,0.06); }
 .area-icon    { width:38px; height:38px; }
-.area-nombre  { font-size:15px; font-weight:700; color:#1a202c; }
+.area-nombre  { font-size:15px; font-weight:700; color:var(–text); }
 .area-subtext { font-size:11px; color:#718096; font-weight:600; margin-top:2px; }
-.area-chevron { margin-left:auto; font-size:18px; color:#94a3b8; transition:transform 0.3s; }
+.area-chevron { margin-left:auto; font-size:18px; color:var(–faint); transition:transform 0.3s; }
 .area-header-row.open .area-chevron { transform:rotate(180deg); }
-.area-badge-num { width:46px; height:46px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:17px; font-weight:900; color:#fff; flex-shrink:0; text-shadow:0 1px 2px rgba(0,0,0,0.12); }
-.area-ok        { padding:14px 18px; border-radius:8px; background:#f0fdf4; border:1px solid #86efac; display:flex; align-items:center; gap:12px; margin-bottom:8px; }
-.area-ok-nombre { font-size:15px; font-weight:700; color:#1a202c; }
+.area-badge-num { width:46px; height:46px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:17px; font-weight:900; color:#fff; flex-shrink:0; }
+.area-ok { padding:14px 18px; border-radius:10px; background:#f0fdf4; border:1px solid #86efac; display:flex; align-items:center; gap:12px; margin-bottom:8px; }
+.area-ok-nombre { font-size:15px; font-weight:700; color:var(–text); }
 .area-ok-sub    { font-size:13px; color:#047857; font-weight:600; margin-top:1px; }
 .area-detail-table { max-height:0; overflow:hidden; transition:max-height 0.4s cubic-bezier(0.4,0,0.2,1); margin-bottom:8px; }
 .area-detail-table.open { max-height:3000px; }
@@ -252,30 +308,13 @@ video { pointer-events:none; outline:none; }
 .docs-table tr:last-child td { border-bottom:none; }
 .docs-table tr:hover td { background:#fffbeb; }
 .doc-num { width:28px; height:28px; background:linear-gradient(135deg,#3b82f6,#2563eb); border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff; box-shadow:0 2px 4px rgba(59,130,246,0.3); flex-shrink:0; }
-.area-doc-badge { display:inline-block; border-radius:5px; padding:2px 9px; font-size:11px; font-weight:700; border:1px solid; white-space:nowrap; }
 
-/* ══ CIERRE ══ */
-.cierre-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:20px; }
-.cierre-card { background:#fff; border:1px solid #e2e8f0; border-radius:10px; padding:18px 16px; display:flex; align-items:center; gap:14px; transition:all 0.3s ease; }
-.cierre-card:hover { box-shadow:0 8px 24px rgba(0,0,0,0.08); transform:translateY(-2px); }
-.cierre-icon { width:54px; height:54px; border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:all 0.3s ease; }
-.cierre-card.e1 .cierre-icon { background:#eff6ff; color:#3b82f6; }
-.cierre-card.e2 .cierre-icon { background:#fef3c7; color:#f59e0b; }
-.cierre-card.ef .cierre-icon { background:#f0fdf4; color:#059669; }
-.cierre-card:hover .cierre-icon { box-shadow:0 0 15px currentColor; transform:scale(1.08); }
-.cierre-num { font-size:30px; font-weight:800; line-height:1; letter-spacing:-1px; }
-.cierre-card.e1 .cierre-num { color:#3b82f6; }
-.cierre-card.e2 .cierre-num { color:#f59e0b; }
-.cierre-card.ef .cierre-num { color:#059669; }
-.cierre-label { font-size:12px; font-weight:600; color:#64748b; margin-top:3px; }
-.cierre-sub { font-size:10px; color:#94a3b8; margin-top:2px; font-family:‘Inter’,sans-serif; }
-
-/* ══ SORT ══ */
+/* ══ SORT / CONTROLS ══ */
 .tbl-controls { display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:12px; gap:12px; }
-.sort-sel { background:#f8fafc; border:1px solid #e2e8f0; border-radius:5px; padding:5px 10px; font-size:11px; font-weight:700; color:#515151; cursor:pointer; font-family:‘Inter’,sans-serif; }
+.sort-sel { background:#f8fafc; border:1px solid var(–border); border-radius:5px; padding:5px 10px; font-size:11px; font-weight:700; color:var(–gray); cursor:pointer; font-family:‘Inter’,sans-serif; }
 
 /* ══ EMPTY ══ */
-.empty-rep { text-align:center; padding:60px 20px; color:#94a3b8; }
+.empty-rep { text-align:center; padding:60px 20px; color:var(–faint); }
 .empty-rep-icon { font-size:40px; margin-bottom:12px; }
 .empty-rep-text { font-size:15px; font-weight:500; }
 
@@ -287,35 +326,55 @@ video { pointer-events:none; outline:none; }
 .rep-section:nth-child(4){ animation-delay:0.12s; }
 .rep-section:nth-child(5){ animation-delay:0.16s; }
 .rep-section:nth-child(6){ animation-delay:0.20s; }
-@keyframes numPop { from{opacity:0;transform:scale(0.82);} to{opacity:1;transform:scale(1);} }
-.num-pop { animation:numPop 0.4s cubic-bezier(0.34,1.56,0.64,1) both; }
 
-/* ══ PANEL DETALLE ══ */
-.overlay     { position:fixed; inset:0; background:rgba(0,0,0,0.32); z-index:300; display:none; backdrop-filter:blur(2px); }
-.overlay.open{ display:block; }
-.slide-panel { position:fixed; right:-520px; top:0; bottom:0; width:460px; background:#fff; z-index:400; box-shadow:-8px 0 40px rgba(0,0,0,0.15); transition:right 0.35s cubic-bezier(0.4,0,0.2,1); overflow-y:auto; border-left:4px solid #FDB913; }
+/* ══ SLIDE PANEL ══ */
+.overlay      { position:fixed; inset:0; background:rgba(0,0,0,0.32); z-index:300; display:none; backdrop-filter:blur(2px); }
+.overlay.open { display:block; }
+.slide-panel  { position:fixed; right:-520px; top:0; bottom:0; width:460px; background:#fff; z-index:400; box-shadow:-8px 0 40px rgba(0,0,0,0.15); transition:right 0.35s cubic-bezier(0.4,0,0.2,1); overflow-y:auto; border-left:4px solid var(–yellow); }
 .slide-panel.open { right:0; }
-.sp-header { background:#515151; padding:22px 26px 18px; position:relative; }
+.sp-header { background:var(–gray); padding:22px 26px 18px; position:relative; }
 .sp-close  { position:absolute; top:14px; right:14px; width:30px; height:30px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); border-radius:5px; color:#fff; font-size:18px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
 .sp-close:hover { background:rgba(255,255,255,0.2); }
 .sp-id    { font-size:19px; font-weight:800; color:#fff; padding-right:36px; margin-bottom:3px; }
 .sp-fecha { font-size:12px; color:rgba(255,255,255,0.5); font-family:‘Inter’,sans-serif; }
 .sp-body  { padding:22px 26px; }
 .sp-kpi-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:22px; }
-.sp-kpi { background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:14px 16px; }
-.sp-kpi-label { font-size:10px; font-weight:700; color:#94a3b8; text-transform:uppercase; letter-spacing:1px; margin-bottom:6px; }
+.sp-kpi { background:#f8fafc; border:1px solid var(–border); border-radius:8px; padding:14px 16px; }
+.sp-kpi-label { font-size:10px; font-weight:700; color:var(–faint); text-transform:uppercase; letter-spacing:1px; margin-bottom:6px; }
 .sp-kpi-val   { font-size:30px; font-weight:800; color:#dc2626; letter-spacing:-1px; line-height:1; }
-.sp-sec-label { font-size:10px; font-weight:700; color:#94a3b8; text-transform:uppercase; letter-spacing:1.2px; margin-bottom:12px; padding-bottom:8px; border-bottom:1px solid #f1f5f9; }
+.sp-sec-label { font-size:10px; font-weight:700; color:var(–faint); text-transform:uppercase; letter-spacing:1.2px; margin-bottom:12px; padding-bottom:8px; border-bottom:1px solid #f1f5f9; }
 .sp-area-row  { display:flex; align-items:center; justify-content:space-between; padding:11px 0; border-bottom:1px solid #f8fafc; }
 .sp-area-row:last-child { border-bottom:none; }
 .sp-area-left { display:flex; align-items:center; gap:10px; }
 .sp-area-dot  { width:10px; height:10px; border-radius:2px; flex-shrink:0; }
-.sp-area-name { font-size:14px; font-weight:600; color:#1a202c; }
-.sp-area-pct  { font-size:11px; color:#94a3b8; margin-top:1px; font-family:‘Inter’,sans-serif; }
+.sp-area-name { font-size:14px; font-weight:600; color:var(–text); }
+.sp-area-pct  { font-size:11px; color:var(–faint); margin-top:1px; font-family:‘Inter’,sans-serif; }
 .sp-area-num  { font-size:22px; font-weight:800; }
 
-/* ══ MAIN WRAP ══ */
-.main-wrap { padding:24px 40px; max-width:1400px; margin:0 auto; }
+/* ══ LEYENDA CUSTOM PARA LOS CHARTS ══ */
+.chart-legend {
+display: flex;
+flex-wrap: wrap;
+gap: 8px 14px;
+justify-content: center;
+margin-top: 10px;
+position: relative;
+z-index: 2;
+}
+.legend-item {
+display: flex;
+align-items: center;
+gap: 5px;
+font-size: 10px;
+font-weight: 700;
+color: var(–muted);
+}
+.legend-dot {
+width: 8px;
+height: 8px;
+border-radius: 50%;
+flex-shrink: 0;
+}
 </style>
 
 </head>
@@ -335,7 +394,6 @@ video { pointer-events:none; outline:none; }
 </header>
 
 <div class="main-wrap">
-
   <div class="periodo-card">
     <div class="periodo-label-txt">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
@@ -366,7 +424,6 @@ video { pointer-events:none; outline:none; }
       </div>
     </div>
   </div>
-
 </div>
 
 <div class="overlay" id="overlay" onclick="cerrarPanel()"></div>
@@ -387,12 +444,19 @@ video { pointer-events:none; outline:none; }
 </div>
 
 <script>
+// ════════════════════════════════════════════════════════════
+// ✦ REGISTRO DE DATALABELS — UNA SOLA VEZ, AL INICIO
+//   Esto elimina el bug de etiquetas duplicadas. El plugin
+//   se importa como ChartDataLabels (variable global del CDN)
+//   y se registra una única vez aquí.
+// ════════════════════════════════════════════════════════════
+Chart.register(ChartDataLabels);
+
 // ════════════════════════════════════
 // CONFIG
 // ════════════════════════════════════
 function obtenerURLDelLogoPublico() {
-  const FILE_ID = '1FYCSTRo_TRULxHRHfocIdUCD6Vwp1gB2';
-  return 'https://drive.google.com/thumbnail?id=' + FILE_ID + '&sz=w1000';
+  return 'https://drive.google.com/thumbnail?id=1FYCSTRo_TRULxHRHfocIdUCD6Vwp1gB2&sz=w1000';
 }
 
 const AREAS_CFG = {
@@ -416,14 +480,15 @@ const ICONOS_CIERRE = {
 };
 
 const ICONO_VIGNETTE = 'https://cdn-icons-mp4.freepik.com/512/11201/11201834.mp4';
-const vMini = (src, sz, op) => `<video autoplay loop muted playsinline style="width:${sz}px;height:${sz}px;object-fit:cover;border-radius:50%;opacity:${op};flex-shrink:0;"><source src="${src}" type="video/mp4"></video>`;
+const vMini = (src, sz, op) =>
+  `<video autoplay loop muted playsinline style="width:${sz}px;height:${sz}px;object-fit:cover;border-radius:50%;opacity:${op};flex-shrink:0;"><source src="${src}" type="video/mp4"></video>`;
 
 const RUBROS_CFG = {
-  'Normal':       { cls:'normal',     label:'Normal / Originación', emoji:'🏠' },
-  'Colocación 0': { cls:'col0',       label:'Colocación 0',         emoji:'🔵' },
-  'Renovación':   { cls:'renovacion', label:'Renovación',           emoji:'🔄' },
-  'Reestructura': { cls:'reestruc',   label:'Reestructura',         emoji:'🔧' },
-  'Ampliación':   { cls:'ampliacion', label:'Ampliación',           emoji:'📈' }
+  'Normal':       { cls:'normal',     label:'Normal / Originación', emoji:'🏠', color:'#FDB913' },
+  'Colocación 0': { cls:'col0',       label:'Colocación 0',         emoji:'🔵', color:'#64748b' },
+  'Renovación':   { cls:'renovacion', label:'Renovación',           emoji:'🔄', color:'#06b6d4' },
+  'Reestructura': { cls:'reestruc',   label:'Reestructura',         emoji:'🔧', color:'#f97316' },
+  'Ampliación':   { cls:'ampliacion', label:'Ampliación',           emoji:'📈', color:'#a855f7' }
 };
 
 const COLORES_AREA = {
@@ -443,21 +508,19 @@ const CACHE    = {};
 const CARGANDO = {};
 let anioActual     = 2026;
 let datosMostrados = null;
-let rubroAbierto   = null;
+window.charts = {};
 
 // ════════════════════════════════════
 // INIT
 // ════════════════════════════════════
 document.addEventListener('DOMContentLoaded', () => {
-  const imgPrincipal = document.getElementById('logoPrincipal');
-  if (imgPrincipal) imgPrincipal.src = obtenerURLDelLogoPublico();
+  const img = document.getElementById('logoPrincipal');
+  if (img) img.src = obtenerURLDelLogoPublico();
   const hoy = new Date();
   document.getElementById('fechaHoy').textContent =
     hoy.toLocaleDateString('es-MX',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
-
   document.getElementById('repContenido').innerHTML =
     `<div class="empty-rep"><div class="empty-rep-icon">⏳</div><div class="empty-rep-text">Cargando datos de 2026...</div></div>`;
-
   cargarAnio(2026, () => {
     poblarMeses(2026);
     const mc    = hoy.getMonth() + 1;
@@ -473,7 +536,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ════════════════════════════════════
-// CARGA POR AÑO
+// CARGA
 // ════════════════════════════════════
 function cargarAnio(anio, cb) {
   anio = parseInt(anio);
@@ -529,7 +592,6 @@ function verReporte() {
   const datos = CACHE[anio] && CACHE[anio][clave];
   if (!datos) { setStatus('vacio','Sin datos para este período'); return; }
   datosMostrados = datos;
-  rubroAbierto   = null;
   renderReporte(datos, MESES_L[mes], anio);
   setStatus('cargado', `${MESES_L[mes]} ${anio}`);
 }
@@ -548,17 +610,14 @@ function setStatus(tipo, texto) {
 function renderReporte(datos, nombreMes, anio) {
   const wrap = document.getElementById('repWrap');
   const cont = document.getElementById('repContenido');
-
-  // ✦ FIX: destruir charts existentes ANTES de limpiar el DOM
   destruirCharts();
-
   cont.innerHTML = htmlSkeleton();
   wrap.classList.remove('visible');
   requestAnimationFrame(() => wrap.classList.add('visible'));
 
-  const pctC      = datos.total ? Math.round((datos.sinIncidencias/datos.total)*100) : 0;
-  const pctI      = datos.total ? Math.round((datos.conIncidencias/datos.total)*100) : 0;
-  const totArea   = totalesPorArea(datos.incidencias||[]);
+  const pctC    = datos.total ? Math.round((datos.sinIncidencias/datos.total)*100) : 0;
+  const pctI    = datos.total ? Math.round((datos.conIncidencias/datos.total)*100) : 0;
+  const totArea = totalesPorArea(datos.incidencias||[]);
   const totalIncs = Object.values(totArea).reduce((s,v) => s+v, 0);
 
   requestAnimationFrame(() => {
@@ -571,18 +630,14 @@ function renderReporte(datos, nombreMes, anio) {
       htmlEtapasCierre(datos.etapasCierre, datos.sinIncidencias) +
       htmlDetalleAreas(datos.incidencias||[], totArea);
 
-    // ✦ FIX CLAVE: setTimeout en lugar de RAF anidado.
-    // Espera 60ms para que el navegador pinte el layout completo
-    // y los contenedores tengan dimensiones reales antes de que
-    // Chart.js los mida.
-    setTimeout(() => initCharts(datos), 60);
+    // ✦ 80ms para que el layout quede pintado antes de que Chart.js mida los contenedores
+    setTimeout(() => initCharts(datos), 80);
   });
 }
 
-// ✦ FIX: función para destruir instancias previas y evitar memory leaks
 function destruirCharts() {
   ['chartKPI','chartRubros','chartCierre'].forEach(id => {
-    if (window.charts && window.charts[id]) {
+    if (window.charts[id]) {
       window.charts[id].destroy();
       delete window.charts[id];
     }
@@ -590,7 +645,7 @@ function destruirCharts() {
 }
 
 // ════════════════════════════════════
-// HELPERS DE DATOS
+// HELPERS
 // ════════════════════════════════════
 function parsearAreas(texto) {
   const r = {};
@@ -612,22 +667,14 @@ function totalesPorArea(inc) {
   return t;
 }
 
-function colorArea(nombreArea) {
-  const key = Object.keys(COLORES_AREA).find(k =>
-    (nombreArea||'').toLowerCase().replace('í','i').replace('é','e')
-      .includes(k.toLowerCase().replace('í','i').replace('é','e'))
-  );
-  return COLORES_AREA[key] || { bg:'#f8fafc', border:'#e2e8f0', texto:'#475569' };
-}
-
 function tipoCSSClass(tipo) {
   if (!tipo) return 'tipo-normal';
   const t = tipo.toLowerCase();
-  if (t === 'normal')        return 'tipo-normal';
-  if (t.includes('col'))     return 'tipo-col0';
-  if (t.includes('renov'))   return 'tipo-renovacion';
-  if (t.includes('reestr'))  return 'tipo-reestruc';
-  if (t.includes('amplia'))  return 'tipo-ampliacion';
+  if (t === 'normal')       return 'tipo-normal';
+  if (t.includes('col'))    return 'tipo-col0';
+  if (t.includes('renov'))  return 'tipo-renovacion';
+  if (t.includes('reestr')) return 'tipo-reestruc';
+  if (t.includes('amplia')) return 'tipo-ampliacion';
   return 'tipo-normal';
 }
 
@@ -638,25 +685,14 @@ function esJSON(obj) {
 function parsearDocumentosHTML(texto) {
   const raw = (texto == null ? '' : String(texto)).trim();
   if (!raw || raw === '—') return [];
-  return raw.split('\n')
-    .map(l => l.trim())
-    .filter(l => /^[•\-·]/.test(l))
+  return raw.split('\n').map(l => l.trim()).filter(l => /^[•\-·]/.test(l))
     .map(linea => {
-      const limpia = linea.replace(/^[•\-·]\s*/, '').trim();
+      const limpia = linea.replace(/^[•\-·]\s*/,'').trim();
       const partes = limpia.split(' | ').map(p => p.trim());
-      const area       = partes[0] || '';
-      const origen     = partes[1] || '';
-      const docRaw     = partes[2] || '';
-      const comentario = partes[3] || '';
-      const documento = docRaw
-        .replace(/^\+\s/,  '')
-        .replace(/^\d+\.\s*/, '')
-        .replace(/^\+\s/,  '')
-        .replace(/\s*\/.*$/, '')
-        .trim();
-      return { area, origen, documento, comentario, textoLimpio: documento + (comentario && comentario !== '—' ? ` — ${comentario}` : '') };
-    })
-    .filter(d => d.documento);
+      const area = partes[0]||'', origen = partes[1]||'', docRaw = partes[2]||'', comentario = partes[3]||'';
+      const documento = docRaw.replace(/^\+\s/,'').replace(/^\d+\.\s*/,'').replace(/^\+\s/,'').replace(/\s*\/.*$/,'').trim();
+      return { area, origen, documento, comentario, textoLimpio: documento + (comentario && comentario!=='—' ? ` — ${comentario}` : '') };
+    }).filter(d => d.documento);
 }
 
 // ════════════════════════════════════
@@ -664,66 +700,48 @@ function parsearDocumentosHTML(texto) {
 // ════════════════════════════════════
 function htmlSkeleton() {
   return `<div class="skeleton-wrap">
-    <div class="skeleton-row">
-      <div class="skeleton-box"></div><div class="skeleton-box"></div><div class="skeleton-box"></div>
-    </div>
-    <div class="skeleton-bar w80"></div>
-    <div class="skeleton-bar w60"></div>
-    <div class="skeleton-bar w40"></div>
+    <div class="skeleton-row"><div class="skeleton-box"></div><div class="skeleton-box"></div><div class="skeleton-box"></div></div>
+    <div class="skeleton-bar w80"></div><div class="skeleton-bar w60"></div><div class="skeleton-bar w40"></div>
   </div>`;
 }
 
 function htmlHeader(chipTxt, label) {
-  return `
-  <div class="rep-header">
-    <div class="rep-header-top">
-      <div class="rep-logo-area">
-        <div class="rep-logo-bg">
-          <img src="https://cualli.mx/wp-content/uploads/2022/07/logo-cualli@3x.png" class="rep-logo-img" alt="Cualli"
-               onerror="this.src='https://cualli.mx/wp-content/uploads/2022/07/cualli-bl@3x.png'">
-        </div>
-        <div>
-          <div class="rep-header-titulo">EXPEDIENTES CUALLI / Cierre — Estatus de Integración</div>
-          <div class="rep-header-sub">Contraloría Operativa · Sistema TESI · Control de Calidad</div>
-        </div>
-      </div>
-      <div style="text-align:right;">
-        <div class="rep-mes-chip">${chipTxt}</div>
-        <div class="rep-anio">${label}</div>
-      </div>
+  return `<div class="rep-header"><div class="rep-header-top">
+    <div class="rep-logo-area">
+      <div class="rep-logo-bg"><img src="https://cualli.mx/wp-content/uploads/2022/07/logo-cualli@3x.png" class="rep-logo-img" alt="Cualli" onerror="this.src='https://cualli.mx/wp-content/uploads/2022/07/cualli-bl@3x.png'"></div>
+      <div><div class="rep-header-titulo">EXPEDIENTES CUALLI / Cierre — Estatus de Integración</div><div class="rep-header-sub">Contraloría Operativa · Sistema TESI · Control de Calidad</div></div>
     </div>
-  </div>`;
+    <div style="text-align:right;"><div class="rep-mes-chip">${chipTxt}</div><div class="rep-anio">${label}</div></div>
+  </div></div>`;
 }
-
-window.charts = {};
 
 function htmlKPIs(total, completos, incidencias, pctC, pctI) {
   const vid = (s) => `<video class="kpi-icon-img" autoplay loop muted playsinline><source src="${s}" type="video/mp4"></video>`;
-  window.currentKPIData = [completos, incidencias];
-  // ✦ FIX: doughnut-wrap con height:100% explícito para que Chart.js mida bien
+  window._kpiData = { total, completos, incidencias };
   return `<div class="kpi-section">
     <div class="kpi-row">
-      <div class="kpi-box total" id="kpi-total" onclick="resaltarSegmento('chartKPI', null)">
+      <div class="kpi-box total" onclick="resaltarSegmento('chartKPI',null)">
         <div class="kpi-icon-wrap">${vid(ICONOS_KPI.total)}</div>
         <div><div class="kpi-num num-pop">${total}</div><div class="kpi-label">Total Evaluados</div></div>
       </div>
-      <div class="kpi-box completos" id="kpi-completos" onclick="resaltarSegmento('chartKPI', 0)">
+      <div class="kpi-box completos" onclick="resaltarSegmento('chartKPI',0)">
         <div class="kpi-icon-wrap">${vid(ICONOS_KPI.completos)}</div>
         <div><div class="kpi-num num-pop">${completos}</div><div class="kpi-label">Sin Incidencias (${pctC}%)</div></div>
       </div>
-      <div class="kpi-box incidencias" id="kpi-incidencias" onclick="resaltarSegmento('chartKPI', 1)">
+      <div class="kpi-box incidencias" onclick="resaltarSegmento('chartKPI',1)">
         <div class="kpi-icon-wrap">${vid(ICONOS_KPI.incidencias)}</div>
         <div><div class="kpi-num num-pop">${incidencias}</div><div class="kpi-label">Con Incidencias (${pctI}%)</div></div>
       </div>
     </div>
     <div class="chart-panel">
-      <div class="chart-card">
+      <div class="chart-card" id="card-kpi">
         <div class="chart-title">Estatus Global</div>
+        <div class="chart-title-badge">Expedientes</div>
         <div class="doughnut-wrap">
           <canvas id="chartKPI"></canvas>
           <div class="doughnut-center">
-            <div style="font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;">Total</div>
-            <div style="font-size:30px;font-weight:800;color:#1a202c;line-height:1;">${total}</div>
+            <div class="doughnut-center-label">Total</div>
+            <div class="doughnut-center-num">${total}</div>
           </div>
         </div>
       </div>
@@ -733,9 +751,9 @@ function htmlKPIs(total, completos, incidencias, pctC, pctI) {
 
 function htmlRubros(conteo, incs, label) {
   if (!conteo) return '';
-  const cards = Object.entries(RUBROS_CFG).map(([t, c], idx) => {
+  const cards = Object.entries(RUBROS_CFG).map(([t,c], idx) => {
     const d = conteo[t]||{total:0,conIncidencias:0};
-    return `<div class="rubro-card ${c.cls}" id="rubro-card-${c.cls}" onclick="resaltarSegmento('chartRubros', ${idx})">
+    return `<div class="rubro-card ${c.cls}" onclick="resaltarSegmento('chartRubros',${idx})">
       <div class="rubro-nombre">${c.emoji} ${c.label}</div>
       <div class="rubro-total">${d.total}</div>
       <div class="rubro-inc-badge ${d.conIncidencias?'':'cero'}">${d.conIncidencias} inc.</div>
@@ -745,23 +763,24 @@ function htmlRubros(conteo, incs, label) {
     <div class="sec-titulo"><h2>Expedientes por Tipo</h2><p>${label}</p></div>
     <div class="rubros-grid">${cards}</div>
     <div class="chart-panel">
-      <div class="chart-card">
+      <div class="chart-card" id="card-rubros">
         <div class="chart-title">Distribución por Tipo</div>
+        <div class="chart-title-badge">Tipos</div>
         <canvas id="chartRubros"></canvas>
       </div>
     </div>
-  </div><div id="rubros-detalles"></div>`;
+  </div>`;
 }
 
 function htmlDistribucion(totArea, totalIncs, label) {
   if (totalIncs === 0) return `<div class="rep-section"><div class="sec-titulo"><h2>Distribución</h2></div><div class="area-ok">✓ Sin incidencias</div></div>`;
-  const areasOrd = Object.entries(totArea).filter(([,v]) => v > 0).sort((a, b) => b[1] - a[1]);
+  const areasOrd = Object.entries(totArea).filter(([,v]) => v>0).sort((a,b) => b[1]-a[1]);
   const filas = areasOrd.map(([nom, val], idx) => {
     const a = AREAS_CFG[nom], pct = Math.round((val/totalIncs)*100), bg = idx%2===0?'#fff':'#f8fafc';
     return `<tr style="background:${bg};">
       <td style="border-bottom:1px solid #f1f5f9;"><div style="display:flex;align-items:center;gap:10px;">${vMini(ICONO_VIGNETTE,20,0.6)}<span style="font-weight:700;font-size:13px;color:#1a202c;">${nom}</span></div></td>
       <td style="border-bottom:1px solid #f1f5f9;text-align:center;">
-        <div style="width:46px;height:46px;background:linear-gradient(135deg,${a.colorClaro},${a.color});border-radius:50%;border:4px solid ${a.colorOscuro};display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:17px;font-weight:900;text-shadow:0 1px 2px rgba(0,0,0,0.2);">${val}</div>
+        <div style="width:46px;height:46px;background:linear-gradient(135deg,${a.colorClaro},${a.color});border-radius:50%;border:4px solid ${a.colorOscuro};display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:17px;font-weight:900;">${val}</div>
       </td>
       <td style="border-bottom:1px solid #f1f5f9;">
         <div style="font-size:13px;color:#4a5568;font-weight:500;margin-bottom:4px;">${val} incidencia${val!==1?'s':''} · ${pct}% del total</div>
@@ -770,27 +789,21 @@ function htmlDistribucion(totArea, totalIncs, label) {
       <td style="border-bottom:1px solid #f1f5f9;text-align:right;width:55px;"><span style="font-size:12px;font-weight:700;color:#94a3b8;">${pct}%</span></td>
     </tr>`;
   }).join('');
-
   return `<div class="rep-section">
     <div class="sec-titulo"><h2>Distribución de Incidencias por Área</h2><p>Período: ${label}</p></div>
     <table class="tbl">
       <thead><tr><th style="width:28%">Área</th><th style="width:12%;text-align:center;">Total</th><th style="width:50%">Distribución</th><th style="width:10%;text-align:right;">%</th></tr></thead>
       <tbody>${filas}</tbody>
-      <tfoot><tr>
-        <td><strong>Total general</strong></td>
-        <td style="text-align:center;"><strong style="font-size:15px;color:#1a202c;">${totalIncs}</strong></td>
-        <td><strong>incidencias registradas en el período</strong></td>
-        <td style="text-align:right;"><strong>100%</strong></td>
-      </tr></tfoot>
+      <tfoot><tr><td><strong>Total general</strong></td><td style="text-align:center;"><strong style="font-size:15px;color:#1a202c;">${totalIncs}</strong></td><td><strong>incidencias registradas en el período</strong></td><td style="text-align:right;"><strong>100%</strong></td></tr></tfoot>
     </table>
   </div>`;
 }
 
 function htmlExpedientes(incidencias) {
   if (!incidencias.length) return '';
-  const sorted = [...incidencias].sort((a,b) => b.totalIncidencias - a.totalIncidencias), mostrar = sorted.slice(0,15);
+  const sorted = [...incidencias].sort((a,b) => b.totalIncidencias-a.totalIncidencias), mostrar = sorted.slice(0,15);
   const filas = mostrar.map((exp, idx) => {
-    const bg = idx%2===0?'#ffffff':'#f8fafc', bc = idx===mostrar.length-1?'transparent':'#e2e8f0', cls = tipoCSSClass(exp.tipo);
+    const bg = idx%2===0?'#fff':'#f8fafc', bc = idx===mostrar.length-1?'transparent':'#e2e8f0', cls = tipoCSSClass(exp.tipo);
     return `<tr style="background:${bg};" onclick='abrirDetalle(${esJSON(exp)})'>
       <td style="border-bottom:1px solid ${bc};"><span style="font-weight:600;font-size:13px;color:#94a3b8;">${idx+1}</span></td>
       <td style="border-bottom:1px solid ${bc};"><span style="font-weight:600;font-size:13px;">${exp.id}</span></td>
@@ -799,129 +812,39 @@ function htmlExpedientes(incidencias) {
       <td style="border-bottom:1px solid ${bc};text-align:center;"><span class="inc-badge" style="border-color:#dc2626;color:#dc2626;">${exp.totalIncidencias}</span></td>
     </tr>`;
   }).join('');
-  return `<div class="rep-section"><div class="tbl-controls"><div><div class="sec-titulo" style="text-align:left;margin-bottom:0;"><h2 style="font-size:20px;">Expedientes con Incidencias</h2><p>Total: ${incidencias.length} expedientes</p></div></div>
-    <select class="sort-sel" onchange="reordenarExpedientes(this.value)"><option value="desc">↓ Más incidencias</option><option value="asc">↑ Menos incidencias</option><option value="fecha">📅 Por fecha</option></select></div>
-    <table class="tbl"><thead><tr><th style="width:5%">#</th><th style="width:30%">ID Oportunidad</th><th style="width:18%">Fecha de Firma</th><th style="width:27%">Tipo</th><th style="width:20%;text-align:center;">Incidencias</th></tr></thead><tbody id="tbodyExp">${filas}</tbody></table></div>`;
-}
-
-function htmlDetalleAreas(incidencias, totArea) {
-  const areasOrdenadas = Object.entries(AREAS_CFG)
-    .sort(([nA], [nB]) => (totArea[nB]||0) - (totArea[nA]||0));
-
-  let html = `<div class="rep-section">
-    <div class="sec-titulo">
-      <h2>Detalle por Área</h2>
-      <p>Documentos pendientes de integración</p>
-    </div>`;
-
-  areasOrdenadas.forEach(([nombre, a]) => {
-    const totalArea = totArea[nombre] || 0;
-    const todosLosDocs = [];
-
-    incidencias.forEach(exp => {
-      const mapAreas = parsearAreas(exp.areas);
-      if ((mapAreas[nombre]||0) === 0) return;
-      if (exp.documentos && exp.documentos.length > 0) {
-        exp.documentos
-          .filter(d => {
-            const aNorm = (d.area||'').toLowerCase().replace('í','i').replace('é','e');
-            const bNorm = nombre.toLowerCase().replace('í','i').replace('é','e');
-            return aNorm.includes(bNorm) || bNorm.includes(aNorm.split(' ')[0]);
-          })
-          .forEach(d => todosLosDocs.push({ ...d, expId: exp.id }));
-      } else {
-        parsearDocumentosHTML(exp.areas || '')
-          .filter(d => {
-            const aNorm = (d.area||'').toLowerCase().replace('í','i').replace('é','e');
-            const bNorm = nombre.toLowerCase().replace('í','i').replace('é','e');
-            return aNorm.includes(bNorm) || bNorm.includes(aNorm.split(' ')[0]);
-          })
-          .forEach(d => todosLosDocs.push({ ...d, expId: exp.id }));
-      }
-    });
-
-    if (totalArea > 0) {
-      let contenido = '';
-      if (todosLosDocs.length > 0) {
-        const filasDocs = todosLosDocs.map((doc, i) => {
-          const bg = i%2===0?'#f8fafc':'#ffffff';
-          const docLimpio = (doc.documento||'').replace(/^\*+\s*/,'').replace(/^\d+\.\s*/,'').replace(/^\*+\s*/,'').replace(/\s*\/.*$/,'').trim() || '—';
-          const obs = doc.observacion || doc.comentario || '—';
-          return `<tr style="background:${bg};">
-            <td style="padding:13px 18px;border-bottom:1px solid #f1f5f9;width:55%;">
-              <div style="display:flex;align-items:flex-start;gap:10px;">
-                <div class="doc-num">${i+1}</div>
-                <div style="font-size:12px;font-weight:700;color:#1a202c;line-height:1.4;padding-top:3px;">${docLimpio}</div>
-              </div>
-            </td>
-            <td style="padding:13px 18px;border-bottom:1px solid #f1f5f9;">
-              <div style="font-size:12px;color:#64748b;line-height:1.5;"><span style="color:#3b82f6;font-weight:700;">•</span> ${obs}</div>
-              <div style="font-size:10px;color:#cbd5e1;margin-top:3px;font-family:'Inter',sans-serif;">${doc.expId}</div>
-            </td>
-          </tr>`;
-        }).join('');
-        contenido = `<table class="docs-table"><thead><tr><th style="width:55%;">Documento pendiente</th><th>Comentario</th></tr></thead><tbody>${filasDocs}</tbody></table>`;
-      } else {
-        contenido = `<div style="padding:20px;font-size:12px;color:#94a3b8;text-align:center;font-style:italic;">Sin detalle de documentos disponible</div>`;
-      }
-
-      html += `
-        <div class="area-header-row" id="hdr-${nombre}" style="background:${a.colorBg};border-color:${a.colorBorder};" onclick="toggleArea('${nombre}')">
-          <img src="${a.icono}" class="area-icon" alt="${nombre}">
-          <div>
-            <div class="area-nombre">${nombre}</div>
-            <div class="area-subtext">${totalArea} incidencia${totalArea!==1?'s':''} · ${todosLosDocs.length} documento${todosLosDocs.length!==1?'s':''} pendiente${todosLosDocs.length!==1?'s':''}</div>
-          </div>
-          <div class="area-badge-num" style="background:linear-gradient(135deg,${a.colorClaro},${a.color});border:4px solid ${a.colorOscuro};">${totalArea}</div>
-          <span class="area-chevron">▾</span>
-        </div>
-        <div class="area-detail-table" id="acordeon-${nombre}">
-          <div style="background:#fff;border:1px solid ${a.colorBorder};border-top:none;border-radius:0 0 8px 8px;margin-bottom:8px;overflow:hidden;">
-            <div style="background:${a.colorBg};padding:8px 18px;border-bottom:1px solid ${a.colorBorder};">
-              <span style="font-size:10px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:1px;">Documentos pendientes de integración</span>
-            </div>
-            ${contenido}
-          </div>
-        </div>`;
-    } else {
-      html += `
-        <div class="area-ok">
-          <img src="${a.icono}" class="area-icon" alt="${nombre}">
-          <div>
-            <div class="area-ok-nombre">${nombre}</div>
-            <div class="area-ok-sub">✓ Sin incidencias registradas</div>
-          </div>
-        </div>`;
-    }
-  });
-
-  html += `</div>`;
-  return html;
+  return `<div class="rep-section">
+    <div class="tbl-controls">
+      <div><div class="sec-titulo" style="text-align:left;margin-bottom:0;"><h2 style="font-size:20px;">Expedientes con Incidencias</h2><p>Total: ${incidencias.length} expedientes</p></div></div>
+      <select class="sort-sel" onchange="reordenarExpedientes(this.value)"><option value="desc">↓ Más incidencias</option><option value="asc">↑ Menos incidencias</option><option value="fecha">📅 Por fecha</option></select>
+    </div>
+    <table class="tbl"><thead><tr><th style="width:5%">#</th><th style="width:30%">ID Oportunidad</th><th style="width:18%">Fecha de Firma</th><th style="width:27%">Tipo</th><th style="width:20%;text-align:center;">Incidencias</th></tr></thead><tbody id="tbodyExp">${filas}</tbody></table>
+  </div>`;
 }
 
 function htmlEtapasCierre(etapas, completos) {
   if (!etapas) return '';
   const e1=etapas['1a Revision']||0, e2=etapas['2a Revision']||0, ef=etapas['Final']||0;
-  window.currentCierreData = [e1, e2, ef];
+  window._cierreData = [e1, e2, ef];
   return `<div class="rep-section">
     <div class="sec-titulo"><h2>Cierre de Incidencias por Etapa</h2></div>
     <div class="cierre-grid">
-      <div class="cierre-card e1" id="cierre-e1" onclick="resaltarSegmento('chartCierre', 0)">
+      <div class="cierre-card e1" onclick="resaltarSegmento('chartCierre',0)">
         <div class="cierre-icon">${vMini(ICONOS_CIERRE.e1,24,1)}</div>
-        <div><div class="cierre-num">${e1}</div><div class="cierre-label">1ª Rev.</div></div>
+        <div><div class="cierre-num">${e1}</div><div class="cierre-label">1ª Revisión</div></div>
       </div>
-      <div class="cierre-card e2" id="cierre-e2" onclick="resaltarSegmento('chartCierre', 1)">
+      <div class="cierre-card e2" onclick="resaltarSegmento('chartCierre',1)">
         <div class="cierre-icon">${vMini(ICONOS_CIERRE.e2,24,1)}</div>
-        <div><div class="cierre-num">${e2}</div><div class="cierre-label">2ª Rev.</div></div>
+        <div><div class="cierre-num">${e2}</div><div class="cierre-label">2ª Revisión</div></div>
       </div>
-      <div class="cierre-card ef" id="cierre-ef" onclick="resaltarSegmento('chartCierre', 2)">
+      <div class="cierre-card ef" onclick="resaltarSegmento('chartCierre',2)">
         <div class="cierre-icon">${vMini(ICONOS_CIERRE.ef,24,1)}</div>
-        <div><div class="cierre-num">${ef}</div><div class="cierre-label">Rev. Final</div></div>
+        <div><div class="cierre-num">${ef}</div><div class="cierre-label">Revisión Final</div></div>
       </div>
     </div>
     <div class="chart-panel">
-      <div class="chart-card">
+      <div class="chart-card" id="card-cierre">
         <div class="chart-title">Eficiencia de Cierre</div>
+        <div class="chart-title-badge">Etapas</div>
         <div class="doughnut-wrap">
           <canvas id="chartCierre"></canvas>
         </div>
@@ -930,111 +853,336 @@ function htmlEtapasCierre(etapas, completos) {
   </div>`;
 }
 
-// ════════════════════════════════════
-// CHARTS — ✦ FIX: responsive:true + maintainAspectRatio:false en los 3
-// ════════════════════════════════════
+function htmlDetalleAreas(incidencias, totArea) {
+  const areasOrdenadas = Object.entries(AREAS_CFG).sort(([nA],[nB]) => (totArea[nB]||0)-(totArea[nA]||0));
+  let html = `<div class="rep-section"><div class="sec-titulo"><h2>Detalle por Área</h2><p>Documentos pendientes de integración</p></div>`;
+
+  areasOrdenadas.forEach(([nombre, a]) => {
+    const totalArea = totArea[nombre]||0;
+    const todosLosDocs = [];
+    incidencias.forEach(exp => {
+      const mapAreas = parsearAreas(exp.areas);
+      if ((mapAreas[nombre]||0) === 0) return;
+      if (exp.documentos && exp.documentos.length > 0) {
+        exp.documentos.filter(d => {
+          const aN = (d.area||'').toLowerCase().replace('í','i'); const bN = nombre.toLowerCase().replace('í','i');
+          return aN.includes(bN) || bN.includes(aN.split(' ')[0]);
+        }).forEach(d => todosLosDocs.push({...d, expId:exp.id}));
+      } else {
+        parsearDocumentosHTML(exp.areas||'').filter(d => {
+          const aN = (d.area||'').toLowerCase().replace('í','i'); const bN = nombre.toLowerCase().replace('í','i');
+          return aN.includes(bN) || bN.includes(aN.split(' ')[0]);
+        }).forEach(d => todosLosDocs.push({...d, expId:exp.id}));
+      }
+    });
+
+    if (totalArea > 0) {
+      const contenido = todosLosDocs.length > 0
+        ? `<table class="docs-table"><thead><tr><th style="width:55%;">Documento pendiente</th><th>Comentario</th></tr></thead><tbody>
+          ${todosLosDocs.map((doc,i) => {
+            const bg = i%2===0?'#f8fafc':'#fff';
+            const docLimpio = (doc.documento||'').replace(/^\*+\s*/,'').replace(/^\d+\.\s*/,'').replace(/^\*+\s*/,'').replace(/\s*\/.*$/,'').trim()||'—';
+            const obs = doc.observacion||doc.comentario||'—';
+            return `<tr style="background:${bg};"><td style="padding:13px 18px;border-bottom:1px solid #f1f5f9;width:55%;"><div style="display:flex;align-items:flex-start;gap:10px;"><div class="doc-num">${i+1}</div><div style="font-size:12px;font-weight:700;color:#1a202c;line-height:1.4;padding-top:3px;">${docLimpio}</div></div></td><td style="padding:13px 18px;border-bottom:1px solid #f1f5f9;"><div style="font-size:12px;color:#64748b;line-height:1.5;"><span style="color:#3b82f6;font-weight:700;">•</span> ${obs}</div><div style="font-size:10px;color:#cbd5e1;margin-top:3px;font-family:'Inter',sans-serif;">${doc.expId}</div></td></tr>`;
+          }).join('')}
+          </tbody></table>`
+        : `<div style="padding:20px;font-size:12px;color:#94a3b8;text-align:center;font-style:italic;">Sin detalle de documentos disponible</div>`;
+
+      html += `
+        <div class="area-header-row" id="hdr-${nombre}" style="background:${a.colorBg};border-color:${a.colorBorder};" onclick="toggleArea('${nombre}')">
+          <img src="${a.icono}" class="area-icon" alt="${nombre}">
+          <div><div class="area-nombre">${nombre}</div><div class="area-subtext">${totalArea} incidencia${totalArea!==1?'s':''} · ${todosLosDocs.length} documento${todosLosDocs.length!==1?'s':''} pendiente${todosLosDocs.length!==1?'s':''}</div></div>
+          <div class="area-badge-num" style="background:linear-gradient(135deg,${a.colorClaro},${a.color});border:4px solid ${a.colorOscuro};">${totalArea}</div>
+          <span class="area-chevron">▾</span>
+        </div>
+        <div class="area-detail-table" id="acordeon-${nombre}">
+          <div style="background:#fff;border:1px solid ${a.colorBorder};border-top:none;border-radius:0 0 8px 8px;margin-bottom:8px;overflow:hidden;">
+            <div style="background:${a.colorBg};padding:8px 18px;border-bottom:1px solid ${a.colorBorder};"><span style="font-size:10px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:1px;">Documentos pendientes de integración</span></div>
+            ${contenido}
+          </div>
+        </div>`;
+    } else {
+      html += `<div class="area-ok"><img src="${a.icono}" class="area-icon" alt="${nombre}"><div><div class="area-ok-nombre">${nombre}</div><div class="area-ok-sub">✓ Sin incidencias registradas</div></div></div>`;
+    }
+  });
+  return html + `</div>`;
+}
+
+// ════════════════════════════════════════════════════════════
+// ✦ initCharts — SISTEMA REDISEÑADO
+//
+// CAUSAS DEL BUG de etiquetas dobles:
+//   1) Chart.register(ChartDataLabels) se llamaba DENTRO de initCharts(),
+//      ejecutándose múltiples veces. El plugin quedaba registrado N veces
+//      y se dibujaba N veces por cada render. SOLUCIÓN: el registro está
+//      al inicio del script, fuera de cualquier función.
+//   2) Se creaba gradiente con ctxK pero se reutilizaba para otro canvas.
+//      SOLUCIÓN: cada canvas crea su propio contexto local.
+//
+// MEJORAS DE DISEÑO:
+//   — maintainAspectRatio: false en los 3 charts (respeta height CSS)
+//   — responsive: true (se redimensiona con la ventana)
+//   — Etiquetas con fondo blanco semitransparente, sin solapamiento
+//   — Sombra en segmentos con plugin custom
+//   — Animación de entrada por arco (animateRotate)
+//   — Pie usa 'pie' real con padding para separación visual
+// ════════════════════════════════════════════════════════════
 function initCharts(datos) {
-  Chart.register(ChartDataLabels);
 
-  const shadowP = {
-    beforeDraw: (c) => {
-      const ctx = c.ctx;
+  // Plugin de sombra — se define localmente (no se registra globalmente para evitar duplicados)
+  const shadowPlugin = {
+    id: 'shadowPlugin',
+    beforeDraw(chart) {
+      const ctx = chart.ctx;
       ctx.save();
-      ctx.shadowColor = 'rgba(0,0,0,0.12)';
-      ctx.shadowBlur  = 15;
-      ctx.shadowOffsetY = 8;
+      ctx.shadowColor   = 'rgba(0,0,0,0.15)';
+      ctx.shadowBlur    = 18;
+      ctx.shadowOffsetX = 0;
+      ctx.shadowOffsetY = 6;
+    },
+    afterDraw(chart) {
+      chart.ctx.restore();
     }
   };
 
-  const labelPro = {
-    color: '#334155',
-    font: { family:'Inter', weight:800, size:11 },
-    anchor: 'end',
-    align: 'start',
-    formatter: (v, x) => {
-      let s = 0;
-      x.chart.data.datasets[0].data.forEach(d => s += d);
-      const p = Math.round((v * 100) / s);
-      return p > 4 ? p + "%" : "";
-    }
+  // ── Configuración de etiquetas EXTERNA (fuera del arco) ──
+  // ✦ 'display: auto' deja que el plugin decida cuándo omitir si hay solapamiento
+  const externalLabels = {
+    display(ctx) {
+      const total = ctx.dataset.data.reduce((s, v) => s + v, 0);
+      const pct   = total > 0 ? Math.round((ctx.dataset.data[ctx.dataIndex] / total) * 100) : 0;
+      return pct >= 5; // Ocultar si el segmento es < 5% (evita solapamiento en segmentos chicos)
+    },
+    formatter(value, ctx) {
+      const total = ctx.dataset.data.reduce((s, v) => s + v, 0);
+      const pct   = total > 0 ? Math.round((value / total) * 100) : 0;
+      return pct + '%';
+    },
+    color:       '#fff',
+    font:        { family:'IBM Plex Sans', weight:'800', size:12 },
+    anchor:      'center',
+    align:       'center',
+    // Fondo con rounding para legibilidad sobre cualquier color
+    backgroundColor(ctx) {
+      const colors = ctx.dataset.backgroundColor;
+      return Array.isArray(colors) ? colors[ctx.dataIndex] : colors;
+    },
+    borderRadius: 4,
+    padding:      { top:3, bottom:3, left:6, right:6 },
+    // ✦ textShadowBlur da legibilidad sin necesitar borde blanco
+    textShadowBlur:  4,
+    textShadowColor: 'rgba(0,0,0,0.4)',
+    clip:            false,
   };
 
-  // ── CHART KPI (doughnut) ──
-  const ctxK = document.getElementById('chartKPI');
-  if (ctxK) {
-    const gO = ctxK.getContext('2d').createLinearGradient(0,0,0,300);
-    const gI = ctxK.getContext('2d').createLinearGradient(0,0,0,300);
-    gO.addColorStop(0,'#10b981'); gO.addColorStop(1,'#059669');
-    gI.addColorStop(0,'#f87171'); gI.addColorStop(1,'#dc2626');
-    window.charts.chartKPI = new Chart(ctxK, {
+  // ══════════════════════════════════════
+  // CHART 1 — ESTATUS GLOBAL (Doughnut)
+  // ══════════════════════════════════════
+  const elKPI = document.getElementById('chartKPI');
+  if (elKPI) {
+    const ctx  = elKPI.getContext('2d');
+    const gOK  = ctx.createLinearGradient(0, 0, 0, 300);
+    gOK.addColorStop(0, '#34d399');
+    gOK.addColorStop(1, '#059669');
+    const gINC = ctx.createLinearGradient(0, 0, 0, 300);
+    gINC.addColorStop(0, '#f87171');
+    gINC.addColorStop(1, '#dc2626');
+
+    window.charts.chartKPI = new Chart(ctx, {
       type: 'doughnut',
-      plugins: [shadowP],
+      plugins: [shadowPlugin],
       data: {
-        labels: ['OK','INC'],
-        datasets: [{ data: window.currentKPIData, backgroundColor:[gO,gI], borderRadius:10, spacing:6, hoverOffset:20 }]
+        labels: ['Sin Incidencias', 'Con Incidencias'],
+        datasets: [{
+          data:            [window._kpiData.completos, window._kpiData.incidencias],
+          backgroundColor: [gOK, gINC],
+          borderWidth:     4,
+          borderColor:     '#fff',
+          hoverBorderWidth: 0,
+          borderRadius:    8,
+          spacing:         4,
+          hoverOffset:     16,
+        }]
       },
       options: {
-        responsive: true,             // ✦ FIX
-        maintainAspectRatio: false,   // ✦ FIX: respeta height del contenedor CSS
-        cutout: '75%',
+        responsive:          true,
+        maintainAspectRatio: false,
+        cutout:              '72%',
+        animation: {
+          animateRotate: true,
+          animateScale:  false,
+          duration:      900,
+          easing:        'easeOutQuart',
+        },
         plugins: {
-          legend: { position:'bottom', labels:{ boxWidth:10, font:{ size:9, weight:600 } } },
-          datalabels: { display: false }
+          legend: {
+            position: 'bottom',
+            labels: {
+              boxWidth:  10,
+              boxHeight: 10,
+              borderRadius: 3,
+              useBorderRadius: true,
+              font:    { size:10, weight:'700', family:'IBM Plex Sans' },
+              color:   '#64748b',
+              padding: 16,
+            }
+          },
+          // ✦ Sin etiquetas internas en la dona (el total va en el centro con HTML)
+          datalabels: { display: false },
+          tooltip: {
+            callbacks: {
+              label(ctx) {
+                const total = ctx.dataset.data.reduce((s,v)=>s+v,0);
+                const pct   = total > 0 ? Math.round((ctx.parsed/total)*100) : 0;
+                return ` ${ctx.label}: ${ctx.raw} (${pct}%)`;
+              }
+            }
+          }
         }
       }
     });
   }
 
-  // ── CHART RUBROS (pie) ──
-  const ctxR = document.getElementById('chartRubros');
-  if (ctxR) {
-    window.charts.chartRubros = new Chart(ctxR, {
+  // ══════════════════════════════════════
+  // CHART 2 — DISTRIBUCIÓN POR TIPO (Pie)
+  // ══════════════════════════════════════
+  const elRubros = document.getElementById('chartRubros');
+  if (elRubros) {
+    const ctx = elRubros.getContext('2d');
+    const COLORES_RUBROS = ['#FDB913','#64748b','#06b6d4','#f97316','#a855f7'];
+    const nombresRubros  = Object.keys(RUBROS_CFG);
+    const valoresRubros  = nombresRubros.map(t => datos.conteoPorTipo?.[t]?.total || 0);
+    const totalRubros    = valoresRubros.reduce((s,v) => s+v, 0);
+
+    window.charts.chartRubros = new Chart(ctx, {
       type: 'pie',
-      plugins: [shadowP],
+      plugins: [shadowPlugin],
       data: {
-        labels: Object.keys(RUBROS_CFG),
+        labels: nombresRubros.map((t,i) => `${RUBROS_CFG[t].emoji} ${RUBROS_CFG[t].label}`),
         datasets: [{
-          data: Object.keys(RUBROS_CFG).map(t => datos.conteoPorTipo[t]?.total || 0),
-          backgroundColor: ['#FDB913','#64748b','#06b6d4','#f97316','#a855f7'],
-          borderWidth: 3,
-          borderColor: '#fff',
-          hoverOffset: 25
+          data:            valoresRubros,
+          backgroundColor: COLORES_RUBROS,
+          borderWidth:     4,
+          borderColor:     '#fff',
+          hoverBorderWidth: 0,
+          hoverOffset:     20,
         }]
       },
       options: {
-        responsive: true,           // ✦ FIX
-        maintainAspectRatio: false, // ✦ FIX
+        responsive:          true,
+        maintainAspectRatio: false,
+        layout: {
+          // ✦ Padding extra para que las etiquetas no queden cortadas
+          padding: { top:20, bottom:20, left:20, right:20 }
+        },
+        animation: {
+          animateRotate: true,
+          animateScale:  true,
+          duration:      1000,
+          easing:        'easeOutElastic',
+        },
         plugins: {
-          legend: { position:'right', labels:{ boxWidth:8, font:{ size:9 } } },
-          datalabels: labelPro
+          legend: {
+            position: 'right',
+            labels: {
+              boxWidth:  10,
+              boxHeight: 10,
+              borderRadius: 3,
+              useBorderRadius: true,
+              font:    { size:10, weight:'700', family:'IBM Plex Sans' },
+              color:   '#64748b',
+              padding: 10,
+              // ✦ Filtrar segmentos en cero de la leyenda
+              filter: (item) => valoresRubros[item.index] > 0,
+            }
+          },
+          datalabels: {
+            ...externalLabels,
+            // ✦ Para el pie, mostrar sólo si el segmento tiene datos
+            display(ctx) {
+              const total = ctx.dataset.data.reduce((s,v)=>s+v,0);
+              const pct   = total > 0 ? Math.round((ctx.dataset.data[ctx.dataIndex]/total)*100) : 0;
+              return pct >= 5;
+            },
+          },
+          tooltip: {
+            callbacks: {
+              label(ctx) {
+                const pct = totalRubros > 0 ? Math.round((ctx.parsed/totalRubros)*100) : 0;
+                return ` ${ctx.label}: ${ctx.raw} exp. (${pct}%)`;
+              }
+            }
+          }
         }
       }
     });
   }
 
-  // ── CHART CIERRE (doughnut) ──
-  const ctxC = document.getElementById('chartCierre');
-  if (ctxC) {
-    window.charts.chartCierre = new Chart(ctxC, {
+  // ══════════════════════════════════════
+  // CHART 3 — EFICIENCIA DE CIERRE (Doughnut)
+  // ══════════════════════════════════════
+  const elCierre = document.getElementById('chartCierre');
+  if (elCierre) {
+    const ctx = elCierre.getContext('2d');
+    const COLORES_CIERRE = ['#3b82f6','#f59e0b','#10b981'];
+
+    window.charts.chartCierre = new Chart(ctx, {
       type: 'doughnut',
-      plugins: [shadowP],
+      plugins: [shadowPlugin],
       data: {
-        labels: ['1ª Rev','2ª Rev','Final'],
+        labels: ['1ª Revisión', '2ª Revisión', 'Revisión Final'],
         datasets: [{
-          data: window.currentCierreData,
-          backgroundColor: ['#3b82f6','#f59e0b','#10b981'],
-          borderRadius: 10,
-          spacing: 5,
-          hoverOffset: 18
+          data:            window._cierreData || [0,0,0],
+          backgroundColor: COLORES_CIERRE,
+          borderWidth:     4,
+          borderColor:     '#fff',
+          hoverBorderWidth: 0,
+          borderRadius:    8,
+          spacing:         4,
+          hoverOffset:     16,
         }]
       },
       options: {
-        responsive: true,           // ✦ FIX
-        maintainAspectRatio: false, // ✦ FIX
-        cutout: '68%',
+        responsive:          true,
+        maintainAspectRatio: false,
+        cutout:              '65%',
+        animation: {
+          animateRotate: true,
+          animateScale:  false,
+          duration:      900,
+          easing:        'easeOutQuart',
+        },
+        layout: { padding: 10 },
         plugins: {
-          legend: { position:'right', labels:{ boxWidth:8, font:{ size:9 } } },
-          datalabels: labelPro
+          legend: {
+            position: 'bottom',
+            labels: {
+              boxWidth:  10,
+              boxHeight: 10,
+              borderRadius: 3,
+              useBorderRadius: true,
+              font:    { size:10, weight:'700', family:'IBM Plex Sans' },
+              color:   '#64748b',
+              padding: 14,
+            }
+          },
+          datalabels: {
+            ...externalLabels,
+            display(ctx) {
+              const total = ctx.dataset.data.reduce((s,v)=>s+v,0);
+              const pct   = total > 0 ? Math.round((ctx.dataset.data[ctx.dataIndex]/total)*100) : 0;
+              return pct >= 5;
+            },
+          },
+          tooltip: {
+            callbacks: {
+              label(ctx) {
+                const total = ctx.dataset.data.reduce((s,v)=>s+v,0);
+                const pct   = total > 0 ? Math.round((ctx.parsed/total)*100) : 0;
+                return ` ${ctx.label}: ${ctx.raw} (${pct}%)`;
+              }
+            }
+          }
         }
       }
     });
@@ -1044,21 +1192,17 @@ function initCharts(datos) {
 // ════════════════════════════════════
 // INTERACCIONES
 // ════════════════════════════════════
-function toggleRubro(cls) {
-  const detalle = document.getElementById(`rubro-detalle-${cls}`);
-  if (!detalle || !detalle.innerHTML.trim()) return;
-  const card    = document.getElementById(`rubro-card-${cls}`);
-  const estaOpen = detalle.classList.contains('open');
-  document.querySelectorAll('.rubro-detalle-wrap').forEach(d => d.classList.remove('open'));
-  document.querySelectorAll('.rubro-card').forEach(c => c.classList.remove('activo'));
-  if (!estaOpen) {
-    detalle.classList.add('open');
-    card && card.classList.add('activo');
-    rubroAbierto = cls;
-    setTimeout(() => detalle.scrollIntoView({ behavior:'smooth', block:'nearest' }), 50);
+function resaltarSegmento(chartId, index) {
+  const chart = window.charts[chartId];
+  if (!chart) return;
+  if (index === null) {
+    chart.setActiveElements([]);
+    chart.tooltip.setActiveElements([]);
   } else {
-    rubroAbierto = null;
+    chart.setActiveElements([{datasetIndex:0, index}]);
+    chart.tooltip.setActiveElements([{datasetIndex:0, index}]);
   }
+  chart.update();
 }
 
 function toggleArea(nombre) {
@@ -1071,20 +1215,20 @@ function toggleArea(nombre) {
   if (!abierto) {
     el.classList.add('open');
     hdr && hdr.classList.add('open');
-    setTimeout(() => el.scrollIntoView({ behavior:'smooth', block:'nearest' }), 50);
+    setTimeout(() => el.scrollIntoView({behavior:'smooth',block:'nearest'}), 50);
   }
 }
 
 function reordenarExpedientes(orden) {
   if (!datosMostrados) return;
   let exps = [...(datosMostrados.incidencias||[])];
-  if (orden==='desc') exps.sort((a,b) => b.totalIncidencias - a.totalIncidencias);
-  else if (orden==='asc') exps.sort((a,b) => a.totalIncidencias - b.totalIncidencias);
-  else exps.sort((a,b) => a.fecha.localeCompare(b.fecha));
+  if (orden==='desc')      exps.sort((a,b) => b.totalIncidencias-a.totalIncidencias);
+  else if (orden==='asc')  exps.sort((a,b) => a.totalIncidencias-b.totalIncidencias);
+  else                     exps.sort((a,b) => a.fecha.localeCompare(b.fecha));
   const mostrar = exps.slice(0,15), tbody = document.getElementById('tbodyExp');
   if (!tbody) return;
   tbody.innerHTML = mostrar.map((exp,idx) => {
-    const bg = idx%2===0?'#ffffff':'#f8fafc', bc = idx===mostrar.length-1?'transparent':'#e2e8f0', cls = tipoCSSClass(exp.tipo);
+    const bg = idx%2===0?'#fff':'#f8fafc', bc = idx===mostrar.length-1?'transparent':'#e2e8f0', cls = tipoCSSClass(exp.tipo);
     return `<tr style="background:${bg};" onclick='abrirDetalle(${esJSON(exp)})'>
       <td style="border-bottom:1px solid ${bc};"><span style="font-weight:600;font-size:13px;color:#94a3b8;">${idx+1}</span></td>
       <td style="border-bottom:1px solid ${bc};"><span style="font-weight:600;font-size:13px;">${exp.id}</span></td>
@@ -1100,22 +1244,18 @@ function abrirDetalle(exp) {
   document.getElementById('spFecha').textContent = `Fecha de firma: ${exp.fecha}`;
   document.getElementById('spTotal').textContent = exp.totalIncidencias;
   const map    = parsearAreas(exp.areas);
-  const conInc = Object.entries(map).filter(([,n]) => n > 0);
+  const conInc = Object.entries(map).filter(([,n]) => n>0);
   document.getElementById('spAreas').textContent = conInc.length;
-  document.getElementById('spAreasList').innerHTML = conInc
-    .sort((a,b) => b[1] - a[1])
-    .map(([nombre,n]) => {
-      const a   = AREAS_CFG[nombre];
-      const pct = Math.round((n/exp.totalIncidencias)*100);
-      return `
-        <div class="sp-area-row">
-          <div class="sp-area-left">
-            <div class="sp-area-dot" style="background:${a?.color||'#888'}"></div>
-            <div><div class="sp-area-name">${nombre}</div><div class="sp-area-pct">${pct}% del total</div></div>
-          </div>
-          <div class="sp-area-num" style="color:${a?.color||'#888'}">${n}</div>
-        </div>`;
-    }).join('');
+  document.getElementById('spAreasList').innerHTML = conInc.sort((a,b)=>b[1]-a[1]).map(([nombre,n]) => {
+    const a = AREAS_CFG[nombre], pct = Math.round((n/exp.totalIncidencias)*100);
+    return `<div class="sp-area-row">
+      <div class="sp-area-left">
+        <div class="sp-area-dot" style="background:${a?.color||'#888'}"></div>
+        <div><div class="sp-area-name">${nombre}</div><div class="sp-area-pct">${pct}% del total</div></div>
+      </div>
+      <div class="sp-area-num" style="color:${a?.color||'#888'}">${n}</div>
+    </div>`;
+  }).join('');
   document.getElementById('overlay').classList.add('open');
   document.getElementById('slidePanel').classList.add('open');
 }
@@ -1125,22 +1265,6 @@ function cerrarPanel() {
   document.getElementById('slidePanel').classList.remove('open');
 }
 
-function resaltarSegmento(chartId, index) {
-  const chart = window.charts[chartId];
-  if (!chart) return;
-  if (index === null) {
-    chart.setActiveElements([]);
-    chart.tooltip.setActiveElements([]);
-  } else {
-    chart.setActiveElements([{datasetIndex: 0, index: index}]);
-    chart.tooltip.setActiveElements([{datasetIndex: 0, index: index}]);
-  }
-  chart.update();
-}
-
-// ════════════════════════════════════
-// REFRESH LIVE
-// ════════════════════════════════════
 function refrescarDatos() {
   const anio = parseInt(document.getElementById('selectAnio').value);
   const mes  = document.getElementById('selectMes').value;
