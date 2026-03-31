@@ -10,6 +10,7 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
 <!-- ✦ DataLabels como plugin separado, se registra manualmente UNA sola vez -->
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+
 <style>
 :root {
   --yellow:   #FDB913;
@@ -590,30 +591,145 @@ body {
 
 /* ══ KPI BOXES — ajustes específicos ══ */
 .kpi-section { padding:28px 40px; background:transparent; border-bottom:none; }
-.kpi-row { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:20px; }
+.kpi-row { display:grid; grid-template-columns:repeat(3,1fr); gap:28px; margin-bottom:20px; }
+
+/* ══ TARJETA KPI — estilo infografía con relieve ══ */
 .kpi-box {
-  padding: 22px 24px;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  cursor: pointer;
   position: relative;
-  overflow: hidden;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  background: #fff;
+  border-radius: 12px;
+  padding: 0;
+  cursor: pointer;
+  overflow: visible;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   animation: cardIn 0.5s cubic-bezier(0.34,1.3,0.64,1) both;
 }
+
+/* Marco exterior con color (efecto de borde grueso) */
+.kpi-box::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: 4px;
+  bottom: 4px;
+  border-radius: 14px;
+  z-index: -1;
+}
+.kpi-box.total::before { background: var(--yellow); }
+.kpi-box.completos::before { background: #10B981; }
+.kpi-box.incidencias::before { background: #EF4444; }
+
+/* Sombra de profundidad */
+.kpi-box::after {
+  content: '';
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  right: -8px;
+  bottom: -8px;
+  background: rgba(0,0,0,0.08);
+  border-radius: 14px;
+  z-index: -2;
+  filter: blur(8px);
+}
+
+/* Contenedor interno blanco */
+.kpi-box-inner {
+  background: #fff;
+  border-radius: 10px;
+  border: 1px solid rgba(0,0,0,0.04);
+  padding: 28px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+}
+
+/* Borde interior sutil de color */
+.kpi-box.total .kpi-box-inner { border-top: 3px solid var(--yellow); }
+.kpi-box.completos .kpi-box-inner { border-top: 3px solid #10B981; }
+.kpi-box.incidencias .kpi-box-inner { border-top: 3px solid #EF4444; }
+
+/* Hover effect */
+.kpi-box:hover {
+  transform: translateY(-6px);
+}
+.kpi-box:hover::after {
+  transform: translateY(4px);
+  filter: blur(12px);
+  opacity: 0.12;
+}
+
+/* Dots decorativos esquina superior derecha */
+.kpi-dots {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: grid;
+  grid-template-columns: repeat(4, 5px);
+  grid-template-rows: repeat(4, 5px);
+  gap: 3px;
+  opacity: 0.35;
+}
+.kpi-dots span {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+}
+.kpi-box.total .kpi-dots span { background: var(--yellow); }
+.kpi-box.completos .kpi-dots span { background: #10B981; }
+.kpi-box.incidencias .kpi-dots span { background: #EF4444; }
+
 .kpi-box:nth-child(1){ animation-delay:0.04s; }
 .kpi-box:nth-child(2){ animation-delay:0.09s; }
 .kpi-box:nth-child(3){ animation-delay:0.14s; }
 
-/* Ícono — fondo sutil monocromo */
-.kpi-icon-wrap { width:52px; height:52px; display:flex; align-items:center; justify-content:center; flex-shrink:0; background: transparent !important; border-radius: 0; }
-.kpi-icon-img { width:66px; height:66px; object-fit:contain; border-radius:0; }
-.kpi-num   { font-size:38px; font-weight:800; line-height:1; letter-spacing:-1.5px; }
-.kpi-box.total .kpi-num       { color:var(--yellow); }
-.kpi-box.completos .kpi-num   { color:#059669; }
-.kpi-box.incidencias .kpi-num { color:#dc2626; }
-.kpi-label { font-size:11px; font-weight:700; color:var(--muted); margin-top:4px; text-transform:uppercase; letter-spacing:0.8px; }
+/* Ícono centrado con color de línea */
+.kpi-icon-wrap { 
+  width: 56px; 
+  height: 56px; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  margin-bottom: 18px;
+}
+.kpi-icon-wrap svg {
+  width: 48px;
+  height: 48px;
+}
+.kpi-box.total .kpi-icon-wrap svg { color: var(--yellow); stroke: var(--yellow); }
+.kpi-box.completos .kpi-icon-wrap svg { color: #10B981; stroke: #10B981; }
+.kpi-box.incidencias .kpi-icon-wrap svg { color: #EF4444; stroke: #EF4444; }
+
+.kpi-icon-img { width:68px; height:68px; object-fit:contain; }
+
+/* Label / título */
+.kpi-label { 
+  font-size: 14px; 
+  font-weight: 700; 
+  color: #334155; 
+  margin-bottom: 8px; 
+  text-transform: uppercase; 
+  letter-spacing: 0.5px;
+}
+
+/* Número grande */
+.kpi-num { 
+  font-size: 48px; 
+  font-weight: 800; 
+  line-height: 1; 
+  letter-spacing: -2px;
+  margin-bottom: 12px;
+  color: #1E293B;
+}
+
+/* Delta indicator abajo */
+.kpi-delta {
+  margin-top: 4px;
+}
+
 @keyframes numPop { from{opacity:0;transform:scale(0.82);} to{opacity:1;transform:scale(1);} }
 .num-pop { animation:numPop 0.4s cubic-bezier(0.34,1.56,0.64,1) both; }
 
@@ -2400,86 +2516,84 @@ function htmlKPIs(total, completos, incidencias, pctC, pctI, label, prev, prevNo
   const CIRC      = 2 * Math.PI * R_ARC; // ≈ 490
 
   const donaSVG = (id, color, colorLight, pct, label, sublabel, delayClass, esFijo) => {
-    const safeId   = id.replace(/[^a-zA-Z0-9]/g, '');
-    const CIRC_VAL = (2 * Math.PI * 78).toFixed(4);
-    // Si esFijo=true (dona total) el arco arranca ya lleno, sin animación de conteo
-    const offsetInicial = esFijo ? '0' : CIRC_VAL;
-    return `
-    <div class="kpi-dona-wrap">
-      <svg class="dona-svg-stage ${delayClass}"
-           id="svg${safeId}"
-           viewBox="0 0 ${SVG_SIZE} ${SVG_SIZE}"
-           width="${SVG_SIZE}" height="${SVG_SIZE}"
-           xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <radialGradient id="dkGrad${safeId}" cx="40%" cy="35%" r="65%">
-            <stop offset="0%"   stop-color="#4d5f75"/>
-            <stop offset="100%" stop-color="#1e2533"/>
-          </radialGradient>
-          <linearGradient id="aGrad${safeId}" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%"   stop-color="${colorLight}"/>
-            <stop offset="100%" stop-color="${color}"/>
-          </linearGradient>
-          <filter id="glow${safeId}" x="-25%" y="-25%" width="150%" height="150%">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur"/>
-            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-          </filter>
-        </defs>
+  const safeId   = id.replace(/[^a-zA-Z0-9]/g, '');
+  const CIRC_VAL = (2 * Math.PI * 78).toFixed(4);
+  const offsetInicial = esFijo ? '0' : CIRC_VAL;
 
-        <circle cx="${CX}" cy="${CY}" r="${R_OUT}"
-          fill="none" stroke="${color}" stroke-width="14" opacity="0.13"/>
-        <circle cx="${CX}" cy="${CY}" r="${R_MID}"
-          fill="none" stroke="${color}" stroke-width="11" opacity="0.26"/>
-        <circle cx="${CX}" cy="${CY}" r="${R_ARC}"
-          fill="none" stroke="#cbd5e1" stroke-opacity="0.5"
-          stroke-width="${STROKE_W}" stroke-linecap="round"/>
-        <circle id="arc${safeId}"
-          cx="${CX}" cy="${CY}" r="${R_ARC}"
-          fill="none" stroke="url(#aGrad${safeId})"
-          stroke-width="${STROKE_W}" stroke-linecap="round"
-          stroke-dasharray="${CIRC_VAL}"
-          stroke-dashoffset="${offsetInicial}"
-          transform="rotate(-90 ${CX} ${CY})"
-          filter="url(#glow${safeId})"/>
+  // Parámetros geométricos para centrado
+  const SVG_SIZE = 220;
+  const CX       = 110;
+  const CY       = 110;
+  const R_OUT    = 100;
+  const R_MID    = 88;
+  const R_ARC    = 78;
+  const STROKE_W = 18;
 
-        <!-- Dot luminoso en la punta del arco -->
-        <circle id="dot${safeId}"
-          cx="${CX}" cy="${CY - R_ARC}" r="${STROKE_W / 2 + 1}"
-          fill="${color}" opacity="${esFijo ? 0 : 0}"/>
-        <circle id="dotHalo${safeId}"
-          cx="${CX}" cy="${CY - R_ARC}" r="${STROKE_W / 2 + 4}"
-          fill="none" stroke="#fff" stroke-width="2.5" stroke-opacity="0.55"
-          opacity="${esFijo ? 0 : 0}"/>
+  return `
+  <div class="kpi-dona-wrap">
+    <svg class="dona-svg-stage ${delayClass}"
+         id="svg${safeId}"
+         viewBox="0 0 ${SVG_SIZE} ${SVG_SIZE}"
+         width="${SVG_SIZE}" height="${SVG_SIZE}"
+         xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="dkGrad${safeId}" cx="40%" cy="35%" r="65%">
+          <stop offset="0%"   stop-color="#4d5f75"/>
+          <stop offset="100%" stop-color="#1e2533"/>
+        </radialGradient>
+        <linearGradient id="aGrad${safeId}" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%"   stop-color="${colorLight}"/>
+          <stop offset="100%" stop-color="${color}"/>
+        </linearGradient>
+        <filter id="glow${safeId}" x="-25%" y="-25%" width="150%" height="150%">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
 
-        <circle cx="${CX}" cy="${CY}" r="57" fill="#253044"/>
-        <circle cx="${CX}" cy="${CY}" r="57" fill="url(#dkGrad${safeId})"/>
-        <circle cx="${CX}" cy="${CY}" r="57"
-          fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
-        <circle cx="${CX}" cy="${CY}" r="${R_ARC - STROKE_W/2 - 1}"
-          fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+      <circle cx="${CX}" cy="${CY}" r="${R_OUT}" fill="none" stroke="${color}" stroke-width="14" opacity="0.13"/>
+      <circle cx="${CX}" cy="${CY}" r="${R_MID}" fill="none" stroke="${color}" stroke-width="11" opacity="0.26"/>
+      <circle cx="${CX}" cy="${CY}" r="${R_ARC}" fill="none" stroke="#cbd5e1" stroke-opacity="0.5" stroke-width="${STROKE_W}" stroke-linecap="round"/>
+      
+      <circle id="arc${safeId}"
+        cx="${CX}" cy="${CY}" r="${R_ARC}"
+        fill="none" stroke="url(#aGrad${safeId})"
+        stroke-width="${STROKE_W}" stroke-linecap="round"
+        stroke-dasharray="${CIRC_VAL}"
+        stroke-dashoffset="${offsetInicial}"
+        transform="rotate(-90 ${CX} ${CY})"
+        filter="url(#glow${safeId})"/>
 
-        <!-- Etiqueta superior — color del arco -->
-        <text x="${CX}" y="${CY - 16}"
-          font-family="IBM Plex Sans, sans-serif"
-          font-size="9" font-weight="800" letter-spacing="1.5"
-          text-anchor="middle" dominant-baseline="middle"
-          fill="${colorLight}">${label.toUpperCase()}</text>
+      <circle id="dot${safeId}" cx="${CX}" cy="${CY - R_ARC}" r="${STROKE_W / 2 + 1}" fill="${color}" opacity="${esFijo ? 0 : 0}"/>
+      <circle id="dotHalo${safeId}" cx="${CX}" cy="${CY - R_ARC}" r="${STROKE_W / 2 + 4}" fill="none" stroke="#fff" stroke-width="2.5" stroke-opacity="0.55" opacity="${esFijo ? 0 : 0}"/>
 
-        <!-- SOLO PORCENTAJE — dato principal de la dona -->
-        <text id="pct${safeId}"
-          x="${CX}" y="${CY + 10}"
-          font-family="IBM Plex Sans, sans-serif"
-          font-size="42" font-weight="800" letter-spacing="-1"
-          text-anchor="middle" dominant-baseline="middle"
-          fill="#ffffff">${esFijo ? '100%' : '0%'}</text>
-      </svg>
+      <circle cx="${CX}" cy="${CY}" r="57" fill="#253044"/>
+      <circle cx="${CX}" cy="${CY}" r="57" fill="url(#dkGrad${safeId})"/>
+      <circle cx="${CX}" cy="${CY}" r="57" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
+      <circle cx="${CX}" cy="${CY}" r="${R_ARC - STROKE_W/2 - 1}" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
 
+      <text x="${CX}" y="${CY - 16}" 
+        font-family="IBM Plex Sans, sans-serif"
+        font-size="10" font-weight="800" letter-spacing="1.5"
+        text-anchor="middle" dominant-baseline="middle"
+        fill="${colorLight}">${label ? label.toUpperCase() : (id.includes('ok') ? 'COMPLETOS' : 'INCIDENCIAS')}</text>
+
+      <text id="pct${safeId}"
+        x="${CX}" y="${CY + 14}"
+        font-family="IBM Plex Sans, sans-serif"
+        font-size="44" font-weight="800" letter-spacing="-2"
+        text-anchor="middle" dominant-baseline="middle"
+        fill="#ffffff">${esFijo ? '100%' : '0%'}</text>
+    </svg>
+
+    ${label || sublabel ? `
       <div class="dona-label-bottom">
-        <div class="dona-label-title" style="color:${color}">${label}</div>
-        <div class="dona-label-sub">${sublabel}</div>
+        ${label ? `<div class="dona-label-title" style="color:${color}">${label}</div>` : ''}
+        ${sublabel ? `<div class="dona-label-sub">${sublabel}</div>` : ''}
       </div>
-    </div>`;
-  };
+    ` : ''}
+  </div>`;
+};
 
   return `<div class="kpi-section">
     ${secTitulo(1, 'Resumen General', 'Universo total de expedientes evaluados en el período', label)}
@@ -2487,26 +2601,29 @@ function htmlKPIs(total, completos, incidencias, pctC, pctI, label, prev, prevNo
     <!-- TARJETAS KPI con delta vs mes anterior -->
     <div class="kpi-row">
       <div class="kpi-box total">
-        <div class="kpi-icon-wrap">${vid(ICONOS_KPI.total)}</div>
-        <div style="flex:1;">
-          <div class="kpi-num num-pop">${total}</div>
+        <div class="kpi-box-inner">
+          <div class="kpi-dots"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+          <div class="kpi-icon-wrap">${vid(ICONOS_KPI.total)}</div>
           <div class="kpi-label">Total Evaluados</div>
+          <div class="kpi-num num-pop">${total}</div>
           ${delta(total, prev?.total, false)}
         </div>
       </div>
       <div class="kpi-box completos">
-        <div class="kpi-icon-wrap">${vid(ICONOS_KPI.completos)}</div>
-        <div style="flex:1;">
-          <div class="kpi-num num-pop">${completos}</div>
+        <div class="kpi-box-inner">
+          <div class="kpi-dots"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+          <div class="kpi-icon-wrap">${vid(ICONOS_KPI.completos)}</div>
           <div class="kpi-label">Sin Incidencias</div>
+          <div class="kpi-num num-pop">${completos}</div>
           ${delta(completos, prev?.sinIncidencias, false)}
         </div>
       </div>
       <div class="kpi-box incidencias">
-        <div class="kpi-icon-wrap">${vid(ICONOS_KPI.incidencias)}</div>
-        <div style="flex:1;">
-          <div class="kpi-num num-pop">${incidencias}</div>
+        <div class="kpi-box-inner">
+          <div class="kpi-dots"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+          <div class="kpi-icon-wrap">${vid(ICONOS_KPI.incidencias)}</div>
           <div class="kpi-label">Con Incidencias</div>
+          <div class="kpi-num num-pop">${incidencias}</div>
           ${delta(incidencias, prev?.conIncidencias, true)}
         </div>
       </div>
@@ -2514,8 +2631,8 @@ function htmlKPIs(total, completos, incidencias, pctC, pctI, label, prev, prevNo
 
     <!-- DONAS: solo porcentaje animado — rol proporcional -->
     <div class="kpi-donas-panel">
-      ${donaSVG('kpi_ok',  '#059669','#34d399', pctC, 'Completos',  'expedientes sin incidencias',   'delay-1', false)}
-      ${donaSVG('kpi_inc', '#dc2626','#f87171', pctI, 'Incidencias','expedientes con observaciones', 'delay-2', false)}
+      ${donaSVG('kpi_ok',  '#059669','#34d399', pctC, '', '', 'delay-1', false)}
+      ${donaSVG('kpi_inc', '#dc2626','#f87171', pctI, '', '', 'delay-2', false)}    
     </div>
 
   </div>`;
@@ -2615,7 +2732,7 @@ function htmlRubros(conteo, incs, label) {
         '<text id="pctT' + safeT + '"' +
           ' x="' + CX + '" y="' + (CY + 13) + '"' +
           ' font-family="IBM Plex Sans, sans-serif"' +
-          ' font-size="10" font-weight="700"' +
+          ' font-size="16" font-weight="700"' +
           ' text-anchor="middle" dominant-baseline="middle"' +
           ' fill="' + col.light + '">0%</text>' +
       '</svg>';
@@ -2739,7 +2856,7 @@ const barrasSVG =
   }).join('');
 
   return '<div class="rep-section">' +
-    '<div class="sec-titulo">' + secTitulo(2, 'Expedientes por Tipo', 'Distribución del universo evaluado por categoría de crédito', label) + '</div>' +
+    '<div class="sec-titulo">' + secTitulo(2, 'Expedientes por Tipo', 'Distribución del universo evaluado por tipo de colocación', label) + '</div>' +
     '<div class="rtype-grid" id="rtypeGrid">' + tarjetas + '</div>' +
   '</div>';
 }
@@ -2791,7 +2908,7 @@ function htmlDistribucion(totArea, totalIncs, label) {
         // % dentro al final
         '<text id="pctA' + safeN + '"' +
           ' x="' + (wBar - R_PILL - 4) + '" y="' + CY + '"' +
-          ' font-family="IBM Plex Sans, sans-serif" font-size="13" font-weight="800"' +
+          ' font-family="IBM Plex Sans, sans-serif" font-size="16" font-weight="800"' +
           ' fill="rgba(255,255,255,0.95)" text-anchor="end" dominant-baseline="middle"' +
           ' opacity="0">' + pct + '%</text>' +
         // Círculo blanco en la punta
@@ -2872,8 +2989,8 @@ function htmlEtapasCierre(etapas, completos, label) {
   // Colores que codifican eficiencia
   const CFG = [
     { id:'e1', label:'1ª Revisión',    sub:'Óptimo',   val:e1, col:'#10b981', light:'#34d399', dark:'#065f46', bg:'#f0fdf4', border:'#86efac' },
-    { id:'e2', label:'2ª Revisión',    sub:'Moderado', val:e2, col:'#f59e0b', light:'#fbbf24', dark:'#92400e', bg:'#fffbeb', border:'#fde68a' },
-    { id:'ef', label:'Revisión Final', sub:'Crítico',  val:ef, col:'#ef4444', light:'#f87171', dark:'#991b1b', bg:'#fef2f2', border:'#fecaca' },
+    { id:'e2', label:'2ª Revisión',    sub:'Cumple', val:e2, col:'#f59e0b', light:'#fbbf24', dark:'#92400e', bg:'#fffbeb', border:'#fde68a' },
+    { id:'ef', label:'Revisión Final', sub:'Alerta',  val:ef, col:'#ef4444', light:'#f87171', dark:'#991b1b', bg:'#fef2f2', border:'#fecaca' },
   ];
 
   // ── Semicírculo SVG (180°) ──
@@ -2960,20 +3077,20 @@ function htmlEtapasCierre(etapas, completos, label) {
 
         // Número — centrado en el tercio superior del semicírculo
         '<text x="' + CX + '" y="' + (CY - 14) + '"' +
-          ' font-family="IBM Plex Sans, sans-serif" font-size="28" font-weight="800"' +
+          ' font-family="IBM Plex Sans, sans-serif" font-size="30" font-weight="800"' +
           ' fill="#fff" text-anchor="middle" dominant-baseline="middle">' + c.val + '</text>' +
 
         // Porcentaje animado — justo debajo del número
         '<text id="sgPct' + safeId + '" x="' + CX + '" y="' + (CY + 10) + '"' +
-          ' font-family="IBM Plex Sans, sans-serif" font-size="13" font-weight="700"' +
+          ' font-family="IBM Plex Sans, sans-serif" font-size="19" font-weight="700"' +
           ' fill="' + c.light + '" text-anchor="middle" dominant-baseline="middle">0%</text>' +
 
         // Marcadores 0% y 100% en los extremos del arco
         '<text x="' + (CX - R - SW + 2) + '" y="' + (CY + 18) + '"' +
-          ' font-family="Inter, sans-serif" font-size="8" font-weight="600"' +
+          ' font-family="Inter, sans-serif" font-size="12" font-weight="600"' +
           ' fill="#94a3b8" text-anchor="middle">0%</text>' +
         '<text x="' + (CX + R + SW - 2) + '" y="' + (CY + 18) + '"' +
-          ' font-family="Inter, sans-serif" font-size="8" font-weight="600"' +
+          ' font-family="Inter, sans-serif" font-size="12" font-weight="600"' +
           ' fill="#94a3b8" text-anchor="middle">100%</text>' +
       '</svg>';
 
@@ -3664,160 +3781,233 @@ function htmlProyectosPieChart(porArea, total) {
     return '';
   }
 
-  // Colores exactos como la imagen de referencia
-  const COLORES = [
-    { bg: '#2D8B4E', shadow: 'rgba(45,139,78,0.4)' },   // Verde oscuro
-    { bg: '#F5A623', shadow: 'rgba(245,166,35,0.4)' },  // Amarillo/Naranja
-    { bg: '#E67E22', shadow: 'rgba(230,126,34,0.4)' },  // Naranja
-    { bg: '#E74C3C', shadow: 'rgba(231,76,60,0.4)' },   // Rojo
-    { bg: '#3498DB', shadow: 'rgba(52,152,219,0.4)' },  // Azul
-    { bg: '#9B59B6', shadow: 'rgba(155,89,182,0.4)' },  // Púrpura
-    { bg: '#1ABC9C', shadow: 'rgba(26,188,156,0.4)' },  // Teal
-    { bg: '#34495E', shadow: 'rgba(52,73,94,0.4)' },    // Gris oscuro
+  // Colores VIBRANTES y saturados - estilo infografía moderna
+  const COLORES_PIE = [
+    { main: '#2563EB', light: '#60A5FA', dark: '#1D4ED8', glow: '#3B82F6' },
+    { main: '#DC2626', light: '#F87171', dark: '#B91C1C', glow: '#EF4444' },
+    { main: '#F59E0B', light: '#FBBF24', dark: '#D97706', glow: '#FCD34D' },
+    { main: '#10B981', light: '#34D399', dark: '#059669', glow: '#6EE7B7' },
+    { main: '#8B5CF6', light: '#A78BFA', dark: '#7C3AED', glow: '#C4B5FD' },
+    { main: '#06B6D4', light: '#22D3EE', dark: '#0891B2', glow: '#67E8F9' },
+    { main: '#EC4899', light: '#F472B6', dark: '#DB2777', glow: '#FBCFE8' },
+    { main: '#F97316', light: '#FB923C', dark: '#EA580C', glow: '#FDBA74' },
   ];
 
-  const maxCount = Math.max(...areas.map(([_, v]) => v.total));
-
-  let barrasHtml = areas.map(([nombre, stats], idx) => {
-    const color = COLORES[idx % COLORES.length];
-    const pct = total > 0 ? Math.round((stats.total / total) * 100) : 0;
-    const widthPct = maxCount > 0 ? (stats.total / maxCount) * 100 : 0;
+  const CX = 350;
+  const CY = 250;
+  const R_INNER = 50;
+  const RADIOS_EXTERIOR = [180, 160, 155, 165, 150, 145, 140, 135];
+  
+  let acumulado = 0;
+  const segmentos = areas.map(([nombre, stats], idx) => {
+    const pct = total > 0 ? (stats.total / total) : 0;
+    const startAngle = acumulado * 2 * Math.PI - Math.PI / 2;
+    acumulado += pct;
+    const endAngle = acumulado * 2 * Math.PI - Math.PI / 2;
+    const midAngle = (startAngle + endAngle) / 2;
+    const colores = COLORES_PIE[idx % COLORES_PIE.length];
+    const rOuter = RADIOS_EXTERIOR[idx % RADIOS_EXTERIOR.length];
     
-    return `
-      <div class="infog-bar-row">
-        <div class="infog-bar-name">${nombre}</div>
-        <div class="infog-bar-container">
-          <svg class="infog-bar-svg" viewBox="0 0 400 60" preserveAspectRatio="none" style="width: ${Math.max(widthPct, 20)}%;">
-            <defs>
-              <filter id="shadow${idx}" x="-10%" y="-10%" width="120%" height="140%">
-                <feDropShadow dx="0" dy="4" stdDeviation="3" flood-color="${color.shadow}"/>
-              </filter>
-              <linearGradient id="barGrad${idx}" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stop-color="${color.bg}" stop-opacity="1"/>
-                <stop offset="50%" stop-color="${color.bg}" stop-opacity="0.95"/>
-                <stop offset="100%" stop-color="${color.bg}" stop-opacity="0.85"/>
-              </linearGradient>
-            </defs>
-            <!-- Barra con punta de flecha -->
-            <path d="M0,8 L0,52 Q0,58 6,58 L360,58 L400,30 L360,2 L6,2 Q0,2 0,8 Z" 
-                  fill="url(#barGrad${idx})" filter="url(#shadow${idx})"/>
-            <!-- Brillo superior -->
-            <path d="M2,8 L2,28 L358,28 L390,15 L358,3 L6,3 Q2,3 2,8 Z" 
-                  fill="rgba(255,255,255,0.15)"/>
-            <!-- Porcentaje -->
-            <text x="30" y="38" font-family="'IBM Plex Sans', sans-serif" font-size="22" font-weight="800" fill="#fff">${pct}%</text>
-          </svg>
-        </div>
-        <div class="infog-bar-circle" style="background: ${color.bg}; box-shadow: 0 4px 12px ${color.shadow};">
-          <span>${stats.total}</span>
-        </div>
-      </div>
-    `;
-  }).join('');
+    return { nombre, stats, pct: Math.round(pct * 100), startAngle, endAngle, midAngle, ...colores, rOuter, idx };
+  });
 
-  return `
+  function polarToCart(angle, r) {
+    return { x: CX + r * Math.cos(angle), y: CY + r * Math.sin(angle) };
+  }
+
+  function createArc(startAngle, endAngle, rInner, rOuter) {
+    const s1 = polarToCart(startAngle, rOuter);
+    const e1 = polarToCart(endAngle, rOuter);
+    const s2 = polarToCart(endAngle, rInner);
+    const e2 = polarToCart(startAngle, rInner);
+    const large = (endAngle - startAngle) > Math.PI ? 1 : 0;
+    return `M${s1.x},${s1.y} A${rOuter},${rOuter} 0 ${large} 1 ${e1.x},${e1.y} L${s2.x},${s2.y} A${rInner},${rInner} 0 ${large} 0 ${e2.x},${e2.y} Z`;
+  }
+
+  // Filtros y gradientes
+  let defs = `
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="strongShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="rgba(0,0,0,0.35)"/>
+    </filter>
+  `;
+
+  segmentos.forEach((seg, idx) => {
+    defs += `
+      <linearGradient id="grad${idx}" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="${seg.light}"/>
+        <stop offset="40%" stop-color="${seg.main}"/>
+        <stop offset="100%" stop-color="${seg.dark}"/>
+      </linearGradient>
+      <linearGradient id="shine${idx}" x1="0%" y1="0%" x2="50%" y2="100%">
+        <stop offset="0%" stop-color="rgba(255,255,255,0.5)"/>
+        <stop offset="50%" stop-color="rgba(255,255,255,0.15)"/>
+        <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
+      </linearGradient>
+    `;
+  });
+
+  // Segmentos
+  let segments = '';
+  let percentLabels = '';
+  
+  segmentos.forEach((seg, idx) => {
+    const path = createArc(seg.startAngle, seg.endAngle, R_INNER, seg.rOuter);
+    const bounceX = Math.cos(seg.midAngle) * 15;
+    const bounceY = Math.sin(seg.midAngle) * 15;
+    const glowX = Math.cos(seg.midAngle) * 4;
+    const glowY = Math.sin(seg.midAngle) * 4;
+    
+    segments += `
+      <g class="pie-seg" data-idx="${idx}" style="--bx:${bounceX}px; --by:${bounceY}px; transform-origin:${CX}px ${CY}px;">
+        <path d="${path}" fill="${seg.glow}" opacity="0.3" filter="url(#glow)" transform="translate(${glowX}, ${glowY})"/>
+        <path d="${path}" fill="rgba(0,0,0,0.2)" transform="translate(3, 6)"/>
+        <path d="${path}" fill="url(#grad${idx})" stroke="rgba(255,255,255,0.95)" stroke-width="2.5" class="seg-main"/>
+        <path d="${path}" fill="url(#shine${idx})" style="mix-blend-mode:overlay; pointer-events:none;"/>
+      </g>
+    `;
+
+    const labelR = (R_INNER + seg.rOuter) / 2;
+    const lx = CX + labelR * Math.cos(seg.midAngle);
+    const ly = CY + labelR * Math.sin(seg.midAngle);
+    
+    if (seg.pct >= 5) {
+      const fs = seg.pct >= 25 ? 28 : seg.pct >= 15 ? 24 : seg.pct >= 10 ? 20 : 16;
+      percentLabels += `
+        <text x="${lx}" y="${ly}" text-anchor="middle" dominant-baseline="middle" data-idx="${idx}"
+              fill="#fff" font-family="'IBM Plex Sans',sans-serif" font-size="${fs}" font-weight="800"
+              class="pct-label" style="text-shadow: 0 2px 8px rgba(0,0,0,0.6), 0 0 20px rgba(0,0,0,0.3); pointer-events:none;">${seg.pct}%</text>
+      `;
+    }
+  });
+
+  // Líneas y etiquetas
+  let lines = '';
+  let labels = '';
+  
+  segmentos.forEach((seg, idx) => {
+    const startR = seg.rOuter + 15;
+    const sx = CX + startR * Math.cos(seg.midAngle);
+    const sy = CY + startR * Math.sin(seg.midAngle);
+    const isRight = Math.cos(seg.midAngle) >= 0;
+    
+    const bendDist = 45 + (idx % 3) * 20;
+    const bx = sx + (isRight ? bendDist : -bendDist);
+    const ex = isRight ? Math.max(bx + 60, CX + 250) : Math.min(bx - 60, CX - 250);
+    
+    lines += `
+      <g class="conn-line" data-idx="${idx}">
+        <path d="M${sx},${sy} L${bx},${sy} L${ex},${sy}" fill="none" stroke="#334155" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="${ex}" cy="${sy}" r="5" fill="#334155"/>
+        <circle cx="${sx}" cy="${sy}" r="5" fill="${seg.main}" stroke="#fff" stroke-width="2"/>
+      </g>
+    `;
+    
+    const anchor = isRight ? 'start' : 'end';
+    const tx = isRight ? ex + 16 : ex - 16;
+    
+    labels += `
+      <g class="lbl-grp" data-idx="${idx}">
+        <rect x="${isRight ? tx - 5 : tx - 180}" y="${sy - 28}" width="185" height="50" fill="transparent" rx="4"/>
+        <text x="${tx}" y="${sy - 12}" text-anchor="${anchor}" fill="${seg.main}" 
+              font-family="'IBM Plex Sans',sans-serif" font-size="18" font-weight="800">${String(idx + 1).padStart(2, '0')}</text>
+        <text x="${isRight ? tx + 38 : tx - 38}" y="${sy - 12}" text-anchor="${anchor}" fill="#1E293B" 
+              font-family="'IBM Plex Sans',sans-serif" font-size="15" font-weight="700" letter-spacing="0.5">${seg.nombre.toUpperCase()}</text>
+        <text x="${tx}" y="${sy + 12}" text-anchor="${anchor}" fill="#64748B" 
+              font-family="'Inter',sans-serif" font-size="12" font-weight="500">${seg.stats.total} proyecto${seg.stats.total !== 1 ? 's' : ''} · ${seg.stats.enCurso || 0} en curso</text>
+      </g>
+    `;
+  });
+
+  // Centro
+  const center = `
+    <circle cx="${CX}" cy="${CY}" r="${R_INNER + 8}" fill="rgba(0,0,0,0.08)"/>
+    <circle cx="${CX}" cy="${CY}" r="${R_INNER}" fill="#fff" filter="url(#strongShadow)"/>
+    <ellipse cx="${CX - 12}" cy="${CY - 12}" rx="${R_INNER * 0.5}" ry="${R_INNER * 0.3}" fill="rgba(255,255,255,0.9)"/>
+  `;
+
+  // CSS para hover
+  const hoverCSS = `
     <style>
-      .infog-bars-wrapper {
-        padding: 30px 20px;
-        max-width: 750px;
-        margin: 0 auto;
-      }
-      
-      .infog-bar-row {
-        display: flex;
-        align-items: center;
-        gap: 16px;
-        margin-bottom: 16px;
+      .pie-seg {
         cursor: pointer;
-        transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.3s ease;
       }
-      .infog-bar-row:hover {
-        transform: translateX(10px) scale(1.02);
+      .pie-seg:hover, .pie-seg.active {
+        transform: translate(var(--bx), var(--by)) scale(1.06);
+        filter: brightness(1.12) drop-shadow(0 15px 35px rgba(0,0,0,0.4));
       }
-      .infog-bar-row:last-child {
-        margin-bottom: 0;
+      .pie-seg .seg-main {
+        transition: stroke-width 0.3s ease;
       }
-      
-      .infog-bar-name {
-        min-width: 130px;
-        font-size: 14px;
-        font-weight: 700;
-        color: #334155;
-        text-align: right;
-        font-family: 'IBM Plex Sans', sans-serif;
-        letter-spacing: -0.3px;
+      .pie-seg:hover .seg-main, .pie-seg.active .seg-main {
+        stroke-width: 4;
       }
       
-      .infog-bar-container {
-        flex: 1;
-        height: 54px;
-        position: relative;
-        display: flex;
-        align-items: center;
+      .conn-line {
+        transition: opacity 0.3s ease;
+        opacity: 0.7;
+      }
+      .conn-line.active {
+        opacity: 1;
+      }
+      .conn-line path {
+        transition: stroke-width 0.3s ease, stroke 0.3s ease;
+      }
+      .conn-line.active path {
+        stroke-width: 3.5;
+        stroke: #1E293B;
+      }
+      .conn-line circle {
+        transition: transform 0.3s ease, r 0.3s ease;
+      }
+      .conn-line.active circle {
+        transform: scale(1.4);
       }
       
-      .infog-bar-svg {
-        height: 54px;
-        min-width: 100px;
-        transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.3s ease;
+      .lbl-grp {
+        cursor: pointer;
+        transition: transform 0.3s ease, opacity 0.3s ease;
+        opacity: 0.75;
+      }
+      .lbl-grp:hover, .lbl-grp.active {
+        transform: scale(1.08);
+        opacity: 1;
       }
       
-      .infog-bar-row:hover .infog-bar-svg {
-        filter: brightness(1.08);
+      .pct-label {
+        transition: transform 0.3s ease, font-size 0.3s ease;
       }
-      
-      .infog-bar-circle {
-        width: 52px;
-        height: 52px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-        transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
-        position: relative;
-      }
-      
-      /* Borde blanco interno simulando el estilo de la imagen */
-      .infog-bar-circle::before {
-        content: '';
-        position: absolute;
-        top: 3px;
-        left: 3px;
-        right: 3px;
-        bottom: 3px;
-        border-radius: 50%;
-        border: 2px solid rgba(255,255,255,0.9);
-      }
-      
-      /* Brillo superior */
-      .infog-bar-circle::after {
-        content: '';
-        position: absolute;
-        top: 6px;
-        left: 12px;
-        width: 18px;
-        height: 8px;
-        background: rgba(255,255,255,0.35);
-        border-radius: 50%;
-      }
-      
-      .infog-bar-row:hover .infog-bar-circle {
-        transform: scale(1.15) rotate(5deg);
-        box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-      }
-      
-      .infog-bar-circle span {
-        font-size: 18px;
-        font-weight: 800;
-        color: #fff;
-        text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-        font-family: 'IBM Plex Sans', sans-serif;
-        z-index: 1;
-        position: relative;
+      .pct-label.active {
+        transform: scale(1.15);
       }
     </style>
-    
+  `;
+
+  // Script para sincronizar hover entre segmento y etiqueta
+  const hoverScript = `
+    <script>
+      (function(){
+        function setActive(idx, active) {
+          document.querySelectorAll('[data-idx="'+idx+'"]').forEach(el => {
+            if (active) el.classList.add('active');
+            else el.classList.remove('active');
+          });
+        }
+        
+        document.querySelectorAll('.pie-seg, .lbl-grp, .conn-line').forEach(el => {
+          el.addEventListener('mouseenter', () => setActive(el.dataset.idx, true));
+          el.addEventListener('mouseleave', () => setActive(el.dataset.idx, false));
+        });
+      })();
+    <\/script>
+  `;
+
+  return `
+    ${hoverCSS}
     <div class="proy-section">
       <div class="proy-sec-header">
         <span class="proy-sec-num">01</span>
@@ -3826,8 +4016,18 @@ function htmlProyectosPieChart(porArea, total) {
           <p>Proyectos asignados a cada área solicitante</p>
         </div>
       </div>
-      <div class="infog-bars-wrapper">
-        ${barrasHtml}
+      <div class="proy-chart-layout">
+        <div class="proy-pie-wrap">
+          <svg class="proy-pie-svg" viewBox="0 0 700 500" style="overflow:visible;">
+            <defs>${defs}</defs>
+            <g class="segments-layer">${segments}</g>
+            <g class="center-layer">${center}</g>
+            <g class="pct-layer">${percentLabels}</g>
+            <g class="lines-layer">${lines}</g>
+            <g class="labels-layer">${labels}</g>
+          </svg>
+          ${hoverScript}
+        </div>
       </div>
     </div>
   `;
