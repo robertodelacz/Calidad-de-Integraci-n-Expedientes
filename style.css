@@ -894,46 +894,46 @@ function getDatosProyectos() {
     
     const datos = hoja.getDataRange().getValues();
     const encabezados = datos[0];
-    const filas = datos.slice(1).filter(function(fila) { 
-      return fila[1]; // Columna B = Proyecto
+    const filas = datos.slice(1).filter(function(fila) {
+      return fila[1]; // Columna B = Proyecto (debe existir)
     });
     
-    // Índices de columnas (0-indexed)
+    // ══════════════════════════════════════════════════════
+    // ÍNDICES DE COLUMNAS ACTUALIZADOS (0-indexed)
+    // A=0, B=1, C=2, D=3, E=4, F=5, G=6, H=7, I=8, J=9, K=10, L=11, M=12
+    // ══════════════════════════════════════════════════════
     const COL = {
-      ID:                0,   // A
-      PROYECTO:          1,   // B
-      DESCRIPCION:       2,   // C
-      AREA_SOLICITANTE:  3,   // D
-      RESPONSABLE:       4,   // E
-      EMAIL_CONTRALORIA: 5,   // F
-      SOLICITANTE:       6,   // G
-      EMAIL_SOLICITANTE: 7,   // H
-      CONTACTO_ADICIONAL:8,   // I
-      EMAIL_CONTACTO:    9,   // J
-      DURACION_DIAS:     10,  // K
-      FECHA_INICIO:      11,  // L
-      FECHA_COMPROMISO:  12,  // M
-      ESTADO:            13,  // N
-      NIVEL_RIESGO:      14,  // O
-      PORCENTAJE_AVANCE: 15   // P
+      NO: 0,                    // A - No.
+      PROYECTO: 1,              // B - Proyecto
+      DESCRIPCION: 2,           // C - Descripción
+      AREA_SOLICITANTE: 3,      // D - Área Solicitante
+      TIPO: 4,                  // E - Tipo (Tren de Crédito / Cumplimiento Normativo)
+      RESPONSABLE_CONTRALORIA: 5, // F - Responsable Contraloría
+      SOLICITANTE: 6,           // G - Solicitante
+      DURACION_DIAS: 7,         // H - Duración (días)
+      FECHA_INICIO: 8,          // I - Fecha Inicio
+      FECHA_COMPROMISO: 9,      // J - Fecha Compromiso
+      ESTADO: 10,               // K - Estado
+      NIVEL_RIESGO: 11,         // L - Nivel de Riesgo
+      PORCENTAJE_AVANCE: 12     // M - % Avance
     };
     
     // ── Parsear cada proyecto ──
     const proyectos = filas.map(function(fila, idx) {
       return {
-        id:               fila[COL.ID] || idx + 1,
-        proyecto:         fila[COL.PROYECTO] || '',
-        descripcion:      fila[COL.DESCRIPCION] || '',
-        areaSolicitante:  normalizarAreaProyecto(fila[COL.AREA_SOLICITANTE]),
-        responsable:      fila[COL.RESPONSABLE] || '',
-        solicitante:      fila[COL.SOLICITANTE] || '',
-        contactoAdicional: fila[COL.CONTACTO_ADICIONAL] || '',
-        duracionDias:     parsearNumeroProyecto(fila[COL.DURACION_DIAS]),
-        fechaInicio:      formatearFechaProyecto(fila[COL.FECHA_INICIO]),
-        fechaCompromiso:  formatearFechaProyecto(fila[COL.FECHA_COMPROMISO]),
-        estado:           normalizarEstadoProyecto(fila[COL.ESTADO]),
-        nivelRiesgo:      normalizarRiesgoProyecto(fila[COL.NIVEL_RIESGO]),
-        porcentajeAvance: parsearPorcentajeProyecto(fila[COL.PORCENTAJE_AVANCE])
+        id: fila[COL.NO] || idx + 1,
+        proyecto: fila[COL.PROYECTO] || '',
+        descripcion: fila[COL.DESCRIPCION] || '',
+        areaSolicitante: normalizarAreaProyecto(fila[COL.AREA_SOLICITANTE]),
+        tipo: normalizarTipoProyecto(fila[COL.TIPO]),
+        responsableContraloria: fila[COL.RESPONSABLE_CONTRALORIA] || '',
+        solicitante: fila[COL.SOLICITANTE] || '',
+        duracionDias: parsearNumeroProyecto(fila[COL.DURACION_DIAS]),
+        fechaInicio: formatearFechaProyecto(fila[COL.FECHA_INICIO]),
+        fechaCompromiso: formatearFechaProyecto(fila[COL.FECHA_COMPROMISO]),
+        estado: normalizarEstadoProyecto(fila[COL.ESTADO]),
+        nivelRiesgo: normalizarRiesgoProyecto(fila[COL.NIVEL_RIESGO]),
+        avance: parsearPorcentajeProyecto(fila[COL.PORCENTAJE_AVANCE])
       };
     });
     
@@ -970,11 +970,17 @@ function calcularKPIsProyectos(proyectos) {
   proyectos.forEach(function(p) {
     var area = p.areaSolicitante || 'Sin área';
     if (!porArea[area]) {
-      porArea[area] = { total: 0, riesgoAlto: 0, avancePromedio: 0, sumAvance: 0 };
+      porArea[area] = { total: 0, enCurso: 0, riesgoAlto: 0, avancePromedio: 0, sumAvance: 0 };
     }
     porArea[area].total++;
-    porArea[area].sumAvance += p.porcentajeAvance || 0;
+    porArea[area].sumAvance += p.avance || 0;
     if (p.nivelRiesgo === 'Alto') porArea[area].riesgoAlto++;
+    
+    // Contar en curso
+    var estadosEnCurso = ['Solicitud inicial', 'Levantamiento de información', 'En desarrollo', 'En pruebas'];
+    if (estadosEnCurso.some(function(e) { return p.estado && p.estado.toLowerCase().includes(e.toLowerCase()); })) {
+      porArea[area].enCurso++;
+    }
   });
   
   // Calcular promedio de avance por área
@@ -983,6 +989,23 @@ function calcularKPIsProyectos(proyectos) {
       ? Math.round(porArea[area].sumAvance / porArea[area].total) 
       : 0;
     delete porArea[area].sumAvance;
+  });
+  
+  // ── Conteo por Tipo (NUEVO) ──
+  var porTipo = {
+    'Tren de Crédito': 0,
+    'Cumplimiento Normativo': 0,
+    'Otro': 0
+  };
+  proyectos.forEach(function(p) {
+    var tipo = p.tipo || 'Otro';
+    if (tipo.toLowerCase().includes('crédito') || tipo.toLowerCase().includes('credito')) {
+      porTipo['Tren de Crédito']++;
+    } else if (tipo.toLowerCase().includes('cumplimiento') || tipo.toLowerCase().includes('normativo')) {
+      porTipo['Cumplimiento Normativo']++;
+    } else {
+      porTipo['Otro']++;
+    }
   });
   
   // ── Conteo por Nivel de Riesgo ──
@@ -995,79 +1018,73 @@ function calcularKPIsProyectos(proyectos) {
   });
   
   // ── Proyectos en curso vs completados ──
-  var estadosEnCurso = ['Solicitud Inicial', 'Levantamiento de información', 'En pruebas', 'En desarrollo'];
+  var estadosEnCurso = ['Solicitud inicial', 'Levantamiento de información', 'En pruebas', 'En desarrollo'];
   var estadosCompletados = ['Completado', 'En producción', 'Finalizado'];
   
-  var enCurso = proyectos.filter(function(p) {
-    return estadosEnCurso.some(function(e) {
-      return (p.estado || '').toLowerCase().indexOf(e.toLowerCase()) !== -1;
-    });
-  }).length;
+  var enCurso = 0;
+  var completados = 0;
+  var pausados = 0;
+  var cancelados = 0;
   
-  var completados = proyectos.filter(function(p) {
-    return estadosCompletados.some(function(e) {
-      return (p.estado || '').toLowerCase().indexOf(e.toLowerCase()) !== -1;
-    });
-  }).length;
-  
-  // ── Duración promedio ──
-  var duraciones = proyectos.map(function(p) { return p.duracionDias; }).filter(function(d) { return d > 0; });
-  var duracionPromedio = duraciones.length > 0 
-    ? Math.round(duraciones.reduce(function(a, b) { return a + b; }, 0) / duraciones.length) 
-    : 0;
+  proyectos.forEach(function(p) {
+    var estado = (p.estado || '').toLowerCase();
+    if (estadosEnCurso.some(function(e) { return estado.includes(e.toLowerCase()); })) {
+      enCurso++;
+    } else if (estadosCompletados.some(function(e) { return estado.includes(e.toLowerCase()); })) {
+      completados++;
+    } else if (estado.includes('pausado')) {
+      pausados++;
+    } else if (estado.includes('cancelado')) {
+      cancelados++;
+    }
+  });
   
   // ── Avance promedio general ──
-  var avances = proyectos.map(function(p) { return p.porcentajeAvance; }).filter(function(a) { return a >= 0; });
-  var avancePromedio = avances.length > 0 
-    ? Math.round(avances.reduce(function(a, b) { return a + b; }, 0) / avances.length) 
-    : 0;
-  
-  // ── Proyectos vencidos o próximos a vencer ──
-  var hoy = new Date();
-  hoy.setHours(0, 0, 0, 0);
-  
-  var vencidos = proyectos.filter(function(p) {
-    if (!p.fechaCompromiso || p.porcentajeAvance >= 100) return false;
-    var partes = p.fechaCompromiso.split('/');
-    if (partes.length !== 3) return false;
-    var fechaComp = new Date(partes[2], partes[1] - 1, partes[0]);
-    return fechaComp < hoy;
-  }).length;
-  
-  var proximosVencer = proyectos.filter(function(p) {
-    if (!p.fechaCompromiso || p.porcentajeAvance >= 100) return false;
-    var partes = p.fechaCompromiso.split('/');
-    if (partes.length !== 3) return false;
-    var fechaComp = new Date(partes[2], partes[1] - 1, partes[0]);
-    var diasRestantes = Math.ceil((fechaComp - hoy) / (1000 * 60 * 60 * 24));
-    return diasRestantes >= 0 && diasRestantes <= 7;
-  }).length;
-  
-  // ── Responsables únicos ──
-  var responsablesSet = {};
+  var sumAvance = 0;
+  var countAvance = 0;
   proyectos.forEach(function(p) {
-    if (p.responsable) responsablesSet[p.responsable] = true;
+    if (p.avance !== null && p.avance !== undefined) {
+      sumAvance += p.avance;
+      countAvance++;
+    }
   });
-  var responsables = Object.keys(responsablesSet);
+  var avancePromedio = countAvance > 0 ? Math.round(sumAvance / countAvance) : 0;
+  
+  // ── Duración promedio ──
+  var sumDuracion = 0;
+  var countDuracion = 0;
+  proyectos.forEach(function(p) {
+    if (p.duracionDias && p.duracionDias > 0) {
+      sumDuracion += p.duracionDias;
+      countDuracion++;
+    }
+  });
+  var duracionPromedio = countDuracion > 0 ? Math.round(sumDuracion / countDuracion) : 0;
+  
+  // ── Score de riesgo (0-100, mayor = más riesgo) ──
+  var riesgoScore = total > 0 
+    ? Math.round(((porRiesgo['Alto'] * 100) + (porRiesgo['Medio'] * 50) + (porRiesgo['Bajo'] * 10)) / total)
+    : 0;
   
   return {
     total: total,
     enCurso: enCurso,
     completados: completados,
-    riesgoAlto: porRiesgo['Alto'],
-    riesgoMedio: porRiesgo['Medio'],
-    riesgoBajo: porRiesgo['Bajo'],
-    vencidos: vencidos,
-    proximosVencer: proximosVencer,
-    duracionPromedio: duracionPromedio,
+    pausados: pausados,
+    cancelados: cancelados,
     avancePromedio: avancePromedio,
+    duracionPromedio: duracionPromedio,
     porEstado: porEstado,
     porArea: porArea,
+    porTipo: porTipo,
     porRiesgo: porRiesgo,
-    responsables: responsables.length,
-    listaResponsables: responsables
+    riesgoScore: riesgoScore,
+    riesgoAlto: porRiesgo['Alto'],
+    riesgoMedio: porRiesgo['Medio'],
+    riesgoBajo: porRiesgo['Bajo']
   };
 }
+
 
 // =====================================================
 // HELPERS PARA PROYECTOS
@@ -1077,127 +1094,125 @@ function calcularKPIsProyectos(proyectos) {
 /**
  * Normaliza el nombre del área solicitante
  */
-function normalizarAreaProyecto(valor) {
-  if (!valor) return '';
-  var str = String(valor).trim();
+function normalizarTipoProyecto(tipo) {
+  if (!tipo) return '';
+  var t = String(tipo).trim();
   
-  var mapeo = {
-    'cartera': 'Cartera',
-    'pld': 'PLD',
-    'contabilidad': 'Contabilidad',
-    'dictaminación': 'Dictaminación',
-    'dictaminacion': 'Dictaminación',
-    'ti': 'TI',
-    'tecnología': 'TI',
-    'sistemas': 'TI',
-    'comercial': 'Comercial',
-    'crédito': 'Crédito',
-    'credito': 'Crédito',
-    'jurídico': 'Jurídico',
-    'juridico': 'Jurídico',
-    'recursos humanos': 'Recursos Humanos',
-    'rh': 'Recursos Humanos',
-    'operaciones': 'Operaciones',
-    'tesorería': 'Tesorería',
-    'tesoreria': 'Tesorería'
-  };
+  // Normalizar variantes comunes
+  if (t.toLowerCase().includes('crédito') || t.toLowerCase().includes('credito') || t.toLowerCase().includes('tren')) {
+    return 'Tren de Crédito';
+  }
+  if (t.toLowerCase().includes('cumplimiento') || t.toLowerCase().includes('normativo') || t.toLowerCase().includes('regulatorio')) {
+    return 'Cumplimiento Normativo';
+  }
   
-  var lower = str.toLowerCase();
-  return mapeo[lower] || str;
+  return t; // Devolver el valor original si no coincide
 }
-
+ 
 /**
- * Normaliza el estado del proyecto
+ * Normaliza el área solicitante del proyecto
  */
-function normalizarEstadoProyecto(valor) {
-  if (!valor) return 'Sin estado';
-  var str = String(valor).trim();
+function normalizarAreaProyecto(area) {
+  if (!area) return 'Sin área';
+  var a = String(area).trim();
   
-  var estados = [
-    'Solicitud Inicial',
-    'Levantamiento de información',
-    'En desarrollo',
-    'En pruebas',
-    'En producción',
-    'Completado',
-    'Pausado',
-    'Cancelado'
+  // Lista de áreas válidas - ajusta según tus áreas reales
+  var areasValidas = [
+    'Comercial', 'Cartera', 'Crédito', 'Jurídico', 'PLD',
+    'Operaciones', 'Sistemas', 'Contraloría', 'Dirección General',
+    'Recursos Humanos', 'Administración', 'Cobranza', 'Mesa de Control'
   ];
   
-  var lower = str.toLowerCase();
-  for (var i = 0; i < estados.length; i++) {
-    if (lower.indexOf(estados[i].toLowerCase()) !== -1 || 
-        estados[i].toLowerCase().indexOf(lower) !== -1) {
-      return estados[i];
+  // Buscar coincidencia
+  for (var i = 0; i < areasValidas.length; i++) {
+    if (a.toLowerCase().includes(areasValidas[i].toLowerCase())) {
+      return areasValidas[i];
     }
   }
   
-  return str;
+  return a; // Devolver el valor original si no hay coincidencia
 }
-
+ 
+/**
+ * Normaliza el estado del proyecto
+ */
+function normalizarEstadoProyecto(estado) {
+  if (!estado) return 'Sin estado';
+  var e = String(estado).trim().toLowerCase();
+  
+  if (e.includes('solicitud')) return 'Solicitud inicial';
+  if (e.includes('levantamiento')) return 'Levantamiento de información';
+  if (e.includes('desarrollo')) return 'En desarrollo';
+  if (e.includes('prueba')) return 'En pruebas';
+  if (e.includes('producción') || e.includes('produccion')) return 'En producción';
+  if (e.includes('completado') || e.includes('finalizado')) return 'Completado';
+  if (e.includes('pausado')) return 'Pausado';
+  if (e.includes('cancelado')) return 'Cancelado';
+  
+  return String(estado).trim();
+}
+ 
 /**
  * Normaliza el nivel de riesgo
  */
-function normalizarRiesgoProyecto(valor) {
-  if (!valor) return 'Sin definir';
-  var str = String(valor).trim().toLowerCase();
+function normalizarRiesgoProyecto(riesgo) {
+  if (!riesgo) return '';
+  var r = String(riesgo).trim().toLowerCase();
   
-  if (str.indexOf('alto') !== -1 || str === 'high') return 'Alto';
-  if (str.indexOf('medio') !== -1 || str === 'medium') return 'Medio';
-  if (str.indexOf('bajo') !== -1 || str === 'low') return 'Bajo';
+  if (r.includes('alto') || r === 'high' || r === '3') return 'Alto';
+  if (r.includes('medio') || r === 'medium' || r === '2') return 'Medio';
+  if (r.includes('bajo') || r === 'low' || r === '1') return 'Bajo';
   
-  return 'Sin definir';
+  return String(riesgo).trim();
 }
-
+ 
 /**
- * Parsea un valor numérico
+ * Parsea un número de la hoja
  */
 function parsearNumeroProyecto(valor) {
-  if (!valor) return 0;
-  var num = parseFloat(String(valor).replace(/[^\d.-]/g, ''));
-  return isNaN(num) ? 0 : Math.round(num);
+  if (!valor && valor !== 0) return 0;
+  var num = parseInt(String(valor).replace(/[^\d.-]/g, ''), 10);
+  return isNaN(num) ? 0 : num;
 }
-
+ 
 /**
- * Parsea un porcentaje (puede venir como 0.95 o 95 o "95%")
+ * Parsea un porcentaje de la hoja
  */
 function parsearPorcentajeProyecto(valor) {
   if (!valor && valor !== 0) return 0;
   
-  var num = valor;
-  if (typeof valor === 'string') {
-    num = parseFloat(valor.replace('%', '').trim());
+  // Si es número decimal (0.85 = 85%)
+  if (typeof valor === 'number' && valor <= 1) {
+    return Math.round(valor * 100);
   }
+  
+  // Si es string con %
+  var str = String(valor).replace('%', '').trim();
+  var num = parseFloat(str);
   
   if (isNaN(num)) return 0;
   
-  // Si el valor es menor a 1, asumimos que es decimal (0.95 = 95%)
-  if (num > 0 && num <= 1) {
-    num = Math.round(num * 100);
+  // Si parece ser decimal
+  if (num <= 1 && num > 0) {
+    return Math.round(num * 100);
   }
   
-  return Math.min(100, Math.max(0, Math.round(num)));
+  return Math.round(num);
 }
-
+ 
 /**
- * Formatea una fecha para mostrar (DD/MM/YYYY)
+ * Formatea una fecha para mostrara
  */
-function formatearFechaProyecto(valor) {
-  if (!valor) return '';
+function formatearFechaProyecto(fecha) {
+  if (!fecha) return '';
   
   try {
-    var fecha;
-    if (valor instanceof Date) {
-      fecha = valor;
-    } else {
-      fecha = new Date(valor);
-    }
+    var d = new Date(fecha);
+    if (isNaN(d.getTime())) return String(fecha);
     
-    if (isNaN(fecha.getTime())) return '';
-    
-    return Utilities.formatDate(fecha, Session.getScriptTimeZone(), "dd/MM/yyyy");
+    return Utilities.formatDate(d, Session.getScriptTimeZone(), "dd/MM/yyyy");
   } catch (e) {
-    return '';
+    return String(fecha);
   }
 }
 
